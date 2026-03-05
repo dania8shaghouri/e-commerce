@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRoute from "./routes/userRoutes.js";
 import { seedInitialProducts } from "./services/productService.js";
 import productRoute from "./routes/productRoutes.js";
+import cartRoute from "./routes/cartRouter.js";
 dotenv.config();
 
 const app = express();
@@ -23,6 +24,7 @@ seedInitialProducts();
 
 app.use("/user", userRoute);
 app.use("/product", productRoute);
+app.use("/cart", cartRoute);
 
 app.listen(port, () => {
   console.log("running on port " + port);
