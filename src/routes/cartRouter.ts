@@ -4,6 +4,7 @@ import {
   getActiveCartForUser,
   updateItemInCart,
   deleteItemInCart,
+  clearCart,
 } from "../services/cartService.js";
 import validateJwt from "../middlewares/validateJWT.js";
 import type { ExtendRequest } from "../types/extendedRequest.js";
@@ -14,6 +15,12 @@ router.get("/", validateJwt, async (req: ExtendRequest, res) => {
   const userId = req?.user?._id;
   const cart = await getActiveCartForUser({ userId });
   res.status(200).send(cart);
+});
+
+router.delete("/", validateJwt, async (req: ExtendRequest, res) => {
+  const userId = req?.user?._id;
+  const response = await clearCart({ userId });
+  res.status(response.statusCode).send(response.data);
 });
 
 router.post("/items", validateJwt, async (req: ExtendRequest, res) => {
