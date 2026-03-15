@@ -3,8 +3,12 @@ import { getAllProducts } from "../services/productService.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const products = await getAllProducts();
-  res.status(200).send(products);
+  try {
+    const products = await getAllProducts();
+    res.status(200).send(products);
+  } catch {
+    res.status(500).send("SomeThing went wrong");
+  }
 });
 
 export default router;
