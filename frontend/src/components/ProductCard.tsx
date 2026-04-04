@@ -9,7 +9,7 @@ interface Props {
 const ProductCard = ({ id, product, onAddToCart }: Props) => {
   
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-4 w-80">
+    <div className="bg-[#F5F5F5] rounded-2xl shadow-md transition duration-300 p-4 w-80">
       <div className="w-full h-48 flex items-center justify-center overflow-hidden">
         <img
           src={product.image}
@@ -35,7 +35,7 @@ const ProductCard = ({ id, product, onAddToCart }: Props) => {
           </span>
           <button
             onClick={() => onAddToCart(product)}
-            className="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 transition"
+            className="bg-[#006ce1] text-white px-4 py-2 rounded-xl hover:bg-[#0059b3] transition"
           >
             Add to Cart
           </button>

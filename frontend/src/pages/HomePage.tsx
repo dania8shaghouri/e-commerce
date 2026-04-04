@@ -58,7 +58,6 @@ const HomePage = () => {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold mb-8">Ürünler</h1>
       {products.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-xl text-gray-500">Henüz ürün yok</p>
