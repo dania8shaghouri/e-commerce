@@ -2,7 +2,7 @@ import { FiShoppingCart } from "react-icons/fi";
 
 export default function Navbar() {
   return (
-    <nav className="w-full bg-[#006ce1] shadow-md">
+    <nav className="w-full bg-primary shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* LOGO */}
@@ -16,7 +16,7 @@ export default function Navbar() {
             {/* CART BUTTON */}
             <button className="relative text-white hover:scale-110 transition">
               <FiShoppingCart className="text-2xl" />
-              <span className="absolute -top-2 -right-2 bg-white text-[#006ce1] text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              <span className="absolute -top-2 -right-2 bg-white text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 2
               </span>
             </button>
