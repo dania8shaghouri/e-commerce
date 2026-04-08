@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import axios from "axios";
-import type { Product } from "../types/product";
+import type { Product } from "../types/Product";
 import { BASE_URL } from "../constants/baseUrl";
 
 const HomePage = () => {
@@ -57,13 +57,13 @@ const HomePage = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6   ">
       {products.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-xl text-gray-500">Henüz ürün yok</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
           {products.map((product) => (
             <ProductCard
               key={product._id}

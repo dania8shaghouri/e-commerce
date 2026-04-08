@@ -3,9 +3,11 @@ export interface Product {
   title: string;
   brand: string;
   image: string;
+  images: string[];
   cpu: string;
   ram: string;
   storage: string;
   gpu: string;
+  description: string;
   price: number;
 }
