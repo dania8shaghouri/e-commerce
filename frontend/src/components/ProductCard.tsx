@@ -14,7 +14,6 @@ const ProductCard = ({ product, onAddToCart }: Props) => {
     <div className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-4 mt-2 flex flex-col">
       {/* image */}
       <div className="w-full h-48 flex items-center justify-center overflow-hidden">
-        
         <img
           src={`${BASE_URL}/images/${product.image}`}
           alt={product.title}
