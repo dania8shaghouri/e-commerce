@@ -1,6 +1,8 @@
 import { FiShoppingCart } from "react-icons/fi";
 
+
 export default function Navbar() {
+
   return (
     <nav className="w-full bg-primary shadow-md">
       <div className="max-w-7xl mx-auto px-4">
