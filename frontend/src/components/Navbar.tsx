@@ -6,12 +6,24 @@ import { useAuth } from "../context/Auth/AuthContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { username, isAuthenticated } = useAuth();
+  const { username, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   const getInitial = (username: string | null) => {
     if (!username) return "?";
     return username.charAt(0).toUpperCase();
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+  const handleCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -27,7 +39,10 @@ export default function Navbar() {
           {/* RIGHT CIRCLE */}
           <div className="flex items-center gap-4">
             {/* CART BUTTON */}
-            <button className="relative text-white hover:scale-110 transition">
+            <button
+              className="relative text-white hover:scale-110 transition"
+              onClick={handleCart}
+            >
               <FiShoppingCart className="text-2xl" />
               <span className="absolute -top-2 -right-2 bg-white text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 2
@@ -51,7 +66,10 @@ export default function Navbar() {
                     <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
                       My Orders
                     </button>
-                    <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">
+                    <button
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+                      onClick={handleLogout}
+                    >
                       Logout
                     </button>
                   </div>
@@ -59,7 +77,7 @@ export default function Navbar() {
               </div>
             ) : (
               <button
-                onClick={() => navigate("/login")}
+                onClick={handleLogin}
                 className="bg-white text-primary px-4 py-1 rounded-lg"
               >
                 Login
