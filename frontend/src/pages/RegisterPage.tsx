@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../constants/baseUrl";
 import { useAuth } from "../context/Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -14,6 +15,7 @@ const RegisterPage = () => {
   const [success, setSuccess] = useState("");
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,9 +44,9 @@ const RegisterPage = () => {
         return;
       }
       login(email, token);
+      navigate("/");
       console.log(res.data);
       setSuccess(res.data.message || "Registration successful");
-      console.log(res.data);
       setFirstName("");
       setLastName("");
       setEmail("");
