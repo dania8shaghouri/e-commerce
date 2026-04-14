@@ -28,7 +28,13 @@ export const register = async ({
 
   await newUser.save();
 
-  return { data: generateJWT({ firstName, lastName, email }), statusCode: 200 };
+  return {
+    statusCode: 200,
+    data: {
+      token: generateJWT({ firstName, lastName, email }),
+      message: "Registration successful",
+    },
+  };
 };
 
 // login
@@ -48,15 +54,21 @@ export const login = async ({ email, password }: LoginParams) => {
   const passwordMatch = await bcrypt.compare(password, findUser.password);
   if (passwordMatch) {
     return {
-      data: generateJWT({
-        email,
-        firstName: findUser.firstName,
-        lastName: findUser.lastName,
-      }),
       statusCode: 200,
+      data: {
+        token: generateJWT({
+          email,
+          firstName: findUser.firstName,
+          lastName: findUser.lastName,
+        }),
+        message: "Login successful",
+      },
     };
   }
-  return { data: "incorrect email or password", statusCode: 400 };
+  return {
+    statusCode: 400,
+    data: { message: "Incorrect email or password" },
+  };
 };
 
 const generateJWT = (data: any) => {
