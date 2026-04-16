@@ -9,7 +9,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { username, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
 
   const getInitial = (username: string | null) => {
     if (!username) return "?";
@@ -22,6 +22,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
+    clearCart();
     navigate("/");
   };
   const handleCart = () => {

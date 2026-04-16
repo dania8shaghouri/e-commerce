@@ -1,4 +1,4 @@
-import { useState, type FC, type PropsWithChildren } from "react";
+import { useEffect, useState, type FC, type PropsWithChildren } from "react";
 import { CartContext } from "./CartContext";
 import type { CartItem } from "../../../types/CartItem";
 import axios from "axios";
@@ -10,6 +10,41 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchCart = async () => {
+      try {
+        const { data } = await axios.get(`${BASE_URL}/cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const backendCart = data as BackendCart;
+
+        setCartItems(
+          backendCart.items.map((i) => ({
+            productId: i.product._id,
+            title: i.product.title,
+            unitPrice: i.unitPrice,
+            quantity: i.quantity,
+            productImage: i.product.image,
+          })),
+        );
+
+        setTotalAmount(backendCart.totalAmount);
+      } catch (error) {
+        console.error("Cart fetch error:", error);
+      }
+    };
+
+    fetchCart();
+  }, [token]);
+  const clearCart = () => {
+    setCartItems([]);
+    setTotalAmount(0);
+  };
   type BackendCartItem = {
     product: {
       _id: string;
@@ -86,7 +121,9 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, totalAmount, addItemToCart }}>
+    <CartContext.Provider
+      value={{ cartItems, totalAmount, addItemToCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );
