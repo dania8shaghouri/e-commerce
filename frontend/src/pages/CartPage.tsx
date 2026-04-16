@@ -1,5 +1,6 @@
 import { useCart } from "../context/Auth/cart/CartContext";
 import { BASE_URL } from "../constants/baseUrl";
+import { FiTrash2 } from "react-icons/fi";
 
 const CartPage = () => {
   const { cartItems, totalAmount, updateItemQuantity, removeItemFromCart } =
@@ -24,8 +25,14 @@ const CartPage = () => {
           {cartItems.map((item) => (
             <div
               key={item.productId}
-              className="flex items-center justify-between bg-white shadow-md rounded-xl p-4"
+              className="relative flex items-center justify-between bg-white shadow-md rounded-xl p-4"
             >
+              <button
+                onClick={() => removeItemFromCart(item.productId)}
+                className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition"
+              >
+                <FiTrash2 />
+              </button>
               {/* LEFT */}
               <div className="flex items-center gap-4">
                 <img
