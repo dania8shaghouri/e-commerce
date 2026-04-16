@@ -2,7 +2,8 @@ import { useCart } from "../context/Auth/cart/CartContext";
 import { BASE_URL } from "../constants/baseUrl";
 
 const CartPage = () => {
-  const { cartItems, totalAmount } = useCart();
+  const { cartItems, totalAmount, updateItemQuantity, removeItemFromCart } =
+    useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -47,7 +48,7 @@ const CartPage = () => {
                       className="px-2 bg-gray-200 rounded hover:bg-gray-300"
                       onClick={() => {
                         if (item.quantity === 1) {
-                          removeItemFromCart(item.productId); 
+                          removeItemFromCart(item.productId);
                         } else {
                           updateItemQuantity(item.productId, item.quantity - 1);
                         }

@@ -41,10 +41,12 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
     fetchCart();
   }, [token]);
+
   const clearCart = () => {
     setCartItems([]);
     setTotalAmount(0);
   };
+
   type BackendCartItem = {
     product: {
       _id: string;
@@ -59,7 +61,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     items: BackendCartItem[];
     totalAmount: number;
   };
-
+  // add
   const addItemToCart = async (item: CartItem) => {
     console.log("🟡 ADD TO CART TRIGGERED");
     console.log("📦 Sending item:", item);
@@ -119,10 +121,86 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     }
   };
+  // update
+  const updateItemQuantity = async (productId: string, quantity: number) => {
+    try {
+      await axios.put(
+        `${BASE_URL}/cart/items`,
+        { productId, quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
+      // 🔥 tekrar cart çek (tek doğru yöntem)
+      const { data } = await axios.get(`${BASE_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const backendCart = data as BackendCart;
+
+      setCartItems(
+        backendCart.items.map((i) => ({
+          productId: i.product._id,
+          title: i.product.title,
+          unitPrice: i.unitPrice,
+          quantity: i.quantity,
+          productImage: i.product.image,
+        })),
+      );
+
+      setTotalAmount(backendCart.totalAmount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // remove
+  const removeItemFromCart = async (productId: string) => {
+    try {
+      await axios.delete(`${BASE_URL}/cart/items/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const { data } = await axios.get(`${BASE_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const backendCart = data as BackendCart;
+
+      setCartItems(
+        backendCart.items.map((i) => ({
+          productId: i.product._id,
+          title: i.product.title,
+          unitPrice: i.unitPrice,
+          quantity: i.quantity,
+          productImage: i.product.image,
+        })),
+      );
+
+      setTotalAmount(backendCart.totalAmount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <CartContext.Provider
-      value={{ cartItems, totalAmount, addItemToCart, clearCart }}
+      value={{
+        cartItems,
+        totalAmount,
+        addItemToCart,
+        clearCart,
+        updateItemQuantity,
+        removeItemFromCart,
+      }}
     >
       {children}
     </CartContext.Provider>
