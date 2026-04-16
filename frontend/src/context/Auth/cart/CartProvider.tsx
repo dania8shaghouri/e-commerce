@@ -30,6 +30,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     console.log("📦 Sending item:", item);
 
     try {
+      // 1️⃣ ADD ITEM
       const response = await axios.post(
         `${BASE_URL}/cart/items`,
         {
@@ -46,10 +47,18 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       console.log("🟢 Backend response (raw):", response);
       console.log("🟢 Backend response data:", response.data);
 
-      const backendCart = response.data as BackendCart;
+      // 2️⃣ SYNC CART (CRITICAL FIX)
+      const cartResponse = await axios.get(`${BASE_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      console.log("🟢 Parsed backendCart:", backendCart);
+      const backendCart = cartResponse.data as BackendCart;
 
+      console.log("🟢 Synced backendCart:", backendCart);
+
+      // 3️⃣ STATE UPDATE
       setCartItems(
         backendCart.items.map((i) => ({
           productId: i.product._id,

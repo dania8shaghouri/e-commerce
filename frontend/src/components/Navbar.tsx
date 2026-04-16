@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/Auth/AuthContext";
+import { useCart } from "../context/Auth/cart/CartContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { username, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const { cartItems } = useCart();
 
   const getInitial = (username: string | null) => {
     if (!username) return "?";
@@ -26,12 +28,19 @@ export default function Navbar() {
     navigate("/cart");
   };
 
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <nav className="w-full bg-primary shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* LOGO */}
-          <div className="flex items-center gap-2 text-white font-semibold text-lg cursor-pointer">
+          <div
+            className="flex items-center gap-2 text-white font-semibold text-lg cursor-pointer"
+            onClick={goHome}
+          >
             <FiShoppingCart className="text-2xl" />
             <span className="hidden sm:block">Shop</span>
           </div>
@@ -44,9 +53,11 @@ export default function Navbar() {
               onClick={handleCart}
             >
               <FiShoppingCart className="text-2xl" />
-              <span className="absolute -top-2 -right-2 bg-white text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                2
-              </span>
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-white text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
 
             {/* AUTH */}
