@@ -9,6 +9,7 @@ interface Props {
 
 const ProductCard = ({ product, onAddToCart }: Props) => {
   const navigate = useNavigate();
+  
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-4 mt-2 flex flex-col">

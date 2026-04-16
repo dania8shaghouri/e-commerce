@@ -3,11 +3,14 @@ import ProductCard from "../components/ProductCard";
 import axios from "axios";
 import type { Product } from "../types/Product";
 import { BASE_URL } from "../constants/baseUrl";
+import { useCart } from "../context/Auth/cart/CartContext";
 
 const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { addItemToCart } = useCart();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -28,8 +31,13 @@ const HomePage = () => {
   }, []);
 
   const handleAddToCart = (product: Product) => {
-    console.log("Sepete eklendi:", product);
-    // Burada cart logic'in gelecek
+    addItemToCart({
+      productId: product._id,
+      title: product.title,
+      unitPrice: product.price,
+      quantity: 1,
+      productImage: product.image,
+    });
   };
 
   // Loading state
