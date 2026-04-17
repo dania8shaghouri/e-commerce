@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import AuthProvider from "./context/Auth/AuthProvider";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
+import Checkout from "./pages/CheckoutPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CartProvider from "./context/Auth/cart/CartProvider";
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Route>
           </Routes>
         </BrowserRouter>

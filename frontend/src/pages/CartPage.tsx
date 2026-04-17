@@ -1,6 +1,7 @@
 import { useCart } from "../context/Auth/cart/CartContext";
 import { BASE_URL } from "../constants/baseUrl";
 import { FiTrash2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const {
@@ -11,6 +12,7 @@ const CartPage = () => {
     clearCart,
   } = useCart();
 
+  const navigate = useNavigate();
   if (cartItems.length === 0) {
     return (
       <div className="flex items-center justify-center h-[70vh]">
@@ -19,6 +21,9 @@ const CartPage = () => {
     );
   }
 
+  const handleChecout = () => {
+    navigate("/checkout");
+  };
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -116,7 +121,10 @@ const CartPage = () => {
             <span>₺{totalAmount.toLocaleString()}</span>
           </div>
 
-          <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primaryHover transition font-semibold">
+          <button
+            className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primaryHover transition font-semibold"
+            onClick={handleChecout}
+          >
             Checkout
           </button>
         </div>
