@@ -33,6 +33,10 @@ export default function Navbar() {
     navigate("/");
   };
 
+  const handleMyOrders = () => {
+    navigate("/my-orders");
+  };
+
   return (
     <nav className="w-full bg-primary shadow-md">
       <div className="max-w-7xl mx-auto px-4">
@@ -75,7 +79,10 @@ export default function Navbar() {
                 {/* DROPDOWN */}
                 {open && (
                   <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-md overflow-hidden">
-                    <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                    <button
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                      onClick={handleMyOrders}
+                    >
                       My Orders
                     </button>
                     <button

@@ -45,7 +45,10 @@ export const clearCart = async ({ userId }: ClearCart) => {
   cart.totalAmount = 0;
 
   const updatedCart = await cart.save();
-  return { data: await getActiveCartForUser({ userId, populateProduct: true }), statusCode: 200 };
+  return {
+    data: await getActiveCartForUser({ userId, populateProduct: true }),
+    statusCode: 200,
+  };
 };
 
 interface AddItemToCart {
@@ -199,35 +202,33 @@ export const checkout = async ({ userId, shipping }: Checkout) => {
     return { data: "Cart is empty", statusCode: 400 };
   }
 
-  // 🔥 performans fix: paralel product fetch
   const products = await Promise.all(
-    cart.items.map((item) => productModel.findById(item.product))
+    cart.items.map((item) => productModel.findById(item.product)),
   );
 
-const orderItems: IOrderItem[] = cart.items.map((item, index) => {
-  const product = products[index];
+  const orderItems: IOrderItem[] = cart.items.map((item, index) => {
+    const product = products[index];
 
-  if (!product) {
-    throw new Error("Product not found");
-  }
+    if (!product) {
+      throw new Error("Product not found");
+    }
 
-  return {
-    productTitle: product.title,
-    productImage: product.image,
-    quantity: item.quantity,
-    unitPrice: item.unitPrice,
-  };
-});
-
+    return {
+      productTitle: product.title,
+      productImage: product.image,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+    };
+  });
 
   const order = await orderModel.create({
+    orderNumber: `ORD-${Date.now()}`,
     orderItems,
     total: cart.totalAmount,
-    shipping, // ✅ artık object
+    shipping,
     userId,
   });
 
-  // ✅ cart temizleme (daha doğru yaklaşım)
   cart.items = [];
   cart.totalAmount = 0;
   cart.status = "completed";

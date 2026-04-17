@@ -1,5 +1,8 @@
 import { useState, type FC, type PropsWithChildren } from "react";
 import { AuthContext } from "./AuthContext";
+import axios from "axios";
+import { BASE_URL } from "../../constants/baseUrl";
+import type { Order } from "../../types/order";
 
 const USERNAME_KEY = "username";
 const TOKEN_KEY = "token";
@@ -11,6 +14,8 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem(TOKEN_KEY),
   );
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
 
   const isAuthenticated = !!token;
 
@@ -29,9 +34,36 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setToken(null);
   };
 
+  const getMyOrders = async () => {
+    setOrdersLoading(true);
+
+    try {
+      const { data } = await axios.get(`${BASE_URL}/user/my-orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setOrders(data);
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+    } finally {
+      setOrdersLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ username, token, isAuthenticated, login, logout }}
+      value={{
+        username,
+        token,
+        isAuthenticated,
+        login,
+        logout,
+        orders,
+        ordersLoading,
+        getMyOrders,
+      }}
     >
       {children}
     </AuthContext.Provider>

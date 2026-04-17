@@ -33,6 +33,7 @@ const ShippingSchema = new Schema<IShipping>({
 
 /* ------------------ ORDER ------------------ */
 export interface IOrder extends Document {
+  orderNumber: string;
   orderItems: IOrderItem[];
   total: number;
   shipping: IShipping;
@@ -44,8 +45,8 @@ export interface IOrder extends Document {
 
 const OrderSchema = new Schema<IOrder>(
   {
+    orderNumber: { type: String, unique: true },
     orderItems: { type: [OrderItemSchema], required: true },
-
     total: { type: Number, required: true },
 
     shipping: { type: ShippingSchema, required: true },
@@ -64,7 +65,7 @@ const OrderSchema = new Schema<IOrder>(
   },
   {
     timestamps: true, // createdAt & updatedAt
-  }
+  },
 );
 
 export const orderModel = mongoose.model<IOrder>("Order", OrderSchema);
