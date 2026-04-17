@@ -3,8 +3,13 @@ import { BASE_URL } from "../constants/baseUrl";
 import { FiTrash2 } from "react-icons/fi";
 
 const CartPage = () => {
-  const { cartItems, totalAmount, updateItemQuantity, removeItemFromCart } =
-    useCart();
+  const {
+    cartItems,
+    totalAmount,
+    updateItemQuantity,
+    removeItemFromCart,
+    clearCart,
+  } = useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -16,8 +21,17 @@ const CartPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-semibold mb-6">My Cart</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-semibold">My Cart</h1>
 
+        <button
+          onClick={() => clearCart()}
+          className="flex items-center gap-2 text-gray-500 hover:text-red-500 transition"
+        >
+          <FiTrash2 />
+          <span>Clear Cart</span>
+        </button>
+      </div>
       {/* 2 COLUMN LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/*LEFT → PRODUCTS */}

@@ -42,11 +42,6 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     fetchCart();
   }, [token]);
 
-  const clearCart = () => {
-    setCartItems([]);
-    setTotalAmount(0);
-  };
-
   type BackendCartItem = {
     product: {
       _id: string;
@@ -191,6 +186,23 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       console.error(error);
     }
   };
+
+  // clear cart
+  const clearCart = async () => {
+    try {
+      await axios.delete(`${BASE_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCartItems([]);
+      setTotalAmount(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
