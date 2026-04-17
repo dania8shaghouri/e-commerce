@@ -1,8 +1,57 @@
 import { useCart } from "../context/Auth/cart/CartContext";
 import { BASE_URL } from "../constants/baseUrl";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Auth/AuthContext";
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const { cartItems, totalAmount } = useCart();
+  const [form, setForm] = useState({
+    fullName: "",
+    phone: "",
+    city: "",
+    address: "",
+  });
+  const { token } = useAuth();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckout = async () => {
+    if (!form.fullName || !form.phone || !form.city || !form.address) {
+      alert("Lütfen tüm adres bilgilerini doldurun");
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${BASE_URL}/cart/checkout`,
+        {
+          shipping: {
+            fullName: form.fullName,
+            phone: form.phone,
+            city: form.city,
+            address: form.address,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      // ✅ başarılıysa yönlendir
+      navigate("/order-success");
+    } catch (error) {
+      console.error(error);
+      alert("Sipariş oluşturulamadı");
+    }
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -55,6 +104,47 @@ const CheckoutPage = () => {
           </div>
         ))}
       </div>
+      {/* SHIPPING INFO */}
+      <div className="mb-6 bg-white shadow-md rounded-xl p-5">
+        <h2 className="text-lg font-semibold mb-4">Shipping Information</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            value={form.fullName}
+            onChange={handleChange}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary"
+          />
+
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={handleChange}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary"
+          />
+
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={form.city}
+            onChange={handleChange}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary md:col-span-2"
+          />
+
+          <textarea
+            name="address"
+            placeholder="Full Address"
+            value={form.address}
+            onChange={handleChange}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary md:col-span-2"
+          />
+        </div>
+      </div>
 
       {/* SUMMARY + PAYMENT */}
       <div className="mt-6 bg-white shadow-md rounded-xl p-5">
@@ -70,7 +160,10 @@ const CheckoutPage = () => {
           <span>₺{totalAmount.toLocaleString()}</span>
         </div>
 
-        <button className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primaryHover transition font-semibold">
+        <button
+          onClick={handleCheckout}
+          className="w-full bg-primary text-white py-3 rounded-lg hover:bg-primaryHover transition font-semibold"
+        >
           Pay Now
         </button>
       </div>

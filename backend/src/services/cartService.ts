@@ -173,46 +173,63 @@ const calculateCartTotslItems = ({ cartItems }: { cartItems: ICartItem[] }) => {
   return total;
 };
 
-interface Checkout {
-  userId: string;
+interface Shipping {
+  fullName: string;
+  phone: string;
+  city: string;
   address: string;
 }
 
-export const checkout = async ({ userId, address }: Checkout) => {
-  if (!address) {
-    return { data: "Please add the address", statusCode: 400 };
+interface Checkout {
+  userId: string;
+  shipping: Shipping;
+}
+
+export const checkout = async ({ userId, shipping }: Checkout) => {
+  const { fullName, phone, city, address } = shipping;
+
+  // ✅ validation
+  if (!fullName || !phone || !city || !address) {
+    return { data: "Missing shipping information", statusCode: 400 };
   }
 
   const cart = await getActiveCartForUser({ userId });
 
-  const orderItems: IOrderItem[] = [];
-
-  // loop cartitems and create orderItems
-  for (const item of cart.items) {
-    const product = await productModel.findById(item.product);
-
-    if (!product) {
-      return { data: "Product not found", statusCode: 400 };
-    }
-
-    const orderItem: IOrderItem = {
-      productTitle: product.title,
-      productImage: product.image,
-      quantity: item.quantity,
-      unitPrice: item.unitPrice,
-    };
-
-    orderItems.push(orderItem);
+  if (!cart || cart.items.length === 0) {
+    return { data: "Cart is empty", statusCode: 400 };
   }
+
+  // 🔥 performans fix: paralel product fetch
+  const products = await Promise.all(
+    cart.items.map((item) => productModel.findById(item.product))
+  );
+
+const orderItems: IOrderItem[] = cart.items.map((item, index) => {
+  const product = products[index];
+
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+  return {
+    productTitle: product.title,
+    productImage: product.image,
+    quantity: item.quantity,
+    unitPrice: item.unitPrice,
+  };
+});
+
 
   const order = await orderModel.create({
     orderItems,
     total: cart.totalAmount,
-    address,
+    shipping, // ✅ artık object
     userId,
   });
 
-  // update the cart to be completed
+  // ✅ cart temizleme (daha doğru yaklaşım)
+  cart.items = [];
+  cart.totalAmount = 0;
   cart.status = "completed";
   await cart.save();
 

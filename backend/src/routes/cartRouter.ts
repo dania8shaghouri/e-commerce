@@ -64,11 +64,23 @@ router.delete(
 router.post("/checkout", validateJwt, async (req: ExtendRequest, res) => {
   try {
     const userId = req?.user?._id;
-    const { address } = req.body;
-    const response = await checkout({ userId, address });
+    const { shipping } = req.body;
+
+    if (
+      !shipping?.fullName ||
+      !shipping?.phone ||
+      !shipping?.city ||
+      !shipping?.address
+    ) {
+      return res.status(400).send("Missing shipping information");
+    }
+
+    const response = await checkout({ userId, shipping });
+
     res.status(response.statusCode).send(response.data);
-  } catch {
-    res.status(500).send("SomeThing went wrong");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something went wrong");
   }
 });
 export default router;
