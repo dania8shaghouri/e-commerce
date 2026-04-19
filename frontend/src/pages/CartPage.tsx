@@ -24,7 +24,7 @@ const CartPage = () => {
   const handleChecout = () => {
     navigate("/checkout");
   };
-  
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -45,7 +45,8 @@ const CartPage = () => {
           {cartItems.map((item) => (
             <div
               key={item.productId}
-              className="relative flex items-center justify-between bg-white shadow-md rounded-xl p-4"
+              onClick={() => navigate(`/product/${item.productId}`)}
+              className="relative flex items-center justify-between bg-white shadow-md rounded-xl p-4 hover:cursor-pointer"
             >
               <button
                 onClick={() => removeItemFromCart(item.productId)}

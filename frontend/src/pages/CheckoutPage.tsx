@@ -7,7 +7,7 @@ import { useAuth } from "../context/Auth/AuthContext";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
-  const { cartItems, totalAmount } = useCart();
+  const { cartItems, totalAmount, clearCart } = useCart();
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
@@ -46,6 +46,7 @@ const CheckoutPage = () => {
       );
 
       // ✅ başarılıysa yönlendir
+      clearCart();
       navigate("/order-success");
     } catch (error) {
       console.error(error);
