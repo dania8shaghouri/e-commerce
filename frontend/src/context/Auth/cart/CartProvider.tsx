@@ -1,7 +1,7 @@
 import { useEffect, useState, type FC, type PropsWithChildren } from "react";
+import axios from "axios";
 import { CartContext } from "./CartContext";
 import type { CartItem } from "../../../types/CartItem";
-import axios from "axios";
 import { BASE_URL } from "../../../constants/baseUrl";
 import { useAuth } from "../AuthContext";
 

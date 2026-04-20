@@ -1,6 +1,6 @@
-import type { Product } from "../types/Product";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants/baseUrl";
+import type { Product } from "../types/Product";
 interface Props {
   id: string; // HomePage'den gelen id prop'u
   product: Product; // Ana product verisi
@@ -9,7 +9,6 @@ interface Props {
 
 const ProductCard = ({ product, onAddToCart }: Props) => {
   const navigate = useNavigate();
-  
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-4 mt-2 flex flex-col">
