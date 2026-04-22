@@ -1,101 +1,91 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../constants/baseUrl";
 import { useAuth } from "../context/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useRequest } from "../hooks/useRequest";
+import ErrorState from "../components/ui/ErrorState";
+
+type LoginResponse = {
+  token: string;
+  message: string;
+};
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { loading, error, run } = useRequest<LoginResponse>();
 
-    setError("");
-    setSuccess("");
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-    if (!email || !password) {
-      setError("Please fill in all fields");
-      return;
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    if (!email.includes("@")) {
-      setError("Invalid email format");
-      return;
-    }
-    try {
-      setLoading(true);
+  const submitLogin = () => {
+    return run(
+      async () => {
+        const res = await axios.post<LoginResponse>(
+          `${BASE_URL}/user/login`,
+          form
+        );
 
-      const res = await axios.post(`${BASE_URL}/user/login`, {
-        email,
-        password,
-      });
-
-      const token = res.data.token;
-
-      if (!token) {
-        throw new Error("Invalid response from server");
+        return res.data;
+      },
+      (data) => {
+        login(form.email, data.token);
+        navigate("/");
       }
+    );
+  };
 
-      login(email, token);
-
-      setEmail("");
-      setPassword("");
-
-      navigate("/");
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-
-      setError(
-        error.response?.data?.message || error.message || "An error occurred",
-      );
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitLogin();
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Login to Your Account
-        </h2>
+
+        <h2 className="text-xl font-semibold mb-4">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
-            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
 
           <input
+            name="password"
             type="password"
+            value={form.password}
+            onChange={handleChange}
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {success && <p className="text-green-500 text-sm">{success}</p>}
-
           <button
-            type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white py-3 rounded-lg"
+            className="w-full bg-blue-500 text-white py-2 rounded"
           >
-            {loading ? "Logging in..." : "LOGIN"}
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
+
+        {error && (
+          <ErrorState message={error} onRetry={submitLogin} />
+        )}
       </div>
     </div>
   );

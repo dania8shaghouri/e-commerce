@@ -1,116 +1,113 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../constants/baseUrl";
 import { useAuth } from "../context/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useRequest } from "../hooks/useRequest";
+import ErrorState from "../components/ui/ErrorState";
+
+type RegisterResponse = {
+  token: string;
+  message: string;
+};
 
 const RegisterPage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { loading, error, run } = useRequest<RegisterResponse>();
 
-    setError("");
-    setSuccess("");
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
-    if (!firstName || !lastName || !email || !password) {
-      setError("Please fill in all fields");
-      return;
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    try {
-      setLoading(true);
+  const submitRegister = () => {
+    return run(
+      async () => {
+        const res = await axios.post<RegisterResponse>(
+          `${BASE_URL}/user/register`,
+          form
+        );
 
-      const res = await axios.post(`${BASE_URL}/user/register`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-
-      const token = res.data.token;
-      if (!token) {
-        setError("Invalid response from server");
-        return;
+        return res.data;
+      },
+      (data) => {
+        login(form.email, data.token);
+        navigate("/");
       }
-      login(email, token);
-      navigate("/");
-      console.log(res.data);
-      setSuccess(res.data.message || "Registration successful");
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
+    );
+  };
 
-      setError(error.response?.data?.message || "An error occurred");
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitRegister();
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Register New Account
+
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          Register
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <input
-            type="text"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleChange}
             placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
 
           <input
-            type="text"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleChange}
             placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
 
           <input
-            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
 
           <input
+            name="password"
             type="password"
+            value={form.password}
+            onChange={handleChange}
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border rounded-lg"
+            className="w-full p-3 border rounded"
           />
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {success && <p className="text-green-500 text-sm">{success}</p>}
 
           <button
-            type="submit"
             disabled={loading}
             className="w-full bg-primary text-white py-3 rounded-lg"
           >
             {loading ? "Loading..." : "REGISTER"}
           </button>
+
         </form>
+
+        {error && (
+          <ErrorState message={error} onRetry={submitRegister} />
+        )}
       </div>
     </div>
   );
