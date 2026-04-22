@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { orderModel } from "../models/orderModel.js";
+
 interface RegisterParams {
   firstName: string;
   lastName: string;
@@ -9,6 +10,11 @@ interface RegisterParams {
   password: string;
 }
 
+const generateJWT = (data: any) => {
+  return jwt.sign(data, process.env.JWT_SECRET || "");
+};
+
+// ---------------- REGISTER ----------------
 export const register = async ({
   firstName,
   lastName,
@@ -16,10 +22,13 @@ export const register = async ({
   password,
 }: RegisterParams) => {
   const findUser = await userModel.findOne({ email });
+
   if (findUser) {
-    return { data: "User already exists!", statusCode: 400 };
+    throw new Error("User already exists!");
   }
+
   const hashedPassword = await bcrypt.hash(password, 10);
+
   const newUser = new userModel({
     email,
     password: hashedPassword,
@@ -30,15 +39,12 @@ export const register = async ({
   await newUser.save();
 
   return {
-    statusCode: 200,
-    data: {
-      token: generateJWT({ firstName, lastName, email }),
-      message: "Registration successful",
-    },
+    token: generateJWT({ firstName, lastName, email }),
+    message: "Registration successful",
   };
 };
 
-// login
+// ---------------- LOGIN ----------------
 interface LoginParams {
   email: string;
   password: string;
@@ -48,48 +54,34 @@ export const login = async ({ email, password }: LoginParams) => {
   const findUser = await userModel.findOne({ email });
 
   if (!findUser) {
-    return { data: "incorrect email or password", statusCode: 400 };
+    throw new Error("Incorrect email or password");
   }
-  // password → kullanıcının login formuna yazdığı düz şifre
-  // findUser.password → veritabanındaki HASH’li şifre
+
   const passwordMatch = await bcrypt.compare(password, findUser.password);
-  if (passwordMatch) {
-    return {
-      statusCode: 200,
-      data: {
-        token: generateJWT({
-          email,
-          firstName: findUser.firstName,
-          lastName: findUser.lastName,
-        }),
-        message: "Login successful",
-      },
-    };
+
+  if (!passwordMatch) {
+    throw new Error("Incorrect email or password");
   }
+
   return {
-    statusCode: 400,
-    data: { message: "Incorrect email or password" },
+    token: generateJWT({
+      email,
+      firstName: findUser.firstName,
+      lastName: findUser.lastName,
+    }),
+    message: "Login successful",
   };
 };
 
-// my orders
+// ---------------- ORDERS ----------------
 interface GetMyOrdersParams {
   userId: string;
 }
 
 export const getMyOrders = async ({ userId }: GetMyOrdersParams) => {
-  try {
-    const orders = await orderModel.find({ userId }).sort({ createdAt: -1 });
+  const orders = await orderModel
+    .find({ userId })
+    .sort({ createdAt: -1 });
 
-    return {
-      data: orders,
-      statusCode: 200,
-    };
-  } catch (err) {
-    throw err;
-  }
-};
-
-const generateJWT = (data: any) => {
-  return jwt.sign(data, process.env.JWT_SECRET || "");
+  return orders;
 };

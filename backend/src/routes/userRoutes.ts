@@ -1,48 +1,53 @@
-import express, { request, response } from "express";
+import express from "express";
 import { getMyOrders, login, register } from "../services/userService.js";
 import validateJWT from "../middlewares/validateJWT.js";
 import type { ExtendRequest } from "../types/extendedRequest.js";
 
 const router = express.Router();
 
-router.post("/register", async (request, response) => {
+// ---------------- REGISTER ----------------
+router.post("/register", async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = request.body;
-    const { statusCode, data } = await register({
-      firstName,
-      lastName,
-      email,
-      password,
+    const result = await register(req.body);
+
+    res.status(200).json(result);
+  } catch (err: any) {
+    res.status(400).json({
+      message: err.message,
     });
-    response.status(statusCode).json(data);
-  } catch {
-    response.status(500).send("SomeThing went wrong");
   }
 });
 
-router.post("/login", async (request, response) => {
+// ---------------- LOGIN ----------------
+router.post("/login", async (req, res) => {
   try {
-    const { email, password } = request.body;
-    const { statusCode, data } = await login({ email, password });
-    response.status(statusCode).json(data);
-  } catch {
-    response.status(500).send("SomeThing went wrong");
+    const result = await login(req.body);
+
+    res.status(200).json(result);
+  } catch (err: any) {
+    res.status(400).json({
+      message: err.message,
+    });
   }
 });
 
+// ---------------- MY ORDERS ----------------
 router.get(
   "/my-orders",
   validateJWT,
-  async (request: ExtendRequest, response) => {
+  async (req: ExtendRequest, res) => {
     try {
-      const userId = request?.user?._id;
-      const {statusCode, data} = await getMyOrders({
-        userId,
+      const userId = req.user?._id;
+
+      const orders = await getMyOrders({ userId });
+
+      res.status(200).json(orders);
+    } catch (err: any) {
+      res.status(500).json({
+        message: err.message,
       });
-      response.status(statusCode).send(data);
-    } catch (err) {
-      response.status(500).send("SomeThing went wrong");
     }
-  },
+  }
 );
+
 export default router;
