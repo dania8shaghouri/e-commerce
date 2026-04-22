@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import Navbar from "./components/Navbar";
-import RegisterPage from "./pages/RegisterPage";
+import Navbar from "./components/layout/navbar/Navbar";
 import AuthProvider from "./context/Auth/AuthProvider";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
@@ -11,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CartProvider from "./context/Auth/cart/CartProvider";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+import RegisterPage from "./pages/RegisterPage";
 function App() {
   return (
     <AuthProvider>
