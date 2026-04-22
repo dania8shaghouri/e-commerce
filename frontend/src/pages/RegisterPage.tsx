@@ -36,15 +36,17 @@ const RegisterPage = () => {
       async () => {
         const res = await axios.post<RegisterResponse>(
           `${BASE_URL}/user/register`,
-          form
+          form,
         );
 
         return res.data;
       },
       (data) => {
         login(form.email, data.token);
-        navigate("/");
-      }
+        navigate("/login", {
+          state: { message: "Registration successful, please login" },
+        });
+      },
     );
   };
 
@@ -56,13 +58,9 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Register
-        </h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center">Register</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             name="firstName"
             value={form.firstName}
@@ -102,12 +100,9 @@ const RegisterPage = () => {
           >
             {loading ? "Loading..." : "REGISTER"}
           </button>
-
         </form>
 
-        {error && (
-          <ErrorState message={error} onRetry={submitRegister} />
-        )}
+        {error && <ErrorState message={error} onRetry={submitRegister} />}
       </div>
     </div>
   );

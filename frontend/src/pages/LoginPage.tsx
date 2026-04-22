@@ -34,7 +34,7 @@ const LoginPage = () => {
       async () => {
         const res = await axios.post<LoginResponse>(
           `${BASE_URL}/user/login`,
-          form
+          form,
         );
 
         return res.data;
@@ -42,7 +42,7 @@ const LoginPage = () => {
       (data) => {
         login(form.email, data.token);
         navigate("/");
-      }
+      },
     );
   };
 
@@ -54,7 +54,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-
         <h2 className="text-xl font-semibold mb-4">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,10 +81,18 @@ const LoginPage = () => {
             {loading ? "Loading..." : "Login"}
           </button>
         </form>
+        <div className="text-center mt-4 text-sm">
+          Don't have an account?
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="text-blue-600 ml-1 underline"
+          >
+            Register
+          </button>
+        </div>
 
-        {error && (
-          <ErrorState message={error} onRetry={submitLogin} />
-        )}
+        {error && <ErrorState message={error} onRetry={submitLogin} />}
       </div>
     </div>
   );
