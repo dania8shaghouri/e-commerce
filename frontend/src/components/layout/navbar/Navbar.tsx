@@ -27,8 +27,12 @@ export default function Navbar() {
           <Logo onClick={goHome} />
 
           <div className="flex items-center gap-4">
-            <div className={pathname === "/cart" ? "text-yellow-300" : ""}>
-              <CartButton count={cartItems.length} onClick={goCart} />
+            <div className={pathname === "/cart" ? "text-red-950" : ""}>
+              <CartButton
+                count={cartItems.length}
+                onClick={goCart}
+                active={pathname === "/cart"}
+              />
             </div>
 
             {isAuthenticated ? (
