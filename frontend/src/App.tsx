@@ -11,6 +11,7 @@ import CartProvider from "./context/Auth/cart/CartProvider";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 import RegisterPage from "./pages/RegisterPage";
+import OrderErrorPage from "./pages/OrderErrorPage";
 function App() {
   return (
     <AuthProvider>
@@ -26,6 +27,7 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccessPage />} />
+              <Route path="/order-failed" element={<OrderErrorPage />} />
               <Route path="/my-orders" element={<MyOrdersPage />} />
             </Route>
           </Routes>
