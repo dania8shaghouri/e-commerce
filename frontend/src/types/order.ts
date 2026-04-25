@@ -11,7 +11,12 @@ export interface Shipping {
   city: string;
   address: string;
 }
-
+export interface Payment {
+  cardName: string;
+  cardNumber: string;
+  expiry: string;
+  cvv: string;
+}
 export interface Order {
   _id: string;
   orderNumber: string;
@@ -21,3 +26,5 @@ export interface Order {
   status: string;
   createdAt: string;
 }
+
+export type CheckoutFormData = Shipping ;

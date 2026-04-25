@@ -2,7 +2,7 @@ interface Props {
   totalItems: number;
   totalAmount: number;
   loading: boolean;
-  onCheckout: () => void;
+  onCheckout: () => void | Promise<void>
 }
 
 const CheckoutSummary = ({

@@ -173,7 +173,6 @@
 // };
 
 // export default CheckoutPage;
-
 import { useCart } from "../context/Auth/cart/CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -183,72 +182,46 @@ import { checkoutRequest } from "../services/cartService";
 import Loading from "../components/ui/Loading";
 import CheckoutItems from "../components/checkout/CheckoutItems";
 import ShippingForm from "../components/checkout/ShippingForm";
-import CheckoutSummary from "../components/checkout/CheckoutSummary";
-import type { Shipping } from "../types/order";
+import type { CheckoutFormData } from "../validation/checkoutSchema";
 
 const CheckoutPage = () => {
   const { cartItems, totalAmount, clearCart } = useCart();
   const { token } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState<Shipping>({
-    fullName: "",
-    phone: "",
-    city: "",
-    address: "",
-  });
-
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+const handleCheckout = async (data: CheckoutFormData) => {
+  setLoading(true);
 
-  const handleCheckout = async () => {
-    const isValid = Object.values(form).every(Boolean);
+  try {
+    await checkoutRequest(token!, {
+      shipping: data,
+    });
 
-    if (!isValid) {
-      toast.error("Please fill all fields");
-      return;
-    }
+    await clearCart();
 
-    setLoading(true);
-
-    try {
-      await checkoutRequest(token!, form);
-      await clearCart();
-
-      toast.success("Order placed successfully");
-      navigate("/order-success");
-    } catch {
-      toast.error("Checkout failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("Order placed successfully");
+    navigate("/order-success");
+  } catch {
+    toast.error("Checkout failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) return <Loading />;
-
   if (cartItems.length === 0) return <div>Cart is empty</div>;
 
   const totalItems = cartItems.reduce((acc, i) => acc + i.quantity, 0);
-
+  console.log(totalAmount, totalItems);
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-2xl mb-6">Checkout</h1>
 
       <CheckoutItems items={cartItems} />
 
-      <ShippingForm form={form} onChange={handleChange} />
-
-      <CheckoutSummary
-        totalItems={totalItems}
-        totalAmount={totalAmount}
-        loading={loading}
-        onCheckout={handleCheckout}
-      />
+      <ShippingForm onSubmit={handleCheckout} />
     </div>
   );
 };

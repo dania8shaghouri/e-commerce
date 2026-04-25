@@ -33,10 +33,22 @@ export const clearCartRequest = (token: string) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const checkoutRequest = (token: string, shipping: Shipping) =>
+// export const checkoutRequest = (token: string, shipping: Shipping) =>
+//   axios.post(
+//     `${BASE_URL}/cart/checkout`,
+//     { shipping },
+//     {
+//       headers: { Authorization: `Bearer ${token}` },
+//     },
+//   );
+
+export const checkoutRequest = (
+  token: string,
+  data: { shipping: Shipping }
+) =>
   axios.post(
     `${BASE_URL}/cart/checkout`,
-    { shipping },
+    data,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
