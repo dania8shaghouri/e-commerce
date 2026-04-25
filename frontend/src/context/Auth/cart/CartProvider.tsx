@@ -1,226 +1,3 @@
-// import { useEffect, useState, type FC, type PropsWithChildren } from "react";
-// import axios from "axios";
-// import { CartContext } from "./CartContext";
-// import type { CartItem } from "../../../types/CartItem";
-// import { BASE_URL } from "../../../constants/baseUrl";
-// import { useAuth } from "../AuthContext";
-
-// const CartProvider: FC<PropsWithChildren> = ({ children }) => {
-//   const { token } = useAuth();
-//   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-//   const [totalAmount, setTotalAmount] = useState<number>(0);
-
-//   useEffect(() => {
-//     if (!token) return;
-
-//     const fetchCart = async () => {
-//       try {
-//         const { data } = await axios.get(`${BASE_URL}/cart`, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         const backendCart = data as BackendCart;
-
-//         setCartItems(
-//           backendCart.items.map((i) => ({
-//             productId: i.product._id,
-//             title: i.product.title,
-//             unitPrice: i.unitPrice,
-//             quantity: i.quantity,
-//             productImage: i.product.image,
-//           })),
-//         );
-
-//         setTotalAmount(backendCart.totalAmount);
-//       } catch (error) {
-//         console.error("Cart fetch error:", error);
-//       }
-//     };
-
-//     fetchCart();
-//   }, [token]);
-
-//   type BackendCartItem = {
-//     product: {
-//       _id: string;
-//       title: string;
-//       image: string;
-//     };
-//     quantity: number;
-//     unitPrice: number;
-//   };
-
-//   type BackendCart = {
-//     items: BackendCartItem[];
-//     totalAmount: number;
-//   };
-//   // add
-//   const addItemToCart = async (item: CartItem) => {
-//     console.log("🟡 ADD TO CART TRIGGERED");
-//     console.log("📦 Sending item:", item);
-
-//     try {
-//       // 1️⃣ ADD ITEM
-//       const response = await axios.post(
-//         `${BASE_URL}/cart/items`,
-//         {
-//           productId: item.productId,
-//           quantity: item.quantity,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         },
-//       );
-
-//       console.log("🟢 Backend response (raw):", response);
-//       console.log("🟢 Backend response data:", response.data);
-
-//       // 2️⃣ SYNC CART (CRITICAL FIX)
-//       const cartResponse = await axios.get(`${BASE_URL}/cart`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       const backendCart = cartResponse.data as BackendCart;
-
-//       console.log("🟢 Synced backendCart:", backendCart);
-
-//       // 3️⃣ STATE UPDATE
-//       setCartItems(
-//         backendCart.items.map((i) => ({
-//           productId: i.product._id,
-//           title: i.product.title,
-//           unitPrice: i.unitPrice,
-//           quantity: i.quantity,
-//           productImage: i.product.image,
-//         })),
-//       );
-
-//       setTotalAmount(backendCart.totalAmount);
-
-//       console.log("✅ CART UPDATED SUCCESSFULLY");
-//       console.log("🧺 Updated cartItems:", backendCart.items);
-//       console.log("💰 Total:", backendCart.totalAmount);
-//     } catch (error: unknown) {
-//       console.log("🔴 ADD TO CART FAILED");
-
-//       if (axios.isAxiosError(error)) {
-//         console.error("❌ Axios error:", error.response?.data || error.message);
-//       } else {
-//         console.error("❌ Unknown error:", error);
-//       }
-//     }
-//   };
-//   // update
-//   const updateItemQuantity = async (productId: string, quantity: number) => {
-//     try {
-//       await axios.put(
-//         `${BASE_URL}/cart/items`,
-//         { productId, quantity },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         },
-//       );
-
-//       // 🔥 tekrar cart çek (tek doğru yöntem)
-//       const { data } = await axios.get(`${BASE_URL}/cart`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       const backendCart = data as BackendCart;
-
-//       setCartItems(
-//         backendCart.items.map((i) => ({
-//           productId: i.product._id,
-//           title: i.product.title,
-//           unitPrice: i.unitPrice,
-//           quantity: i.quantity,
-//           productImage: i.product.image,
-//         })),
-//       );
-
-//       setTotalAmount(backendCart.totalAmount);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   // remove
-//   const removeItemFromCart = async (productId: string) => {
-//     try {
-//       await axios.delete(`${BASE_URL}/cart/items/${productId}`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       const { data } = await axios.get(`${BASE_URL}/cart`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       const backendCart = data as BackendCart;
-
-//       setCartItems(
-//         backendCart.items.map((i) => ({
-//           productId: i.product._id,
-//           title: i.product.title,
-//           unitPrice: i.unitPrice,
-//           quantity: i.quantity,
-//           productImage: i.product.image,
-//         })),
-//       );
-
-//       setTotalAmount(backendCart.totalAmount);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   // clear cart
-//   const clearCart = async () => {
-//     try {
-//       await axios.delete(`${BASE_URL}/cart`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-
-//       setCartItems([]);
-//       setTotalAmount(0);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <CartContext.Provider
-//       value={{
-//         cartItems,
-//         totalAmount,
-//         addItemToCart,
-//         clearCart,
-//         updateItemQuantity,
-//         removeItemFromCart,
-//       }}
-//     >
-//       {children}
-//     </CartContext.Provider>
-//   );
-// };
-
-// export default CartProvider;
-
 import { useEffect, useState, type FC, type PropsWithChildren } from "react";
 import { CartContext } from "./CartContext";
 import type { CartItem } from "../../../types/CartItem";
@@ -232,6 +9,7 @@ import {
   removeCartItem,
   clearCartRequest,
 } from "../../../services/cartService";
+import toast from "react-hot-toast";
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const { token } = useAuth();
@@ -271,42 +49,68 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     setTotalAmount(backendCart.totalAmount);
   };
 
-useEffect(() => {
-  if (!token) return;
+  useEffect(() => {
+    if (!token) return;
 
-  const fetchCart = async () => {
-    const { data } = await getCart(token);
-    const backendCart = data as BackendCart;
+    const fetchCart = async () => {
+      const { data } = await getCart(token);
+      const backendCart = data as BackendCart;
 
-    setCartItems(backendCart.items.map(mapBackendItem));
-    setTotalAmount(backendCart.totalAmount);
-  };
+      setCartItems(backendCart.items.map(mapBackendItem));
+      setTotalAmount(backendCart.totalAmount);
+    };
 
-  fetchCart();
-}, [token]);
+    fetchCart();
+  }, [token]);
 
   const addItemToCart = async (item: CartItem) => {
-    await addToCart(token!, {
-      productId: item.productId,
-      quantity: item.quantity,
-    });
-    await syncCart();
+    try {
+      await addToCart(token!, {
+        productId: item.productId,
+        quantity: item.quantity,
+      });
+
+      await syncCart();
+
+      toast.success("Product added to cart");
+    } catch {
+      toast.error("Failed to add product");
+    }
   };
 
   const updateItemQuantity = async (productId: string, quantity: number) => {
-    await updateCartItem(token!, { productId, quantity });
-    await syncCart();
+    try {
+      await updateCartItem(token!, { productId, quantity });
+      await syncCart();
+      toast.success("Cart updated");
+    } catch {
+      toast.error("Failed to update cart");
+    }
   };
 
   const removeItemFromCart = async (productId: string) => {
-    await removeCartItem(token!, productId);
-    await syncCart();
+    try {
+      await removeCartItem(token!, productId);
+
+      await syncCart();
+
+      toast.success("Item removed from cart");
+    } catch {
+      toast.error("Failed to remove item");
+    }
   };
 
   const clearCart = async () => {
-    await clearCartRequest(token!);
-    setCartItems([]);
-    setTotalAmount(0);
+    try {
+      await clearCartRequest(token!);
+
+      setCartItems([]);
+      setTotalAmount(0);
+
+      toast.success("Cart cleared");
+    } catch {
+      toast.error("Failed to clear cart");
+    }
   };
 
   return (
