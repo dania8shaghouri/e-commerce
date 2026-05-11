@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import Navbar from "./components/layout/navbar/Navbar";
 
 import AuthProvider from "./context/Auth/AuthProvider";
 import CartProvider from "./context/Auth/cart/CartProvider";
@@ -17,7 +16,9 @@ import OrderErrorPage from "./pages/OrderErrorPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import CustomerLayout from "./layouts/CustomerLayout";
 import AdminLayout from "./features/admin/layouts/AdminLayout";
+
 import DashboardPage from "./features/admin/pages/DashboardPage";
 
 function App() {
@@ -25,21 +26,22 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
-          <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route element={<CustomerLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order-success" element={<OrderSuccessPage />} />
-              <Route path="/order-failed" element={<OrderErrorPage />} />
-              <Route path="/my-orders" element={<MyOrdersPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-success" element={<OrderSuccessPage />} />
+                <Route path="/order-failed" element={<OrderErrorPage />} />
+                <Route path="/my-orders" element={<MyOrdersPage />} />
+              </Route>
             </Route>
-
+            {/* admin layout */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<DashboardPage />} />
             </Route>
