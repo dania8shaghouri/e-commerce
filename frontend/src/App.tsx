@@ -1,17 +1,25 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import Navbar from "./components/layout/navbar/Navbar";
+
 import AuthProvider from "./context/Auth/AuthProvider";
+import CartProvider from "./context/Auth/cart/CartProvider";
+
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/CheckoutPage";
-import ProtectedRoute from "./components/ProtectedRoute";
-import CartProvider from "./context/Auth/cart/CartProvider";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
-import MyOrdersPage from "./pages/MyOrdersPage";
-import RegisterPage from "./pages/RegisterPage";
 import OrderErrorPage from "./pages/OrderErrorPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLayout from "./features/admin/layouts/AdminLayout";
+import DashboardPage from "./features/admin/pages/DashboardPage";
+
 function App() {
   return (
     <AuthProvider>
@@ -23,12 +31,17 @@ function App() {
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+
             <Route element={<ProtectedRoute />}>
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccessPage />} />
               <Route path="/order-failed" element={<OrderErrorPage />} />
               <Route path="/my-orders" element={<MyOrdersPage />} />
+            </Route>
+
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<DashboardPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

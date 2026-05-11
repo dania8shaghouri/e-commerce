@@ -11,13 +11,15 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [username, setUsername] = useState<string | null>(
     localStorage.getItem(USERNAME_KEY),
   );
+
   const [token, setToken] = useState<string | null>(
     localStorage.getItem(TOKEN_KEY),
   );
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
 
-  const isAuthenticated = !!token;
+  const isAuthenticated = Boolean(token);
 
   const login = (username: string, token: string) => {
     setUsername(username);
@@ -28,13 +30,16 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem(USERNAME_KEY);
-    localStorage.removeItem(TOKEN_KEY);
     setUsername(null);
     setToken(null);
+
+    localStorage.removeItem(USERNAME_KEY);
+    localStorage.removeItem(TOKEN_KEY);
   };
 
   const getMyOrders = async () => {
+    if (!token) return;
+
     setOrdersLoading(true);
 
     try {
@@ -47,6 +52,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       setOrders(data);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
+      setOrders([]);
     } finally {
       setOrdersLoading(false);
     }
