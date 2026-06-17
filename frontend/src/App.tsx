@@ -19,7 +19,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CustomerLayout from "./layouts/CustomerLayout";
 import AdminLayout from "./features/admin/layouts/AdminLayout";
 
-import DashboardPage from "./features/admin/pages/DashboardPage";
+import DashboardPage from "./features/admin/pages/admin/DashboardPage";
 
 function App() {
   return (
