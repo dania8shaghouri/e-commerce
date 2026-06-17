@@ -1,7 +1,7 @@
 import StatsGrid from "../../components/dashboard/StatsGrid.jsx";
 import RevenueChart from "../../components/dashboard/RevenueChart.jsx";
 import RecentOrdersTable from "../../components/dashboard/RecentOrdersTable";
-// import TopProducts from "../../components/dashboard/TopProducts";
+import TopProducts from "../../components/dashboard/TopProducts";
 // import OrderStatusChart from "../../components/dashboard/OrderStatusChart";
 
 const DashboardPage = () => {
@@ -16,10 +16,8 @@ const DashboardPage = () => {
       </div>
 
       {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {
-          <RecentOrdersTable />
-          // <TopProducts />
-        }
+        {<RecentOrdersTable />}
+        <TopProducts />
       </div> */}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -27,7 +25,9 @@ const DashboardPage = () => {
           <RecentOrdersTable />
         </div>
 
-        <div className="lg:col-span-1">{/* Top Products */}</div>
+        <div className="lg:col-span-1">
+          <TopProducts />
+        </div>
       </div>
     </div>
   );

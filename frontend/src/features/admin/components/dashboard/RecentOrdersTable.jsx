@@ -30,7 +30,7 @@ const statusStyles = {
 
 const RecentOrdersTable = () => {
   return (
-    <div className="bg-white border border-border rounded-2xl p-4 overflow-x-auto">
+    <div className="bg-white border border-border rounded-2xl p-4 overflow-x-auto w-full">
       <h2 className="font-semibold mb-4">Recent Orders</h2>
 
       <table className="w-full text-sm min-w-[600px]">
