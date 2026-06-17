@@ -1,5 +1,5 @@
-import StatsCard from "../../components/dashboard/StatsGrid.jsx";
-// import RevenueChart from "../../components/dashboard/RevenueChart";
+import StatsGrid from "../../components/dashboard/StatsGrid.jsx";
+import RevenueChart from "../../components/dashboard/RevenueChart.jsx";
 // import RecentOrdersTable from "../../components/dashboard/RecentOrdersTable";
 // import TopProducts from "../../components/dashboard/TopProducts";
 // import OrderStatusChart from "../../components/dashboard/OrderStatusChart";
@@ -7,10 +7,10 @@ import StatsCard from "../../components/dashboard/StatsGrid.jsx";
 const DashboardPage = () => {
   return (
     <div className="space-y-6">
-      <StatsCard />
+      <StatsGrid />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">{/* <RevenueChart /> */}</div>
+        <div className="lg:col-span-2">{<RevenueChart />}</div>
 
         <div>{/* <OrderStatusChart /> */}</div>
       </div>
