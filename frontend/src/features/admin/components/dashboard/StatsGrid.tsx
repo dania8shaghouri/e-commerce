@@ -6,7 +6,18 @@ import {
   FiPackage,
 } from "react-icons/fi";
 
-const stats = [
+import type { IconType } from "react-icons";
+
+interface StatItem {
+  title: string;
+  value: string;
+  change: string;
+  icon: IconType;
+  iconColor: string;
+  iconBg: string;
+}
+
+const stats: StatItem[] = [
   {
     title: "Total Revenue",
     value: "$24,780",

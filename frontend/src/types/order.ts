@@ -27,4 +27,14 @@ export interface Order {
   createdAt: string;
 }
 
-export type CheckoutFormData = Shipping ;
+export type CheckoutFormData = Shipping;
+
+export type OrderStatus = "Paid" | "Pending" | "Failed";
+
+export interface DashboardOrder {
+  id: string;
+  customer: string;
+  status: OrderStatus;
+  total: string;
+  date: string;
+}

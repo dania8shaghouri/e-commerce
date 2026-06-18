@@ -11,3 +11,10 @@ export interface Product {
   description: string;
   price: number;
 }
+
+export interface TopProduct {
+  name: string;
+  sales: number;
+  revenue: string;
+  image: string;
+}

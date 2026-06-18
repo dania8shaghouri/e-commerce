@@ -1,7 +1,7 @@
-import StatsGrid from "../../components/dashboard/StatsGrid.jsx";
-import RevenueChart from "../../components/dashboard/RevenueChart.jsx";
-import RecentOrdersTable from "../../components/dashboard/RecentOrdersTable";
-import TopProducts from "../../components/dashboard/TopProducts";
+import StatsGrid from "../../components/dashboard/StatsGrid.js";
+import RevenueChart from "../../components/dashboard/RevenueChart.js";
+import RecentOrdersTable from "../../components/dashboard/RecentOrdersTable.js";
+import TopProducts from "../../components/dashboard/TopProducts.js";
 // import OrderStatusChart from "../../components/dashboard/OrderStatusChart";
 
 const DashboardPage = () => {

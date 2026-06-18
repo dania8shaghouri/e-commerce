@@ -1,4 +1,14 @@
-const orders = [
+type OrderStatus = "Paid" | "Pending" | "Failed";
+
+interface Order {
+  id: string;
+  customer: string;
+  status: OrderStatus;
+  total: string;
+  date: string;
+}
+
+const orders: Order[] = [
   {
     id: "#1001",
     customer: "John Doe",
@@ -22,7 +32,7 @@ const orders = [
   },
 ];
 
-const statusStyles = {
+const statusStyles: Record<OrderStatus, string> = {
   Paid: "bg-green-50 text-green-600 border-green-200",
   Pending: "bg-yellow-50 text-yellow-600 border-yellow-200",
   Failed: "bg-red-50 text-red-600 border-red-200",
@@ -48,21 +58,15 @@ const RecentOrdersTable = () => {
           {orders.map((o) => (
             <tr key={o.id} className="border-t hover:bg-gray-50 transition">
               <td className="py-3 font-medium text-indigo-600">{o.id}</td>
-
               <td>{o.customer}</td>
-
               <td className="text-gray-500">{o.date}</td>
-
               <td>
                 <span
-                  className={`px-2 py-1 rounded-full text-xs border ${
-                    statusStyles[o.status]
-                  }`}
+                  className={`px-2 py-1 rounded-full text-xs border ${statusStyles[o.status]}`}
                 >
                   {o.status}
                 </span>
               </td>
-
               <td className="font-medium">{o.total}</td>
             </tr>
           ))}

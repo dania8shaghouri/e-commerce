@@ -6,9 +6,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-// recharts hazır bir React grafik kütüphanesi
 
-const data = [
+interface RevenueData {
+  name: string;
+  revenue: number;
+}
+
+const data: RevenueData[] = [
   { name: "Mon", revenue: 400 },
   { name: "Tue", revenue: 300 },
   { name: "Wed", revenue: 500 },
