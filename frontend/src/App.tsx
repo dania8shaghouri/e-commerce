@@ -15,7 +15,7 @@ import OrderSuccessPage from "./pages/OrderSuccessPage";
 import OrderErrorPage from "./pages/OrderErrorPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./context/Auth/ProtectedRoute";
 import CustomerLayout from "./layouts/CustomerLayout";
 import AdminLayout from "./features/admin/layouts/AdminLayout";
 
