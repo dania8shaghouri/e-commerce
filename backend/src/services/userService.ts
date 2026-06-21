@@ -62,13 +62,19 @@ export const login = async ({ email, password }: LoginParams) => {
   if (!passwordMatch) {
     throw new Error("Incorrect email or password");
   }
+  if (!findUser.role) {
+    findUser.role = "customer";
+    await findUser.save();
+  }
 
   return {
     token: generateJWT({
       email,
       firstName: findUser.firstName,
       lastName: findUser.lastName,
+      role: findUser.role,
     }),
+    role: findUser.role,
     message: "Login successful",
   };
 };
@@ -79,9 +85,7 @@ interface GetMyOrdersParams {
 }
 
 export const getMyOrders = async ({ userId }: GetMyOrdersParams) => {
-  const orders = await orderModel
-    .find({ userId })
-    .sort({ createdAt: -1 });
+  const orders = await orderModel.find({ userId }).sort({ createdAt: -1 });
 
   return orders;
 };

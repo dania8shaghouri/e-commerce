@@ -19,6 +19,7 @@ import ProtectedRoute from "./context/Auth/ProtectedRoute";
 import CustomerLayout from "./layouts/CustomerLayout";
 import AdminLayout from "./features/admin/layouts/AdminLayout";
 
+import AdminProtectedRoute from "./features/admin/routes/AdminProtectedRoute";
 import DashboardPage from "./features/admin/pages/admin/DashboardPage";
 
 function App() {
@@ -42,8 +43,10 @@ function App() {
               </Route>
             </Route>
             {/* admin layout */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<DashboardPage />} />
+            <Route element={<AdminProtectedRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<DashboardPage />} />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>

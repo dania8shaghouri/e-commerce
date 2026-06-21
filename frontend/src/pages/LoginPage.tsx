@@ -8,6 +8,7 @@ import ErrorState from "../components/ui/ErrorState";
 
 type LoginResponse = {
   token: string;
+  role: "customer" | "admin";
   message: string;
 };
 
@@ -40,8 +41,17 @@ const LoginPage = () => {
         return res.data;
       },
       (data) => {
-        login(form.email, data.token);
-        navigate("/");
+        console.log("LOGIN:", data);
+
+        login(form.email, data.token, data.role ?? "customer");
+
+        const role = data.role ?? "customer";
+
+        if (role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
       },
     );
   };
