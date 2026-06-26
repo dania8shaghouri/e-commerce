@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constants/baseUrl";
-import { useAuth } from "../context/Auth/AuthContext";
+// import { useAuth } from "../context/Auth/AuthContext";z
 import { useNavigate } from "react-router-dom";
 import { useRequest } from "../hooks/useRequest";
 import ErrorState from "../components/ui/ErrorState";
@@ -12,7 +12,7 @@ type RegisterResponse = {
 };
 
 const RegisterPage = () => {
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
 
   const { loading, error, run } = useRequest<RegisterResponse>();
@@ -42,7 +42,8 @@ const RegisterPage = () => {
         return res.data;
       },
       (data) => {
-        login(form.email, data.token);
+        console.log(data);
+        // login(form.email, data.token, "customer");
         navigate("/login", {
           state: { message: "Registration successful, please login" },
         });

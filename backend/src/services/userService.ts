@@ -34,12 +34,13 @@ export const register = async ({
     password: hashedPassword,
     firstName,
     lastName,
+    role: "customer",
   });
 
   await newUser.save();
 
   return {
-    token: generateJWT({ firstName, lastName, email }),
+    // token: generateJWT({ firstName, lastName, email }),
     message: "Registration successful",
   };
 };

@@ -15,28 +15,25 @@ const validateJWT = (req: ExtendRequest, res: Response, next: NextFunction) => {
     res.status(403).send("Barer token not found");
     return;
   }
-  jwt.verify(
-    token,
-    process.env.JWT_SECRET || "",
-    async (err, payload) => {
-      if (err) {
-        res.status(403).send("invalid token");
-        return;
-      }
-      if (!payload) {
-        res.status(403).send("Invalid token payload ");
-      }
-      const userPayload = payload as {
-        email: string;
-        firstName: string;
-        lastName: string;
-      };
-      // fetch user from database based on the payload
-      const user = await userModel.findOne({ email: userPayload.email });
-      req.user = user;
-      next();
-    },
-  );
+  jwt.verify(token, process.env.JWT_SECRET || "", async (err, payload) => {
+    if (err) {
+      res.status(403).send("invalid token");
+      return;
+    }
+    if (!payload) {
+      res.status(403).send("Invalid token payload ");
+      return;
+    }
+    const userPayload = payload as {
+      email: string;
+      firstName: string;
+      lastName: string;
+    };
+    // fetch user from database based on the payload
+    const user = await userModel.findOne({ email: userPayload.email });
+    req.user = user;
+    next();
+  });
 };
 
 export default validateJWT;
