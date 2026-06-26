@@ -4,16 +4,18 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import userRoute from "./routes/userRoutes.js";
+import cors from "cors";
 import { seedInitialProducts } from "./services/productService.js";
+import userRoute from "./routes/userRoutes.js";
 import productRoute from "./routes/productRoutes.js";
 import cartRoute from "./routes/cartRouter.js";
-import cors from "cors";
+import adminRoute from "./routes/adminRoutes.js";
+
 
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 app.use("/images", express.static(path.join(process.cwd(), "src/images")));
 
@@ -37,7 +39,7 @@ seedInitialProducts();
 app.use("/user", userRoute);
 app.use("/product", productRoute);
 app.use("/cart", cartRoute);
-
+app.use("/admin", adminRoute);
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });
