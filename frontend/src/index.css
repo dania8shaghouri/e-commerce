@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-background text-textPrimary;
+
+    font-family: Inter, system-ui, sans-serif;
+  }
+}
 
 @layer components {
   .error {
