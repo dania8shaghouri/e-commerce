@@ -6,10 +6,19 @@ interface Props {
   active?: boolean;
 }
 
+const formatCartCount = (count: number) => {
+  return count > 99 ? "99+" : count;
+};
+
 const CartButton = ({ count, onClick, active }: Props) => {
+  const hasItems = count > 0;
+
   return (
     <button
+      type="button"
       onClick={onClick}
+      aria-label="Shopping cart"
+      aria-busy={false}
       className={`
         relative
         flex
@@ -22,36 +31,34 @@ const CartButton = ({ count, onClick, active }: Props) => {
         hover:bg-background
         hover:scale-105
         focus:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-primary
 
         ${active ? "text-primary bg-background" : "text-textPrimary"}
-
       `}
     >
-      <FiShoppingCart
-        className="
-          text-xl
-        "
-      />
+      <FiShoppingCart className="text-xl" />
 
-      {count > 0 && (
+      {hasItems && (
         <span
+          aria-label={`Cart items: ${count}`}
           className="
-              absolute
-              -top-1
-              -right-1
-              bg-primary
-              text-white
-              text-xs
-              font-bold
-              w-5
-              h-5
-              rounded-full
-              flex
-              items-center
-              justify-center
-            "
+            absolute
+            -top-1
+            -right-1
+            bg-primary
+            text-white
+            text-xs
+            font-bold
+            w-5
+            h-5
+            rounded-full
+            flex
+            items-center
+            justify-center
+          "
         >
-          {count > 99 ? "99+" : count}
+          {formatCartCount(count)}
         </span>
       )}
     </button>
