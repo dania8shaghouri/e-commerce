@@ -40,12 +40,14 @@
 
 import Hero from "../components/home/hero/Hero";
 import Features from "../components/home/features/Features";
+import Categories from "../components/home/categories/Categories";
 
 const HomePage = () => {
   return (
     <>
       <Hero />
       <Features />
+      <Categories />
     </>
   );
 };
