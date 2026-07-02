@@ -39,11 +39,13 @@
 // export default HomePage;
 
 import Hero from "../components/home/hero/Hero";
+import Features from "../components/home/features/Features";
 
 const HomePage = () => {
   return (
     <>
       <Hero />
+      <Features />
     </>
   );
 };
