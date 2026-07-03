@@ -1,5 +1,5 @@
 import type { Category } from "./types";
-
+import { BASE_URL } from "../../../constants/baseUrl";
 interface Props {
   category: Category;
 }
@@ -72,8 +72,7 @@ const CategoryCard = ({ category }: Props) => {
         {/* Product */}
 
         <img
-          src={category.image}
-          alt={category.title}
+          src={`${BASE_URL}/images/${category.image}`}
           draggable={false}
           className="
             relative
@@ -83,6 +82,7 @@ const CategoryCard = ({ category }: Props) => {
             w-[88%]
 
             object-contain
+            rounded-md
 
             select-none
 
@@ -120,7 +120,7 @@ const CategoryCard = ({ category }: Props) => {
             text-textPrimary
           "
         >
-          {category.title}
+          {category._id}
         </h2>
 
         <p

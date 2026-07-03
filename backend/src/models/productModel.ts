@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface Iproduct extends Document {
   title: string;
   brand: string;
+  category: string;
   image: string;
   images: string[];
   cpu: string;
@@ -17,7 +18,7 @@ export interface Iproduct extends Document {
 const productSchema = new Schema<Iproduct>({
   title: { type: String, required: true },
   brand: { type: String, required: true },
-
+  category: { type: String, required: true },
   image: { type: String, required: true }, // ana resim
   images: [{ type: String }], // çoklu resim
 

@@ -9,17 +9,26 @@ const Categories = () => {
       <div className="absolute -right-40 bottom-10 w-[420px] h-[420px] rounded-full bg-sky-300/20 blur-[140px]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
+        <div className="max-w-2xl">
           <span className="text-primary font-semibold tracking-[0.25em] uppercase">
             Explore
           </span>
 
-          <h2 className="mt-4 text-5xl lg:text-6xl font-bold text-textPrimary">
+          <h2 className="mt-4 text-5xl lg:text-6xl font-bold text-textPrimary leading-tight">
             Popular Categories
           </h2>
 
-          <p className="mt-6 max-w-2xl mx-auto text-lg text-textSecondary leading-8">
-            Explore premium devices designed for work, gaming and creativity.
+          <p
+            className="
+    mt-6
+    max-w-sm
+    text-lg
+    text-textSecondary
+    leading-8
+  "
+          >
+            Discover our most popular product categories and find exactly what
+            you need.
           </p>
         </div>
         <OrbitCarousel />

@@ -71,13 +71,14 @@ import useOrbitDrag from "./hooks/useOrbitDrag";
 
 import Orbit from "./Orbit";
 import OrbitItem from "./OrbitItem";
-import { categories } from "./categoryData";
+import useCategories from "./hooks/useCategories";
 
 const RADIUS_X = 330;
 const RADIUS_Y = 95;
 
 const OrbitCarousel = () => {
   const [rotation, setRotation] = useState(0);
+  const { categories, loading } = useCategories();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -106,12 +107,16 @@ const OrbitCarousel = () => {
     isDraggingRef: isDragging,
     velocityRef: velocity,
   });
+
+  if (loading) {
+    return null;
+  }
   return (
     <div
       ref={containerRef}
       className="
         relative
-        h-[620px]
+        h-[540px]
         overflow-visible
 
         select-none
@@ -130,10 +135,10 @@ const OrbitCarousel = () => {
     >
       <Orbit
         width={1150}
-        height={320}
+        height={310}
         className="
           left-1/2
-          top-[452px]
+          top-[380px]
           -translate-x-1/2
         "
       />
@@ -143,13 +148,13 @@ const OrbitCarousel = () => {
 
         const x = Math.cos(angle) * RADIUS_X;
 
-        const y = Math.sin(angle) * RADIUS_Y + 70;
+        const y = Math.sin(angle) * RADIUS_Y + 20;
 
         const depth = (Math.sin(angle) + 1) / 2;
 
         return (
           <OrbitItem
-            key={category.id}
+            key={category._id}
             category={category}
             x={x}
             y={y}
