@@ -1,5 +1,5 @@
 // import ShopToolbar from "./toolbar/ShopToolbar";
-// import ProductGrid from "./products/ProductGrid";
+import ProductGrid from "./products/ProductGrid";
 // import ShopPagination from "./pagination/ShopPagination";
 
 const ProductSection = () => {
@@ -7,9 +7,10 @@ const ProductSection = () => {
     <div className="space-y-8">
       {/* <ShopToolbar />
 
-      <ProductGrid />
+      
 
       <ShopPagination /> */}
+      <ProductGrid />
     </div>
   );
 };
