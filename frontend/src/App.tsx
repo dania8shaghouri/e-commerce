@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ShopPage from "./pages/shop/ShopPage";
 
 import AuthProvider from "./context/Auth/AuthProvider";
 import CartProvider from "./context/Auth/cart/CartProvider";
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route element={<CustomerLayout />}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
               <Route path="/product/:id" element={<ProductDetailPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
