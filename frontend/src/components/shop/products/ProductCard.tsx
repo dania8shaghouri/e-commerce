@@ -6,6 +6,7 @@ import ProductImage from "./card/ProductImage";
 import ProductInfo from "./card/ProductInfo";
 import ProductPrice from "./card/ProductPrice";
 import ProductActions from "./card/ProductActions";
+import ProductRating from "./card/ProductRating";
 
 interface ProductCardProps {
   product: Product;
@@ -23,8 +24,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
         bg-white
         transition-all
         duration-300
-        hover:-translate-y-1
-        hover:shadow-xl
+       
+hover:border-primary/20
+hover:shadow-2xl
       "
     >
       <Link to={`/product/${product._id}`}>
@@ -32,6 +34,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <div className="space-y-4 p-5">
           <ProductInfo product={product} />
+          <ProductRating />
 
           <ProductPrice price={product.price} />
         </div>

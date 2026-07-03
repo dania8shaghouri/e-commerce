@@ -1,22 +1,47 @@
 import type { Product } from "../../../../types/Product";
 
-interface ProductImageProps {
+import WishlistButton from "./WishlistButton";
+import CategoryBadge from "./CategoryBadge";
+import StockBadge from "./StockBadge";
+
+interface Props {
   product: Product;
 }
 
-const ProductImage = ({ product }: ProductImageProps) => {
+const ProductImage = ({ product }: Props) => {
   return (
-    <div className="relative aspect-square overflow-hidden bg-gray-100">
+    <div
+      className="
+    relative
+    aspect-square
+    overflow-hidden
+    rounded-t-3xl
+    bg-gradient-to-b
+    from-slate-50
+    to-slate-100
+    transition-colors
+duration-300
+group-hover:from-blue-50
+group-hover:to-slate-50
+  "
+    >
+      <WishlistButton />
+
+      <CategoryBadge category={product.category} />
+
+      <StockBadge stock={product.stock} />
+
       <img
         src={product.image}
         alt={product.title}
         className="
           h-full
           w-full
+          rounded-xl
           object-contain
           p-8
-          transition-transform
-          duration-300
+          transition-all
+          duration-500
           group-hover:scale-105
         "
       />

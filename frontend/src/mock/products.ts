@@ -1,12 +1,12 @@
 import type { Product } from "../types/Product";
-
+import img from "../../../backend/src/images/laptop1_main.webp";
 export const mockProducts: Product[] = [
   {
     _id: "1",
     title: "ASUS TUF Gaming F16",
     brand: "ASUS",
     category: "Laptop",
-    image: "/images/laptop.png",
+    image: img,
     images: [],
     cpu: "Intel i7-13620H",
     ram: "16 GB",
@@ -22,7 +22,7 @@ export const mockProducts: Product[] = [
     title: "MSI Katana 15",
     brand: "MSI",
     category: "Laptop",
-    image: "/images/laptop.png",
+    image: img,
     images: [],
     cpu: "Intel i5-13450HX",
     ram: "16 GB",
@@ -38,7 +38,7 @@ export const mockProducts: Product[] = [
     title: "LG UltraGear 27",
     brand: "LG",
     category: "Monitor",
-    image: "/images/monitor.png",
+    image: img,
     images: [],
     cpu: "",
     ram: "",
@@ -54,7 +54,7 @@ export const mockProducts: Product[] = [
     title: "Logitech G Pro X",
     brand: "Logitech",
     category: "Accessory",
-    image: "/images/keyboard.png",
+    image: img,
     images: [],
     cpu: "",
     ram: "",
