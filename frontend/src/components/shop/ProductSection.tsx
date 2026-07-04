@@ -1,18 +1,27 @@
-// import ShopToolbar from "./toolbar/ShopToolbar";
+import { useProducts } from "../../hooks/useProducts";
+
 import ProductGrid from "./products/ProductGrid";
-// import ShopPagination from "./pagination/ShopPagination";
+
+import Loading from "../ui/Loading";
+import ErrorState from "../ui/ErrorState";
+import EmptyState from "../ui/EmptyState";
 
 const ProductSection = () => {
-  return (
-    <div className="space-y-8">
-      {/* <ShopToolbar />
+  const { products, loading, error, refetch } = useProducts();
 
-      
+  if (loading) {
+    return <Loading />;
+  }
 
-      <ShopPagination /> */}
-      <ProductGrid />
-    </div>
-  );
+  if (error) {
+    return <ErrorState message={error} onRetry={refetch} />;
+  }
+
+  if (products.length === 0) {
+    return <EmptyState message="No products found." />;
+  }
+
+  return <ProductGrid products={products} />;
 };
 
 export default ProductSection;

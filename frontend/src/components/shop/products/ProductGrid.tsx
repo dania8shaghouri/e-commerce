@@ -1,17 +1,11 @@
+import type { Product } from "../../../types/Product";
 import ProductCard from "./ProductCard";
-import { useProducts } from "../../../hooks/useProducts";
 
-const ProductGrid = () => {
-  const { products, loading, error } = useProducts();
+interface ProductGridProps {
+  products: Product[];
+}
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
-  if (error) {
-    return <p className="text-red-500">{error}</p>;
-  }
-
+const ProductGrid = ({ products }: ProductGridProps) => {
   return (
     <section
       className="
