@@ -1,4 +1,5 @@
 import type { Product } from "../../../../types/Product";
+import { getImageUrl } from "../../../../utils/getImageUrl";
 
 import WishlistButton from "./WishlistButton";
 import CategoryBadge from "./CategoryBadge";
@@ -32,7 +33,7 @@ group-hover:to-slate-50
       <StockBadge stock={product.stock} />
 
       <img
-        src={product.image}
+        src={getImageUrl(product.image)}
         alt={product.title}
         className="
           h-full

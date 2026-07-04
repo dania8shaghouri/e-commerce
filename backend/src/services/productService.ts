@@ -1,7 +1,24 @@
 import productModel from "../models/productModel.js";
 
+// yeni eklendi
 export const getAllProducts = async () => {
-  return await productModel.find();
+  return productModel.find().select(
+    `
+      title
+      brand
+      category
+      image
+      images
+      price
+      stock
+      rating
+      reviewCount
+    `,
+  );
+};
+
+export const getProductById = async (id: string) => {
+  return productModel.findById(id);
 };
 
 export const seedInitialProducts = async () => {
@@ -98,14 +115,19 @@ export const seedInitialProducts = async () => {
   }
 };
 
-export const getCategories = async () => {
-  return await productModel.aggregate([
+export const getProductCategories = async () => {
+  return productModel.aggregate([
     {
       $group: {
         _id: "$category",
-        totalProducts: { $sum: 1 },
-        image: { $first: "$image" },
+        totalProducts: {
+          $sum: 1,
+        },
+        image: {
+          $first: "$image",
+        },
       },
     },
   ]);
 };
+//

@@ -1,7 +1,17 @@
 import ProductCard from "./ProductCard";
-import { mockProducts } from "../../../mock/products";
+import { useProducts } from "../../../hooks/useProducts";
 
 const ProductGrid = () => {
+  const { products, loading, error } = useProducts();
+
+  if (loading) {
+    return <p>Loading products...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
   return (
     <section
       className="
@@ -13,7 +23,7 @@ const ProductGrid = () => {
         2xl:grid-cols-4
       "
     >
-      {mockProducts.map((product) => (
+      {products.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}
     </section>

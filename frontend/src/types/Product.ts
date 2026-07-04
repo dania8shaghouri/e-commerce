@@ -17,6 +17,10 @@ export interface Product {
 
   price: number;
   stock: number;
+
+  rating: number;
+  reviewCount: number;
+  isFeatured: boolean;
 }
 
 export interface TopProduct {
