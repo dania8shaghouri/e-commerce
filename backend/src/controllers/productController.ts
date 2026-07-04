@@ -10,9 +10,26 @@ import {
   getProductCategories,
 } from "../services/productService.js";
 
-export const getProducts = async (req: Request, res: Response) => {
+
+export const getProducts = async (
+  req: Request,
+  res: Response,
+) => {
   try {
-    const products = await getAllProducts();
+    const category =
+      typeof req.query.category === "string"
+        ? req.query.category.split(",")
+        : [];
+
+    const brand =
+      typeof req.query.brand === "string"
+        ? req.query.brand.split(",")
+        : [];
+
+    const products = await getAllProducts({
+      category,
+      brand,
+    });
 
     res.status(200).json(products);
   } catch (error) {

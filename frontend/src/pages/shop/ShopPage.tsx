@@ -1,11 +1,15 @@
 import ShopHero from "../../components/shop/hero/ShopHero";
 import ShopContent from "../../components/shop/ShopContent";
 
+import ShopFilterProvider from "../../context/shop/ShopFilterProvider";
+
 const ShopPage = () => {
   return (
     <>
-      <ShopHero />
-      <ShopContent />
+      <ShopFilterProvider>
+        <ShopHero />
+        <ShopContent />
+      </ShopFilterProvider>
     </>
   );
 };

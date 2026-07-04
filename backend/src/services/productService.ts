@@ -1,9 +1,29 @@
 import productModel from "../models/productModel.js";
 
+interface ProductFilters {
+  category?: string[];
+  brand?: string[];
+}
+
 // yeni eklendi
-export const getAllProducts = async () => {
-  return productModel.find().select(
-    `
+export const getAllProducts = async (
+  filters?: ProductFilters,
+) => {
+  const query: Record<string, unknown> = {};
+
+  if (filters?.category?.length) {
+    query.category = {
+      $in: filters.category,
+    };
+  }
+
+  if (filters?.brand?.length) {
+    query.brand = {
+      $in: filters.brand,
+    };
+  }
+
+  return productModel.find(query).select(`
       title
       brand
       category
@@ -13,8 +33,7 @@ export const getAllProducts = async () => {
       stock
       rating
       reviewCount
-    `,
-  );
+  `);
 };
 
 export const getProductById = async (id: string) => {

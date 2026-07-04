@@ -1,8 +1,21 @@
 import api from "../api/axios";
 import type { Product } from "../types/Product";
+import type { ShopFilters } from "../types/Filter";
 
-export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await api.get<Product[]>("/product");
+export const getProducts = async (
+  filters?: ShopFilters,
+): Promise<Product[]> => {
+  const params = new URLSearchParams();
+
+  if (filters?.category.length) {
+    params.set("category", filters.category.join(","));
+  }
+
+  if (filters?.brand.length) {
+    params.set("brand", filters.brand.join(","));
+  }
+
+  const { data } = await api.get<Product[]>(`/product?${params.toString()}`);
 
   return data;
 };
