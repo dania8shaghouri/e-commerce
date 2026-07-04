@@ -71,7 +71,7 @@ import useOrbitDrag from "./hooks/useOrbitDrag";
 
 import Orbit from "./Orbit";
 import OrbitItem from "./OrbitItem";
-import useCategories from "./hooks/useCategories";
+import {useCategories} from "../../../hooks/useCategories";
 
 const RADIUS_X = 330;
 const RADIUS_Y = 95;
@@ -154,7 +154,7 @@ const OrbitCarousel = () => {
 
         return (
           <OrbitItem
-            key={category._id}
+            key={category.name}
             category={category}
             x={x}
             y={y}

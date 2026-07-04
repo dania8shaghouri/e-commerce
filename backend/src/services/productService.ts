@@ -115,6 +115,7 @@ export const seedInitialProducts = async () => {
   }
 };
 
+
 export const getProductCategories = async () => {
   return productModel.aggregate([
     {
@@ -128,6 +129,18 @@ export const getProductCategories = async () => {
         },
       },
     },
+    {
+      $project: {
+        _id: 0,
+        name: "$_id",
+        totalProducts: 1,
+        image: 1,
+      },
+    },
+    {
+      $sort: {
+        name: 1,
+      },
+    },
   ]);
 };
-//

@@ -1,4 +1,4 @@
-import type { Category } from "./types";
+import type { Category } from "../../../types/Category";
 import { BASE_URL } from "../../../constants/baseUrl";
 interface Props {
   category: Category;
@@ -120,7 +120,7 @@ const CategoryCard = ({ category }: Props) => {
             text-textPrimary
           "
         >
-          {category._id}
+          {category.name}
         </h2>
 
         <p
