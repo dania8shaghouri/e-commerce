@@ -11,6 +11,8 @@ import {
   getProductBrands,
 } from "../services/productService.js";
 
+import type { ProductFilters } from "../services/productService.js";
+
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const category =
@@ -21,10 +23,30 @@ export const getProducts = async (req: Request, res: Response) => {
     const brand =
       typeof req.query.brand === "string" ? req.query.brand.split(",") : [];
 
-    const products = await getAllProducts({
+    const minPrice =
+      typeof req.query.minPrice === "string"
+        ? Number(req.query.minPrice)
+        : undefined;
+
+    const maxPrice =
+      typeof req.query.maxPrice === "string"
+        ? Number(req.query.maxPrice)
+        : undefined;
+
+    const filters: ProductFilters = {
       category,
       brand,
-    });
+    };
+
+    if (minPrice !== undefined) {
+      filters.minPrice = minPrice;
+    }
+
+    if (maxPrice !== undefined) {
+      filters.maxPrice = maxPrice;
+    }
+
+    const products = await getAllProducts(filters);
 
     res.status(200).json(products);
   } catch (error) {

@@ -26,6 +26,14 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
     }));
   };
 
+  const setPrice = (min: number | null, max: number | null) => {
+    setFilters((prev) => ({
+      ...prev,
+      minPrice: min,
+      maxPrice: max,
+    }));
+  };
+
   const toggleBrand = (brand: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -33,6 +41,20 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
       brand: prev.brand.includes(brand)
         ? prev.brand.filter((item) => item !== brand)
         : [...prev.brand, brand],
+    }));
+  };
+
+  const setMinPrice = (price: number | null) => {
+    setFilters((prev) => ({
+      ...prev,
+      minPrice: price,
+    }));
+  };
+
+  const setMaxPrice = (price: number | null) => {
+    setFilters((prev) => ({
+      ...prev,
+      maxPrice: price,
     }));
   };
 
@@ -47,6 +69,10 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
 
         toggleCategory,
         toggleBrand,
+        setMinPrice,
+        setMaxPrice,
+        setPrice,
+
         clearFilters,
       }}
     >

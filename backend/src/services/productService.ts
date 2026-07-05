@@ -1,10 +1,11 @@
 import productModel from "../models/productModel.js";
 
-interface ProductFilters {
+export interface ProductFilters {
   category?: string[];
   brand?: string[];
+  minPrice?: number;
+  maxPrice?: number;
 }
-
 
 export const getAllProducts = async (filters?: ProductFilters) => {
   const query: Record<string, unknown> = {};
@@ -19,6 +20,18 @@ export const getAllProducts = async (filters?: ProductFilters) => {
     query.brand = {
       $in: filters.brand,
     };
+  }
+
+  if (filters?.minPrice !== undefined || filters?.maxPrice !== undefined) {
+    query.price = {};
+
+    if (filters.minPrice !== undefined) {
+      (query.price as Record<string, number>).$gte = filters.minPrice;
+    }
+
+    if (filters.maxPrice !== undefined) {
+      (query.price as Record<string, number>).$lte = filters.maxPrice;
+    }
   }
 
   return productModel.find(query).select(`

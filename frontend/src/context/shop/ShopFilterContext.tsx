@@ -6,6 +6,9 @@ interface ShopFilterContextType {
 
   toggleCategory: (category: string) => void;
   toggleBrand: (brand: string) => void;
+  setMinPrice: (price: number | null) => void;
+  setMaxPrice: (price: number | null) => void;
+  setPrice: (min: number | null, max: number | null) => void;
 
   clearFilters: () => void;
 }
@@ -21,6 +24,9 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
 
   toggleCategory: () => {},
   toggleBrand: () => {},
+  setMinPrice: () => {},
+  setMaxPrice: () => {},
+  setPrice: () => {},
 
   clearFilters: () => {},
 });

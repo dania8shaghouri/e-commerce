@@ -7,12 +7,20 @@ export const getProducts = async (
 ): Promise<Product[]> => {
   const params = new URLSearchParams();
 
-  if (filters?.category.length) {
+  if (filters?.category?.length) {
     params.set("category", filters.category.join(","));
   }
 
-  if (filters?.brand.length) {
+  if (filters?.brand?.length) {
     params.set("brand", filters.brand.join(","));
+  }
+
+  if (filters?.minPrice != null) {
+    params.set("minPrice", String(filters.minPrice));
+  }
+
+  if (filters?.maxPrice != null) {
+    params.set("maxPrice", String(filters.maxPrice));
   }
 
   const { data } = await api.get<Product[]>(`/product?${params.toString()}`);
