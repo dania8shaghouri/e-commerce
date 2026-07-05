@@ -1,8 +1,8 @@
-import type { Product } from "../../../../types/Product";
-import { getImageUrl } from "../../../../utils/getImageUrl";
+import type { Product } from "../../../types/Product";
+import { getImageUrl } from "../../../utils/getImageUrl";
 
-import WishlistButton from "./WishlistButton";
-import CategoryBadge from "./CategoryBadge";
+import WishlistButton from "../shared/WishlistButton";
+import CategoryBadge from "../shared/CategoryBadge";
 import StockBadge from "./StockBadge";
 
 interface Props {

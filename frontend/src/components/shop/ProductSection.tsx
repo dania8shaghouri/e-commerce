@@ -1,6 +1,6 @@
 import { useProducts } from "../../hooks/useProducts";
 
-import ProductGrid from "./products/ProductGrid";
+import ProductGrid from "../product/card/ProductGrid";
 
 import Loading from "../ui/Loading";
 import ErrorState from "../ui/ErrorState";

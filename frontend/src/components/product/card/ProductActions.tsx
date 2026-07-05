@@ -1,6 +1,6 @@
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import type { Product } from "../../../../types/Product";
+import type { Product } from "../../../types/Product";
 
 interface ProductActionsProps {
   product: Product;
