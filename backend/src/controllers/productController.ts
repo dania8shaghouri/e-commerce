@@ -33,6 +33,8 @@ export const getProducts = async (req: Request, res: Response) => {
         ? Number(req.query.maxPrice)
         : undefined;
 
+    const inStock = req.query.inStock === "true";
+
     const filters: ProductFilters = {
       category,
       brand,
@@ -44,6 +46,9 @@ export const getProducts = async (req: Request, res: Response) => {
 
     if (maxPrice !== undefined) {
       filters.maxPrice = maxPrice;
+    }
+    if (inStock) {
+      filters.inStock = true;
     }
 
     const products = await getAllProducts(filters);

@@ -8,7 +8,8 @@ import { useBrands } from "../../../hooks/useBrands";
 
 const FilterSidebar = () => {
   const { categories } = useCategories();
-  const { filters, toggleCategory, toggleBrand } = useShopFilter();
+  const { filters, toggleCategory, toggleBrand, toggleInStock } =
+    useShopFilter();
   const { brands } = useBrands();
 
   const categoryOptions = categories.map((category) => ({
@@ -41,6 +42,17 @@ const FilterSidebar = () => {
       />
 
       <PriceFilter />
+      <FilterGroup
+        title="Availability"
+        options={[
+          {
+            label: "In Stock Only",
+            value: "inStock",
+          },
+        ]}
+        selected={filters.inStock ? ["inStock"] : []}
+        onToggle={toggleInStock}
+      />
     </aside>
   );
 };

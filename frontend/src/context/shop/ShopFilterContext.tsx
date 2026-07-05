@@ -9,6 +9,7 @@ interface ShopFilterContextType {
   setMinPrice: (price: number | null) => void;
   setMaxPrice: (price: number | null) => void;
   setPrice: (min: number | null, max: number | null) => void;
+  toggleInStock: () => void;
 
   clearFilters: () => void;
 }
@@ -27,6 +28,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
   setMinPrice: () => {},
   setMaxPrice: () => {},
   setPrice: () => {},
+  toggleInStock: () => {},
 
   clearFilters: () => {},
 });

@@ -22,6 +22,9 @@ export const getProducts = async (
   if (filters?.maxPrice != null) {
     params.set("maxPrice", String(filters.maxPrice));
   }
+  if (filters?.inStock) {
+    params.set("inStock", "true");
+  }
 
   const { data } = await api.get<Product[]>(`/product?${params.toString()}`);
 

@@ -5,6 +5,7 @@ export interface ProductFilters {
   brand?: string[];
   minPrice?: number;
   maxPrice?: number;
+  inStock?: boolean;
 }
 
 export const getAllProducts = async (filters?: ProductFilters) => {
@@ -19,6 +20,11 @@ export const getAllProducts = async (filters?: ProductFilters) => {
   if (filters?.brand?.length) {
     query.brand = {
       $in: filters.brand,
+    };
+  }
+  if (filters?.inStock) {
+    query.stock = {
+      $gt: 0,
     };
   }
 

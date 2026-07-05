@@ -34,6 +34,13 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
     }));
   };
 
+  const toggleInStock = () => {
+    setFilters((prev) => ({
+      ...prev,
+      inStock: !prev.inStock,
+    }));
+  };
+
   const toggleBrand = (brand: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -72,6 +79,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
         setMinPrice,
         setMaxPrice,
         setPrice,
+        toggleInStock,
 
         clearFilters,
       }}
