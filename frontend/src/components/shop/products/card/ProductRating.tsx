@@ -1,15 +1,30 @@
 import { FiStar } from "react-icons/fi";
 
-const ProductRating = () => {
-  return (
-    <div className="flex items-center gap-1 text-sm text-yellow-500">
-      <FiStar className="fill-current" />
-      <FiStar className="fill-current" />
-      <FiStar className="fill-current" />
-      <FiStar className="fill-current" />
-      <FiStar className="fill-current" />
+interface ProductRatingProps {
+  rating: number;
+  reviewCount: number;
+}
 
-      <span className="ml-2 text-gray-500">(124)</span>
+const ProductRating = ({ rating, reviewCount }: ProductRatingProps) => {
+  return (
+    <div className="flex items-center gap-1">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <FiStar
+          key={index}
+          className={
+            index < Math.round(rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "text-gray-300"
+          }
+          size={16}
+        />
+      ))}
+
+      <span className="ml-2 text-sm font-medium text-gray-700">
+        {rating.toFixed(1)}
+      </span>
+
+      <span className="text-sm text-gray-500">({reviewCount})</span>
     </div>
   );
 };

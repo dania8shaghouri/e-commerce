@@ -24,7 +24,7 @@ const ProductSection = () => {
 
   return (
     <>
-      <ProductToolbar />
+      <ProductToolbar productCount={products.length} />
 
       <ProductGrid products={products} />
     </>

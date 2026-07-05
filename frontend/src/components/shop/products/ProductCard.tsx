@@ -34,7 +34,10 @@ hover:shadow-2xl
 
         <div className="space-y-4 p-5">
           <ProductInfo product={product} />
-          <ProductRating />
+          <ProductRating
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+          />
 
           <ProductPrice price={product.price} />
         </div>
