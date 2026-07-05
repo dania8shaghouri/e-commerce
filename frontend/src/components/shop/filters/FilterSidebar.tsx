@@ -1,7 +1,6 @@
 import FilterHeader from "./FilterHeader";
 import FilterGroup from "./FilterGroup";
 import PriceFilter from "./PriceFilter";
-import ApplyFilterButton from "./ApplyFilterButton";
 
 import { useCategories } from "../../../hooks/useCategories";
 import { useShopFilter } from "../../../context/shop/ShopFilterContext";
@@ -42,8 +41,6 @@ const FilterSidebar = () => {
       />
 
       <PriceFilter />
-
-      <ApplyFilterButton />
     </aside>
   );
 };
