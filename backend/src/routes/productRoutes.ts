@@ -4,6 +4,7 @@ import {
   getProducts,
   getCategories,
   getProduct,
+  getBrands,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -11,6 +12,8 @@ const router = express.Router();
 router.get("/", getProducts);
 
 router.get("/categories", getCategories);
+
+router.get("/brands", getBrands);
 
 router.get("/:id", getProduct);
 

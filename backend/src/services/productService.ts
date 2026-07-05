@@ -5,10 +5,8 @@ interface ProductFilters {
   brand?: string[];
 }
 
-// yeni eklendi
-export const getAllProducts = async (
-  filters?: ProductFilters,
-) => {
+
+export const getAllProducts = async (filters?: ProductFilters) => {
   const query: Record<string, unknown> = {};
 
   if (filters?.category?.length) {
@@ -134,7 +132,6 @@ export const seedInitialProducts = async () => {
   }
 };
 
-
 export const getProductCategories = async () => {
   return productModel.aggregate([
     {
@@ -154,6 +151,27 @@ export const getProductCategories = async () => {
         name: "$_id",
         totalProducts: 1,
         image: 1,
+      },
+    },
+    {
+      $sort: {
+        name: 1,
+      },
+    },
+  ]);
+};
+
+export const getProductBrands = async () => {
+  return productModel.aggregate([
+    {
+      $group: {
+        _id: "$brand",
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        name: "$_id",
       },
     },
     {

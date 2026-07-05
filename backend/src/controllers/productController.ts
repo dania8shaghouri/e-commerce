@@ -8,13 +8,10 @@ import {
   getAllProducts,
   getProductById,
   getProductCategories,
+  getProductBrands,
 } from "../services/productService.js";
 
-
-export const getProducts = async (
-  req: Request,
-  res: Response,
-) => {
+export const getProducts = async (req: Request, res: Response) => {
   try {
     const category =
       typeof req.query.category === "string"
@@ -22,9 +19,7 @@ export const getProducts = async (
         : [];
 
     const brand =
-      typeof req.query.brand === "string"
-        ? req.query.brand.split(",")
-        : [];
+      typeof req.query.brand === "string" ? req.query.brand.split(",") : [];
 
     const products = await getAllProducts({
       category,
@@ -82,6 +77,20 @@ export const getProduct = async (
 
     return res.status(500).json({
       message: "Server error",
+    });
+  }
+};
+
+export const getBrands = async (req: Request, res: Response) => {
+  try {
+    const brands = await getProductBrands();
+
+    res.status(200).json(brands);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Failed to fetch brands",
     });
   }
 };

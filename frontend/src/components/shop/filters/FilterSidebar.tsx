@@ -5,23 +5,12 @@ import ApplyFilterButton from "./ApplyFilterButton";
 
 import { useCategories } from "../../../hooks/useCategories";
 import { useShopFilter } from "../../../context/shop/ShopFilterContext";
-
-const brands = [
-  "ASUS",
-  "MSI",
-  "Razer",
-  "LG",
-  "Logitech",
-  "Samsung",
-];
+import { useBrands } from "../../../hooks/useBrands";
 
 const FilterSidebar = () => {
   const { categories } = useCategories();
-
-  const {
-    filters,
-    toggleCategory,
-  } = useShopFilter();
+  const { filters, toggleCategory, toggleBrand } = useShopFilter();
+  const { brands } = useBrands();
 
   const categoryOptions = categories.map((category) => ({
     label: category.name,
@@ -30,8 +19,8 @@ const FilterSidebar = () => {
   }));
 
   const brandOptions = brands.map((brand) => ({
-    label: brand,
-    value: brand,
+    label: brand.name,
+    value: brand.name,
   }));
 
   return (
@@ -48,8 +37,8 @@ const FilterSidebar = () => {
       <FilterGroup
         title="Brand"
         options={brandOptions}
-        selected={[]}
-        onToggle={() => {}}
+        selected={filters.brand}
+        onToggle={toggleBrand}
       />
 
       <PriceFilter />

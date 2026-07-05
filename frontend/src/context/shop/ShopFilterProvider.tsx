@@ -26,6 +26,16 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
     }));
   };
 
+  const toggleBrand = (brand: string) => {
+    setFilters((prev) => ({
+      ...prev,
+
+      brand: prev.brand.includes(brand)
+        ? prev.brand.filter((item) => item !== brand)
+        : [...prev.brand, brand],
+    }));
+  };
+
   const clearFilters = () => {
     setFilters(initialFilters);
   };
@@ -36,7 +46,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
         filters,
 
         toggleCategory,
-
+        toggleBrand,
         clearFilters,
       }}
     >

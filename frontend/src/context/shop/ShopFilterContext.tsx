@@ -5,6 +5,7 @@ interface ShopFilterContextType {
   filters: ShopFilters;
 
   toggleCategory: (category: string) => void;
+  toggleBrand: (brand: string) => void;
 
   clearFilters: () => void;
 }
@@ -19,6 +20,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
   },
 
   toggleCategory: () => {},
+  toggleBrand: () => {},
 
   clearFilters: () => {},
 });

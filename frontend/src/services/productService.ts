@@ -31,3 +31,9 @@ export const getCategories = async () => {
 
   return data;
 };
+
+export const getBrands = async () => {
+  const { data } = await api.get("/product/brands");
+
+  return data;
+};
