@@ -11,7 +11,10 @@ import {
   getProductBrands,
 } from "../services/productService.js";
 
-import type { ProductFilters } from "../services/productService.js";
+import type {
+  ProductFilters,
+  ProductSort,
+} from "../services/productService.js";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -35,6 +38,11 @@ export const getProducts = async (req: Request, res: Response) => {
 
     const inStock = req.query.inStock === "true";
 
+    const sort =
+      typeof req.query.sort === "string"
+        ? (req.query.sort as ProductSort)
+        : undefined;
+
     const filters: ProductFilters = {
       category,
       brand,
@@ -49,6 +57,9 @@ export const getProducts = async (req: Request, res: Response) => {
     }
     if (inStock) {
       filters.inStock = true;
+    }
+    if (sort) {
+      filters.sort = sort;
     }
 
     const products = await getAllProducts(filters);

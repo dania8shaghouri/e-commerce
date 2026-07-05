@@ -5,6 +5,7 @@ import ProductGrid from "./products/ProductGrid";
 import Loading from "../ui/Loading";
 import ErrorState from "../ui/ErrorState";
 import EmptyState from "../ui/EmptyState";
+import ProductToolbar from "./ProductToolbar";
 
 const ProductSection = () => {
   const { products, loading, error, refetch } = useProducts();
@@ -21,7 +22,13 @@ const ProductSection = () => {
     return <EmptyState message="No products found." />;
   }
 
-  return <ProductGrid products={products} />;
+  return (
+    <>
+      <ProductToolbar />
+
+      <ProductGrid products={products} />
+    </>
+  );
 };
 
 export default ProductSection;

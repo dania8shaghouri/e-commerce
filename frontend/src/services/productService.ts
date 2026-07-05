@@ -25,6 +25,9 @@ export const getProducts = async (
   if (filters?.inStock) {
     params.set("inStock", "true");
   }
+  if (filters?.sort) {
+    params.set("sort", filters.sort);
+  }
 
   const { data } = await api.get<Product[]>(`/product?${params.toString()}`);
 

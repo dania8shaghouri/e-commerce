@@ -1,15 +1,23 @@
 import productModel from "../models/productModel.js";
 
+export type ProductSort =
+  | "featured"
+  | "price-asc"
+  | "price-desc"
+  | "rating"
+  | "newest";
 export interface ProductFilters {
   category?: string[];
   brand?: string[];
   minPrice?: number;
   maxPrice?: number;
   inStock?: boolean;
+  sort?: ProductSort;
 }
 
 export const getAllProducts = async (filters?: ProductFilters) => {
   const query: Record<string, unknown> = {};
+  const sortQuery: Record<string, 1 | -1> = {};
 
   if (filters?.category?.length) {
     query.category = {
@@ -40,7 +48,30 @@ export const getAllProducts = async (filters?: ProductFilters) => {
     }
   }
 
-  return productModel.find(query).select(`
+  switch (filters?.sort) {
+    case "price-asc":
+      sortQuery.price = 1;
+      break;
+
+    case "price-desc":
+      sortQuery.price = -1;
+      break;
+
+    case "rating":
+      sortQuery.rating = -1;
+      break;
+
+    case "newest":
+      sortQuery._id = -1;
+      break;
+
+    default:
+      break;
+  }
+  return productModel
+  .find(query)
+  .sort(sortQuery)
+  .select(`
       title
       brand
       category

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { ShopFilters } from "../../types/Filter";
+import type { ShopFilters, ProductSort } from "../../types/Filter";
 
 interface ShopFilterContextType {
   filters: ShopFilters;
@@ -10,6 +10,7 @@ interface ShopFilterContextType {
   setMaxPrice: (price: number | null) => void;
   setPrice: (min: number | null, max: number | null) => void;
   toggleInStock: () => void;
+  setSort: (sort: ProductSort) => void;
 
   clearFilters: () => void;
 }
@@ -21,6 +22,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
     minPrice: null,
     maxPrice: null,
     inStock: false,
+    sort: "featured",
   },
 
   toggleCategory: () => {},
@@ -29,6 +31,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
   setMaxPrice: () => {},
   setPrice: () => {},
   toggleInStock: () => {},
+  setSort: () => {},
 
   clearFilters: () => {},
 });

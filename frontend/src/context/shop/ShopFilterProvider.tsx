@@ -3,7 +3,7 @@ import type { FC, PropsWithChildren } from "react";
 
 import { ShopFilterContext } from "./ShopFilterContext";
 
-import type { ShopFilters } from "../../types/Filter";
+import type { ProductSort, ShopFilters } from "../../types/Filter";
 
 const initialFilters: ShopFilters = {
   category: [],
@@ -11,6 +11,7 @@ const initialFilters: ShopFilters = {
   minPrice: null,
   maxPrice: null,
   inStock: false,
+  sort: "featured",
 };
 
 const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -65,6 +66,13 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
     }));
   };
 
+  const setSort = (sort: ProductSort) => {
+    setFilters((prev) => ({
+      ...prev,
+      sort,
+    }));
+  };
+
   const clearFilters = () => {
     setFilters(initialFilters);
   };
@@ -80,6 +88,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
         setMaxPrice,
         setPrice,
         toggleInStock,
+        setSort,
 
         clearFilters,
       }}

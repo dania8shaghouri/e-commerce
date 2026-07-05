@@ -1,13 +1,18 @@
+export type ProductSort =
+  | "featured"
+  | "price-asc"
+  | "price-desc"
+  | "rating"
+  | "newest";
 export interface ShopFilters {
   category: string[];
-
   brand: string[];
 
   minPrice: number | null;
-
   maxPrice: number | null;
 
   inStock: boolean;
+  sort: ProductSort;
 }
 
 export interface FilterOption {
