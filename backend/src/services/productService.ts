@@ -13,11 +13,17 @@ export interface ProductFilters {
   maxPrice?: number;
   inStock?: boolean;
   sort?: ProductSort;
+  page?: number;
+  limit?: number;
 }
 
 export const getAllProducts = async (filters?: ProductFilters) => {
   const query: Record<string, unknown> = {};
   const sortQuery: Record<string, 1 | -1> = {};
+
+  const page = filters?.page ?? 1;
+  const limit = filters?.limit ?? 12;
+  const skip = (page - 1) * limit;
 
   if (filters?.category?.length) {
     query.category = {
@@ -68,10 +74,13 @@ export const getAllProducts = async (filters?: ProductFilters) => {
     default:
       break;
   }
-  return productModel
-  .find(query)
-  .sort(sortQuery)
-  .select(`
+  const totalProducts = await productModel.countDocuments(query);
+
+  const products = await productModel
+    .find(query)
+    .sort(sortQuery)
+    .skip(skip)
+    .limit(limit).select(`
       title
       brand
       category
@@ -82,6 +91,13 @@ export const getAllProducts = async (filters?: ProductFilters) => {
       rating
       reviewCount
   `);
+
+  return {
+    products,
+    totalProducts,
+    totalPages: Math.ceil(totalProducts / limit),
+    currentPage: page,
+  };
 };
 
 export const getProductById = async (id: string) => {
@@ -173,7 +189,7 @@ export const seedInitialProducts = async () => {
     ];
 
     const existingProducts = await getAllProducts();
-    if (existingProducts.length === 0) {
+    if (existingProducts.totalProducts === 0) {
       await productModel.insertMany(products);
       console.log("✅ Products seeded successfully!");
     }

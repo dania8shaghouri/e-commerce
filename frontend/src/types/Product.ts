@@ -29,3 +29,10 @@ export interface TopProduct {
   revenue: string;
   image: string;
 }
+
+export interface ProductsResponse {
+  products: Product[];
+  totalProducts: number;
+  totalPages: number;
+  currentPage: number;
+}

@@ -42,6 +42,11 @@ export const getProducts = async (req: Request, res: Response) => {
       typeof req.query.sort === "string"
         ? (req.query.sort as ProductSort)
         : undefined;
+    const page =
+      typeof req.query.page === "string" ? Number(req.query.page) : 1;
+
+    const limit =
+      typeof req.query.limit === "string" ? Number(req.query.limit) : 4;
 
     const filters: ProductFilters = {
       category,
@@ -61,6 +66,8 @@ export const getProducts = async (req: Request, res: Response) => {
     if (sort) {
       filters.sort = sort;
     }
+    filters.page = page;
+    filters.limit = limit;
 
     const products = await getAllProducts(filters);
 

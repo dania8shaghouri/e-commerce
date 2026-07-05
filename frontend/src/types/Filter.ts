@@ -13,6 +13,7 @@ export interface ShopFilters {
 
   inStock: boolean;
   sort: ProductSort;
+  page: number;
 }
 
 export interface FilterOption {

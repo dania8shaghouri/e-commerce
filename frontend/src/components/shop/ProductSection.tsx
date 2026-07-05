@@ -6,9 +6,17 @@ import Loading from "../ui/Loading";
 import ErrorState from "../ui/ErrorState";
 import EmptyState from "../ui/EmptyState";
 import ProductToolbar from "./ProductToolbar";
-
+import Pagination from "./Pagination";
 const ProductSection = () => {
-  const { products, loading, error, refetch } = useProducts();
+  const {
+    products,
+    loading,
+    error,
+    refetch,
+    currentPage,
+    totalPages,
+    totalProducts,
+  } = useProducts();
 
   if (loading) {
     return <Loading />;
@@ -24,9 +32,10 @@ const ProductSection = () => {
 
   return (
     <>
-      <ProductToolbar productCount={products.length} />
+      <ProductToolbar productCount={totalProducts} />
 
       <ProductGrid products={products} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 };

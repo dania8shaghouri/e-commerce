@@ -12,6 +12,7 @@ const initialFilters: ShopFilters = {
   maxPrice: null,
   inStock: false,
   sort: "featured",
+  page: 1,
 };
 
 const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -20,6 +21,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const toggleCategory = (category: string) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
 
       category: prev.category.includes(category)
         ? prev.category.filter((item) => item !== category)
@@ -30,6 +32,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const setPrice = (min: number | null, max: number | null) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
       minPrice: min,
       maxPrice: max,
     }));
@@ -38,6 +41,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const toggleInStock = () => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
       inStock: !prev.inStock,
     }));
   };
@@ -45,6 +49,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const toggleBrand = (brand: string) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
 
       brand: prev.brand.includes(brand)
         ? prev.brand.filter((item) => item !== brand)
@@ -55,6 +60,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const setMinPrice = (price: number | null) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
       minPrice: price,
     }));
   };
@@ -62,6 +68,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const setMaxPrice = (price: number | null) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
       maxPrice: price,
     }));
   };
@@ -69,7 +76,15 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
   const setSort = (sort: ProductSort) => {
     setFilters((prev) => ({
       ...prev,
+      page: 1,
       sort,
+    }));
+  };
+
+  const setPage = (page: number) => {
+    setFilters((prev) => ({
+      ...prev,
+      page,
     }));
   };
 
@@ -89,6 +104,7 @@ const ShopFilterProvider: FC<PropsWithChildren> = ({ children }) => {
         setPrice,
         toggleInStock,
         setSort,
+        setPage,
 
         clearFilters,
       }}

@@ -11,6 +11,7 @@ interface ShopFilterContextType {
   setPrice: (min: number | null, max: number | null) => void;
   toggleInStock: () => void;
   setSort: (sort: ProductSort) => void;
+  setPage: (page: number) => void;
 
   clearFilters: () => void;
 }
@@ -23,6 +24,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
     maxPrice: null,
     inStock: false,
     sort: "featured",
+    page: 1,
   },
 
   toggleCategory: () => {},
@@ -32,6 +34,7 @@ export const ShopFilterContext = createContext<ShopFilterContextType>({
   setPrice: () => {},
   toggleInStock: () => {},
   setSort: () => {},
+  setPage: () => {},
 
   clearFilters: () => {},
 });

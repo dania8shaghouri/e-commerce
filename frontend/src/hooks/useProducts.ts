@@ -10,14 +10,30 @@ export const useProducts = () => {
   const [error, setError] = useState<string | null>(null);
   const { filters } = useShopFilter();
 
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
+      // const data = await getProducts(filters);
+
       const data = await getProducts(filters);
 
-      setProducts(data);
+      console.log({
+        totalProducts: data.totalProducts,
+        totalPages: data.totalPages,
+        currentPage: data.currentPage,
+      });
+      setProducts(data.products);
+      setCurrentPage(data.currentPage);
+      setTotalPages(data.totalPages);
+      setTotalProducts(data.totalProducts);
+
+      // setProducts(data);
     } catch (error) {
       console.error(error);
 
@@ -35,5 +51,9 @@ export const useProducts = () => {
     loading,
     error,
     refetch: fetchProducts,
+
+    currentPage,
+    totalPages,
+    totalProducts,
   };
 };

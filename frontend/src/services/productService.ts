@@ -1,10 +1,10 @@
 import api from "../api/axios";
-import type { Product } from "../types/Product";
+import type { Product, ProductsResponse } from "../types/Product";
 import type { ShopFilters } from "../types/Filter";
 
 export const getProducts = async (
   filters?: ShopFilters,
-): Promise<Product[]> => {
+): Promise<ProductsResponse> => {
   const params = new URLSearchParams();
 
   if (filters?.category?.length) {
@@ -29,7 +29,12 @@ export const getProducts = async (
     params.set("sort", filters.sort);
   }
 
-  const { data } = await api.get<Product[]>(`/product?${params.toString()}`);
+  if (filters?.page) {
+    params.set("page", String(filters.page));
+  }
+  const { data } = await api.get<ProductsResponse>(
+    `/product?${params.toString()}`,
+  );
 
   return data;
 };
