@@ -38,20 +38,31 @@ const ProductSpecs = ({ product }: ProductSpecsProps) => {
 
   return (
     <section className="mt-16">
-      <h2 className="mb-8 text-3xl font-bold">Specifications</h2>
+      <h2 className="mb-8 text-3xl font-bold text-gray-900">Specifications</h2>
 
-      <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white">
+      <div
+        className="
+          grid
+          gap-5
+          sm:grid-cols-2
+        "
+      >
         {specs.map((spec) => (
           <div
             key={spec.label}
             className="
               flex
+              items-center
               justify-between
-              border-b
-              border-gray-100
-              px-8
+              rounded-2xl
+              border
+              border-gray-200
+              bg-white
+              px-6
               py-5
-              last:border-b-0
+              transition
+              hover:border-primary/30
+              hover:shadow-md
             "
           >
             <span className="font-medium text-gray-500">{spec.label}</span>

@@ -8,20 +8,32 @@ const ProductDescription = ({ product }: Props) => {
   if (!product.description) return null;
 
   return (
-    <section
-      className="
-        mt-16
-        rounded-3xl
-        border
-        border-gray-200
-        bg-white
-        p-10
-        shadow-sm
-      "
-    >
-      <h2 className="mb-6 text-3xl font-bold text-gray-900">Description</h2>
+    <section className="mt-16">
+      <h2 className="text-3xl font-bold text-gray-900">Description</h2>
 
-      <p className="leading-8 text-gray-600">{product.description}</p>
+      <div
+        className="
+          mt-8
+          rounded-3xl
+          border
+          border-gray-200
+          bg-white
+          p-10
+          shadow-sm
+        "
+      >
+        <div
+          className="
+            prose
+            prose-gray
+            max-w-none
+            leading-8
+            text-gray-600
+          "
+        >
+          <p>{product.description}</p>
+        </div>
+      </div>
     </section>
   );
 };

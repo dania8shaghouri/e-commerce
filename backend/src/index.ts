@@ -10,6 +10,7 @@ import userRoute from "./routes/userRoutes.js";
 import productRoute from "./routes/productRoutes.js";
 import cartRoute from "./routes/cartRouter.js";
 import adminRoute from "./routes/adminRoutes.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
 
 
 dotenv.config();
@@ -40,6 +41,7 @@ app.use("/user", userRoute);
 app.use("/product", productRoute);
 app.use("/cart", cartRoute);
 app.use("/admin", adminRoute);
+app.use("/wishlist", wishlistRoutes);
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
 });
