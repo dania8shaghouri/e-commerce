@@ -5,11 +5,23 @@ interface Props {
 }
 
 const ProductDescription = ({ product }: Props) => {
-  return (
-    <section className="mt-12">
-      <h2 className="mb-6 text-2xl font-semibold">Description</h2>
+  if (!product.description) return null;
 
-      <p>{product.description}</p>
+  return (
+    <section
+      className="
+        mt-16
+        rounded-3xl
+        border
+        border-gray-200
+        bg-white
+        p-10
+        shadow-sm
+      "
+    >
+      <h2 className="mb-6 text-3xl font-bold text-gray-900">Description</h2>
+
+      <p className="leading-8 text-gray-600">{product.description}</p>
     </section>
   );
 };
