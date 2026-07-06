@@ -29,7 +29,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
   };
 
   return (
-    <div className="flex gap-6">
+    <div className="flex items-start gap-6">
       {/* Thumbnails */}
       <div className="flex flex-col gap-4 ">
         {images.map((image) => (
@@ -70,7 +70,8 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         onMouseEnter={() => setZoom(true)}
         onMouseLeave={() => setZoom(false)}
         className="
-    flex-1
+    w-full
+    max-w-[650px]
     overflow-hidden
     rounded-3xl
     border

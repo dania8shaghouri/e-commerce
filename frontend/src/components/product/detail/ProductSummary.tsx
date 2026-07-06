@@ -1,7 +1,13 @@
-import { FiCheckCircle, FiShoppingCart } from "react-icons/fi";
+import { useState } from "react";
+import { FiShoppingCart } from "react-icons/fi";
+
 import { useAddToCart } from "../../../hooks/useAddToCart";
 import type { Product } from "../../../types/Product";
+
 import ProductRating from "../card/ProductRating";
+import ProductAvailability from "./ProductAvailability";
+import QuantitySelector from "./QuantitySelector";
+import DeliveryInfo from "./DeliveryInfo";
 
 interface ProductSummaryProps {
   product: Product;
@@ -9,6 +15,20 @@ interface ProductSummaryProps {
 
 const ProductSummary = ({ product }: ProductSummaryProps) => {
   const { addToCart } = useAddToCart();
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increase = () => {
+    if (quantity < product.stock) {
+      setQuantity((q) => q + 1);
+    }
+  };
+
+  const decrease = () => {
+    if (quantity > 1) {
+      setQuantity((q) => q - 1);
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -28,7 +48,7 @@ const ProductSummary = ({ product }: ProductSummaryProps) => {
       </p>
 
       {/* Rating */}
-      <div className="mt-6">
+      <div className="mt-5">
         <ProductRating
           rating={product.rating}
           reviewCount={product.reviewCount}
@@ -36,7 +56,7 @@ const ProductSummary = ({ product }: ProductSummaryProps) => {
       </div>
 
       {/* Price */}
-      <div className="mt-8">
+      <div className="mt-7">
         <p className="text-4xl font-bold text-primary">
           {new Intl.NumberFormat("tr-TR", {
             style: "currency",
@@ -45,19 +65,26 @@ const ProductSummary = ({ product }: ProductSummaryProps) => {
         </p>
       </div>
 
-      {/* Stock */}
-      <div className="mt-6 flex items-center gap-3">
-        <FiCheckCircle className="text-green-500" size={22} />
+      {/* Availability + SKU */}
+      <div className="mt-7 flex items-center justify-between gap-4 border-b border-gray-200 pb-6">
+        <ProductAvailability stock={product.stock} />
 
-        <span className="font-medium text-green-600">
-          {product.stock > 0
-            ? `${product.stock} items in stock`
-            : "Out of stock"}
-        </span>
+        <p className="text-sm text-gray-500 whitespace-nowrap">
+          SKU
+          <span className="ml-2 font-semibold text-gray-900">
+            {product._id.slice(-8).toUpperCase()}
+          </span>
+        </p>
       </div>
 
-      {/* Actions */}
-      <div className="mt-10 flex gap-4">
+      {/* Quantity + Buttons */}
+      <div className="mt-8 flex items-center gap-4">
+        <QuantitySelector
+          quantity={quantity}
+          increase={increase}
+          decrease={decrease}
+        />
+
         <button
           onClick={() => addToCart(product)}
           disabled={product.stock === 0}
@@ -103,6 +130,9 @@ const ProductSummary = ({ product }: ProductSummaryProps) => {
           Buy Now
         </button>
       </div>
+
+      {/* Delivery */}
+      <DeliveryInfo />
     </div>
   );
 };
