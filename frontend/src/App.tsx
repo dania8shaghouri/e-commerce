@@ -22,10 +22,12 @@ import AdminLayout from "./features/admin/layouts/AdminLayout";
 
 import AdminProtectedRoute from "./features/admin/routes/AdminProtectedRoute";
 import DashboardPage from "./features/admin/pages/admin/DashboardPage";
+import WishlistProvider from "./context/Wishlist/WishlistProvider";
 
 function App() {
   return (
     <AuthProvider>
+       <WishlistProvider>
       <CartProvider>
         <BrowserRouter>
           <Routes>
@@ -53,6 +55,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </CartProvider>
+      </WishlistProvider>
     </AuthProvider>
   );
 }

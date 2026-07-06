@@ -26,7 +26,7 @@ group-hover:from-blue-50
 group-hover:to-slate-50
   "
     >
-      <WishlistButton />
+      <WishlistButton productId={product._id} />
 
       <CategoryBadge category={product.category} />
 
