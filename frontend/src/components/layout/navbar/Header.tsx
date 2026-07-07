@@ -23,13 +23,14 @@ const NAV_ITEMS = [
 
 export default function Header({ setMenuOpen }: HeaderProps) {
   const { username, isAuthenticated, logout } = useAuth();
-  const { cartItems } = useCart();
+  const { cartItems, resetCart } = useCart();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const go = (path: string) => navigate(path);
 
   const handleLogout = () => {
+    resetCart();
     logout();
     navigate("/");
   };
@@ -38,7 +39,6 @@ export default function Header({ setMenuOpen }: HeaderProps) {
     <nav className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-
           {/* LEFT */}
           <Logo onClick={() => go("/")} />
 
@@ -57,7 +57,6 @@ export default function Header({ setMenuOpen }: HeaderProps) {
 
           {/* RIGHT */}
           <div className="flex items-center gap-4">
-
             <div className="hidden lg:block w-64">
               <SearchBar />
             </div>
@@ -91,7 +90,6 @@ export default function Header({ setMenuOpen }: HeaderProps) {
             >
               <FiMenu />
             </button>
-
           </div>
         </div>
       </div>

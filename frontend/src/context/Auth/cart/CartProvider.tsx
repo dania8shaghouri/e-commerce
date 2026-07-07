@@ -49,20 +49,16 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     setTotalAmount(backendCart.totalAmount);
   };
 
+  const resetCart = () => {
+    setCartItems([]);
+    setTotalAmount(0);
+  };
+
   useEffect(() => {
     if (!token) return;
 
-    const fetchCart = async () => {
-      const { data } = await getCart(token);
-      const backendCart = data as BackendCart;
-
-      setCartItems(backendCart.items.map(mapBackendItem));
-      setTotalAmount(backendCart.totalAmount);
-    };
-
-    fetchCart();
+    syncCart();
   }, [token]);
-
   const addItemToCart = async (item: CartItem) => {
     try {
       await addToCart(token!, {
@@ -103,9 +99,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const clearCart = async () => {
     try {
       await clearCartRequest(token!);
-
-      setCartItems([]);
-      setTotalAmount(0);
+      resetCart();
 
       toast.success("Cart cleared");
     } catch {
@@ -122,6 +116,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
         clearCart,
         updateItemQuantity,
         removeItemFromCart,
+        resetCart,
       }}
     >
       {children}
