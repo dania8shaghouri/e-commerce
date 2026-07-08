@@ -4,6 +4,10 @@ A full-stack e-commerce application developed with React, TypeScript, Node.js, E
 
 This project includes user authentication, role-based authorization, product management and an admin dashboard structure.
 
+## 🚀 Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://ecommerce-frontend-lyart-one.vercel.app/)
+
 ## Features
 
 - User registration and login
