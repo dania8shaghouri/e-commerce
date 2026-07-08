@@ -56,12 +56,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setOrdersLoading(true);
 
     try {
-      const { data } = await api.get("/user/my-orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const { data } = await api.get("/user/my-orders");
       setOrders(data);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
