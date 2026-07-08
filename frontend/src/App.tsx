@@ -5,7 +5,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ShopPage from "./pages/shop/ShopPage";
 
 import AuthProvider from "./context/Auth/AuthProvider";
-import CartProvider from "./context/Auth/cart/CartProvider";
+import CartProvider from "./context/cart/CartProvider";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";

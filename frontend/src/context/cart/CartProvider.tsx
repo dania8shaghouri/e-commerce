@@ -1,14 +1,14 @@
 import { useEffect, useState, type FC, type PropsWithChildren } from "react";
 import { CartContext } from "./CartContext";
-import type { CartItem } from "../../../types/CartItem";
-import { useAuth } from "../AuthContext";
+import type { CartItem } from "../../types/CartItem";
+import { useAuth } from "../Auth/AuthContext";
 import {
   getCart,
   addToCart,
   updateCartItem,
   removeCartItem,
   clearCartRequest,
-} from "../../../services/cartService";
+} from "../../services/cartService";
 import toast from "react-hot-toast";
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {

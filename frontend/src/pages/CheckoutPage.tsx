@@ -173,10 +173,10 @@
 // };
 
 // export default CheckoutPage;
-import { useCart } from "../context/Auth/cart/CartContext";
+import { useCart } from "../context/cart/CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/Auth/AuthContext";
+// import { useAuth } from "../context/Auth/AuthContext";
 import toast from "react-hot-toast";
 import { checkoutRequest } from "../services/cartService";
 import Loading from "../components/ui/Loading";
@@ -186,29 +186,29 @@ import type { CheckoutFormData } from "../validation/checkoutSchema";
 
 const CheckoutPage = () => {
   const { cartItems, totalAmount, clearCart } = useCart();
-  const { token } = useAuth();
+  // const { token } = useAuth();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-const handleCheckout = async (data: CheckoutFormData) => {
-  setLoading(true);
+  const handleCheckout = async (data: CheckoutFormData) => {
+    setLoading(true);
 
-  try {
-    await checkoutRequest(token!, {
-      shipping: data,
-    });
+    try {
+      await checkoutRequest( {
+        shipping: data,
+      });
 
-    await clearCart();
+      await clearCart();
 
-    toast.success("Order placed successfully");
-    navigate("/order-success");
-  } catch {
-    toast.error("Checkout failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      toast.success("Order placed successfully");
+      navigate("/order-success");
+    } catch {
+      toast.error("Checkout failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) return <Loading />;
   if (cartItems.length === 0) return <div>Cart is empty</div>;

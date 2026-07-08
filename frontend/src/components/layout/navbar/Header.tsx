@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../../context/Auth/AuthContext";
-import { useCart } from "../../../context/Auth/cart/CartContext";
+import { useCart } from "../../../context/cart/CartContext";
 
 import Logo from "./Logo";
 import CartButton from "./CartButton";
