@@ -71,7 +71,7 @@ export default function Header({ setMenuOpen }: HeaderProps) {
               <UserMenu
                 username={username}
                 onLogout={handleLogout}
-                onOrders={() => go("/orders")}
+                onOrders={() => go("/my-orders")}
               />
             ) : (
               <button
