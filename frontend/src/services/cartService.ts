@@ -1,9 +1,8 @@
-import axios from "axios";
-import { BASE_URL } from "../constants/baseUrl";
+import api from "../api/axios";
 import type { Shipping } from "../types/order";
 
 export const getCart = (token: string) =>
-  axios.get(`${BASE_URL}/cart`, {
+  api.get("/cart", {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -11,7 +10,7 @@ export const addToCart = (
   token: string,
   data: { productId: string; quantity: number },
 ) =>
-  axios.post(`${BASE_URL}/cart/items`, data, {
+  api.post("/cart/items", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -19,17 +18,17 @@ export const updateCartItem = (
   token: string,
   data: { productId: string; quantity: number },
 ) =>
-  axios.put(`${BASE_URL}/cart/items`, data, {
+  api.put("/cart/items", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
 export const removeCartItem = (token: string, productId: string) =>
-  axios.delete(`${BASE_URL}/cart/items/${productId}`, {
+  api.delete(`/cart/items/${productId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
 export const clearCartRequest = (token: string) =>
-  axios.delete(`${BASE_URL}/cart`, {
+  api.delete("/cart", {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -42,14 +41,7 @@ export const clearCartRequest = (token: string) =>
 //     },
 //   );
 
-export const checkoutRequest = (
-  token: string,
-  data: { shipping: Shipping }
-) =>
-  axios.post(
-    `${BASE_URL}/cart/checkout`,
-    data,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    },
-  );
+export const checkoutRequest = (token: string, data: { shipping: Shipping }) =>
+  api.post("/cart/checkout", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });

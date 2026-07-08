@@ -1,4 +1,5 @@
-import { useState, type FC, type PropsWithChildren } from "react";
+import { useEffect, useState, type FC, type PropsWithChildren } from "react";
+import { setLogoutHandler } from "../../utils/auth";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
 import { BASE_URL } from "../../constants/baseUrl";
@@ -46,6 +47,9 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem("role");
   };
+  useEffect(() => {
+    setLogoutHandler(logout);
+  }, []);
 
   const getMyOrders = async () => {
     if (!token) return;
