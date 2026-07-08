@@ -1,8 +1,7 @@
 import { useEffect, useState, type FC, type PropsWithChildren } from "react";
 import { setLogoutHandler } from "../../utils/auth";
 import { AuthContext } from "./AuthContext";
-import axios from "axios";
-import { BASE_URL } from "../../constants/baseUrl";
+import api from "../../api/axios";
 import type { Order } from "../../types/order";
 
 const USERNAME_KEY = "username";
@@ -57,7 +56,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     setOrdersLoading(true);
 
     try {
-      const { data } = await axios.get(`${BASE_URL}/user/my-orders`, {
+      const { data } = await api.get("/user/my-orders", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

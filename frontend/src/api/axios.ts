@@ -10,6 +10,18 @@ const api = axios.create({
 
 let isSessionExpired = false;
 
+// ✅ Her istekten önce token ekle
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+// ✅ Her cevaptan sonra 401 kontrolü
 api.interceptors.response.use(
   (response) => response,
 

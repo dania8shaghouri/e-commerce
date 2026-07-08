@@ -42,7 +42,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const syncCart = async () => {
     if (!token) return;
 
-    const { data } = await getCart(token);
+    const { data } = await getCart();
     const backendCart = data as BackendCart;
 
     setCartItems(backendCart.items.map(mapBackendItem));
@@ -59,9 +59,10 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
     syncCart();
   }, [token]);
+
   const addItemToCart = async (item: CartItem) => {
     try {
-      await addToCart(token!, {
+      await addToCart({
         productId: item.productId,
         quantity: item.quantity,
       });
@@ -76,7 +77,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const updateItemQuantity = async (productId: string, quantity: number) => {
     try {
-      await updateCartItem(token!, { productId, quantity });
+      await updateCartItem({ productId, quantity });
       await syncCart();
       toast.success("Cart updated");
     } catch {
@@ -86,7 +87,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const removeItemFromCart = async (productId: string) => {
     try {
-      await removeCartItem(token!, productId);
+      await removeCartItem(productId);
 
       await syncCart();
 
@@ -98,7 +99,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const clearCart = async () => {
     try {
-      await clearCartRequest(token!);
+      await clearCartRequest();
       resetCart();
 
       toast.success("Cart cleared");
