@@ -1,32 +1,16 @@
 import api from "../api/axios";
 import type { WishlistItem, WishlistResponse } from "../types/Wishlist";
 
-export const getWishlist = (token: string) => {
-  return api.get<WishlistItem[]>("/wishlist", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getWishlist = () => {
+  return api.get<WishlistItem[]>("/wishlist");
 };
 
-export const checkWishlist = (token: string, productId: string) => {
+export const checkWishlist = (productId: string) => {
   return api.get<{
     isWishlisted: boolean;
-  }>(`/wishlist/${productId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  }>(`/wishlist/check/${productId}`);
 };
 
-export const toggleWishlist = (token: string, productId: string) => {
-  return api.post<WishlistResponse>(
-    `/wishlist/${productId}`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+export const toggleWishlist = (productId: string) => {
+  return api.post<WishlistResponse>(`/wishlist/${productId}`, {});
 };
