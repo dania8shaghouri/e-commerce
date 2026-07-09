@@ -16,16 +16,9 @@ Novatech Store was developed to strengthen my full-stack development skills by b
 
 # 🚀 Live Demo
 
-### 🌐 Frontend
+## 🚀 Live Demo
 
-https://ecommerce-frontend-lyart-one.vercel.app/
-
-### ⚙️ Backend API
-
-https://ecommerce-backend-aa4u.onrender.com
-
-> **Note:** The backend is a REST API. Opening the API URL directly in a browser displays `Cannot GET /`, which is expected because no root (`/`) route is defined.
-
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://ecommerce-frontend-lyart-one.vercel.app/)
 ---
 
 # 📑 Table of Contents
