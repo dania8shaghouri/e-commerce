@@ -16,7 +16,6 @@ Novatech Store was developed to strengthen my full-stack development skills by b
 
 # 🚀 Live Demo
 
-## 🚀 Live Demo
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://ecommerce-frontend-lyart-one.vercel.app/)
 ---
