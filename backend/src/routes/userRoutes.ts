@@ -2,20 +2,15 @@ import express from "express";
 import { getMyOrders, login, register } from "../services/userService.js";
 import validateJWT from "../middlewares/validateJWT.js";
 import type { ExtendRequest } from "../types/extendedRequest.js";
+import { loginSchema, registerSchema } from "../validation/userValidation.js";
+import validateRequest from "../middlewares/validateRequest.js";
 
 const router = express.Router();
 
 // ---------------- REGISTER ----------------
-router.post("/register", async (req, res) => {
+router.post("/register", validateRequest(registerSchema), async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
-
-    const result = await register({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    const result = await register(req.body);
 
     res.status(200).json(result);
   } catch (err: any) {
@@ -26,7 +21,7 @@ router.post("/register", async (req, res) => {
 });
 
 // ---------------- LOGIN ----------------
-router.post("/login", async (req, res) => {
+router.post("/login", validateRequest(loginSchema), async (req, res) => {
   try {
     const result = await login(req.body);
 
