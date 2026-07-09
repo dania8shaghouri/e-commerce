@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/screenshots/hero.png" alt="Novatech Store Banner" width="100%">
+</p>
+
 # 🛍️ Novatech Store
 
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
@@ -16,8 +20,11 @@ Novatech Store was developed to strengthen my full-stack development skills by b
 
 # 🚀 Live Demo
 
+<p align="center">
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://ecommerce-frontend-lyart-one.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Website-blue?style=for-the-badge)](https://ecommerce-frontend-lyart-one.vercel.app/)
+
+</p>
 ---
 
 # 📑 Table of Contents
@@ -263,14 +270,30 @@ Planned improvements include:
 
 # 📷 Screenshots
 
-Project screenshots will be added soon.
+Explore some of the key pages of **Novatech Store**.
+
+### 🏠 Home & Shop
+
+| Home | Shop |
+|------|------|
+| ![](assets/screenshots/home.png) | ![](assets/screenshots/shop.png) |
 
 ---
 
-# 📄 License
+### 🛒 Shopping Experience
 
-This project is licensed under the MIT License.
+| Cart | Orders |
+|------|------|
+| ![](assets/screenshots/cart.png) | ![](assets/screenshots/orders.png) |
 
 ---
 
-### Developed by **Dania Shaghouri**
+### 👨‍💼 Admin Dashboard
+
+<p align="center">
+  <img src="assets/screenshots/admin-dashboard.png" alt="Admin Dashboard" width="90%">
+</p>
+---
+
+
+
