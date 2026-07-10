@@ -2,6 +2,7 @@ import express from "express";
 import validateJWT from "../middlewares/validateJWT.js";
 import { loginSchema, registerSchema } from "../validation/userValidation.js";
 import validateRequest from "../middlewares/validateRequest.js";
+import authLimiter from "../middlewares/authLimiter.js";
 import {
   registerUser,
   loginUser,
@@ -11,10 +12,10 @@ import {
 const router = express.Router();
 
 // ---------------- REGISTER ----------------
-router.post("/register", validateRequest(registerSchema), registerUser);
+router.post("/register", authLimiter, validateRequest(registerSchema), registerUser);
 
 // ---------------- LOGIN ----------------
-router.post("/login", validateRequest(loginSchema), loginUser);
+router.post("/login", authLimiter, validateRequest(loginSchema), loginUser);
 
 // ---------------- MY ORDERS ----------------
 router.get("/my-orders", validateJWT, getOrders);
