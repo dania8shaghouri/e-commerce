@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
+import helmet from "helmet";
 import { fileURLToPath } from "url";
 
 import cors from "cors";
@@ -12,13 +13,18 @@ import cartRoute from "./routes/cartRouter.js";
 import adminRoute from "./routes/adminRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 
-
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use("/images", express.static(path.join(process.cwd(), "src/images")));
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 
 app.use(
   cors({
