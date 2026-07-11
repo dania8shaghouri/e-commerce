@@ -15,6 +15,17 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 
 dotenv.config();
 
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is missing");
+}
+
+if (!process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI environment variable is missing");
+}
+
+if (!process.env.ALLOWED_ORIGINS) {
+  throw new Error("ALLOWED_ORIGINS environment variable is missing");
+}
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -26,12 +37,22 @@ app.use(
   }),
 );
 
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//   }),
+// );
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") ?? [];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
+
 app.use(express.json());
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
