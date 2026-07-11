@@ -31,12 +31,24 @@ export const useRequest = <T>() => {
       return res;
     } catch (err: unknown) {
       if (axios.isAxiosError<ApiErrorResponse>(err)) {
-        const data = err.response?.data;
-
-        if (data?.errors?.length) {
-          setError(data.errors[0].message);
+        if (err.code === "ERR_NETWORK") {
+          setError("Unable to connect to the server.");
+        } else if (err.code === "ECONNABORTED") {
+          setError("Request timed out.");
+        } else if (err.response?.status === 403) {
+          setError("You are not authorized to perform this action.");
+        } else if (err.response?.status === 404) {
+          setError("Requested resource not found.");
+        } else if (err.response?.status === 500) {
+          setError("Server error. Please try again later.");
         } else {
-          setError(data?.message ?? "Request failed");
+          const data = err.response?.data;
+
+          if (data?.errors?.length) {
+            setError(data.errors[0].message);
+          } else {
+            setError(data?.message ?? "Request failed");
+          }
         }
       } else if (err instanceof Error) {
         setError(err.message);

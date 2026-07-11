@@ -1,12 +1,11 @@
 import { useProducts } from "../../hooks/useProducts";
 
 import ProductGrid from "../product/card/ProductGrid";
-
-import Loading from "../ui/Loading";
 import ErrorState from "../ui/ErrorState";
 import EmptyState from "../ui/EmptyState";
 import ProductToolbar from "./ProductToolbar";
 import Pagination from "./Pagination";
+import ProductGridSkeleton from "../product/card/ProductGridSkeleton";
 const ProductSection = () => {
   const {
     products,
@@ -19,7 +18,7 @@ const ProductSection = () => {
   } = useProducts();
 
   if (loading) {
-    return <Loading />;
+    return <ProductGridSkeleton />;
   }
 
   if (error) {

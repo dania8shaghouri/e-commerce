@@ -20,7 +20,7 @@ export const useProducts = () => {
       setError(null);
 
       // const data = await getProducts(filters);
-
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
       const data = await getProducts(filters);
 
       console.log({
