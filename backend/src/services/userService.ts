@@ -9,19 +9,15 @@ interface RegisterParams {
   email: string;
   password: string;
 }
-
-// const generateJWT = (data: any) => {
-//   return jwt.sign(data, process.env.JWT_SECRET || "", {
-//     expiresIn: "1h",
-//   });
-// };
-
+// Kullanıcı giriş yaptıktan sonra kimlik doğrulaması için
+// 1 saat geçerli bir JWT (JSON Web Token) oluşturur.
 const generateJWT = (data: any) => {
   return jwt.sign(data, process.env.JWT_SECRET as string, {
     expiresIn: "1h",
   });
 };
 // ---------------- REGISTER ----------------
+// Yeni kullanıcı kaydı oluşturur.
 export const register = async ({
   firstName,
   lastName,
@@ -47,7 +43,6 @@ export const register = async ({
   await newUser.save();
 
   return {
-    // token: generateJWT({ firstName, lastName, email }),
     message: "Registration successful",
   };
 };
@@ -57,7 +52,9 @@ interface LoginParams {
   email: string;
   password: string;
 }
-
+// Kullanıcının giriş bilgilerini doğrular.
+// E-posta ve şifreyi kontrol eder, başarılıysa
+// JWT oluşturup kullanıcıya token döndürür.
 export const login = async ({ email, password }: LoginParams) => {
   const findUser = await userModel.findOne({ email });
 
@@ -89,7 +86,7 @@ export const login = async ({ email, password }: LoginParams) => {
 interface GetMyOrdersParams {
   userId: string;
 }
-
+// Giriş yapan kullanıcıya ait siparişleri en yeni tarihten eskiye doğru getirir
 export const getMyOrders = async ({ userId }: GetMyOrdersParams) => {
   const orders = await orderModel.find({ userId }).sort({ createdAt: -1 });
 

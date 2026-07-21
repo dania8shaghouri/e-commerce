@@ -8,6 +8,7 @@ import {
 } from "../services/userService.js";
 
 // ---------------- REGISTER ----------------
+// Yeni kullanıcı kaydı isteğini işleyip sonucu istemciye döndürür.
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const result = await register(req.body);
@@ -21,6 +22,7 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 // ---------------- LOGIN ----------------
+// Kullanıcı giriş isteğini işleyip başarılıysa JWT bilgilerini döndürür.
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const result = await login(req.body);
@@ -34,6 +36,7 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 // ---------------- MY ORDERS ----------------
+// Giriş yapan kullanıcının siparişlerini getirip istemciye döndürür. 
 export const getOrders = async (
   req: ExtendRequest,
   res: Response,

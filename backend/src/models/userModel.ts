@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+// IUser yalnızca TypeScript'in derleme zamanında tip kontrolü yapmasını sağlar.
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
@@ -6,7 +7,7 @@ export interface IUser extends Document {
   password: string;
   role: "customer" | "admin";
 }
-
+// userSchema veritabanına kaydedilecek verilerin yapısını ve doğrulama kurallarını tanımlar.
 const userSchema = new Schema<IUser>({
   firstName: {
     type: String,
@@ -26,6 +27,7 @@ const userSchema = new Schema<IUser>({
   email: {
     type: String,
     required: true,
+    unique: true,
     trim: true,
     lowercase: true,
     maxlength: 100,
