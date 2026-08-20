@@ -2,7 +2,7 @@
   <img src="assets/screenshots/hero.png" alt="Novatech Store Banner" width="100%">
 </p>
 
-# 🛍️ Novatech Store
+# 💻 Novatech Store
 
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript\&logoColor=white)
