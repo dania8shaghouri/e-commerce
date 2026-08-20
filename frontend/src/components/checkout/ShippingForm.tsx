@@ -21,20 +21,20 @@ const ShippingForm = ({ onSubmit }: Props) => {
     resolver: zodResolver(checkoutSchema),
   });
 
-  const formatCardNumber = (value: string) =>
-    value
-      .replace(/\D/g, "")
-      .slice(0, 16)
-      .replace(/(\d{4})/g, "$1 ")
-      .trim();
+  // const formatCardNumber = (value: string) =>
+  //   value
+  //     .replace(/\D/g, "")
+  //     .slice(0, 16)
+  //     .replace(/(\d{4})/g, "$1 ")
+  //     .trim();
 
-  const formatExpiry = (value: string) => {
-    const cleaned = value.replace(/\D/g, "").slice(0, 4);
-    if (cleaned.length >= 3) {
-      return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
-    }
-    return cleaned;
-  };
+  // const formatExpiry = (value: string) => {
+  //   const cleaned = value.replace(/\D/g, "").slice(0, 4);
+  //   if (cleaned.length >= 3) {
+  //     return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
+  //   }
+  //   return cleaned;
+  // };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -75,7 +75,7 @@ const ShippingForm = ({ onSubmit }: Props) => {
       <div className="bg-white p-6 rounded-xl shadow-md">
         <h2 className="mb-4 font-semibold text-lg">Payment Information</h2>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        {/* <div className="grid gap-4 md:grid-cols-2">
           <div className="md:col-span-2">
             <Input placeholder="Card Holder Name" {...register("cardName")} />
             <p className="error">{errors.cardName?.message}</p>
@@ -113,7 +113,7 @@ const ShippingForm = ({ onSubmit }: Props) => {
             />
             <p className="error">{errors.cvv?.message}</p>
           </div>
-        </div>
+        </div> */}
 
         <button
           type="submit"

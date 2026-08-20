@@ -12,7 +12,7 @@ import productRoute from "./routes/productRoutes.js";
 import cartRoute from "./routes/cartRouter.js";
 import adminRoute from "./routes/adminRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
-
+import paymentRoute from "./routes/paymentRoutes.js"
 dotenv.config();
 
 if (!process.env.JWT_SECRET) {
@@ -53,7 +53,8 @@ app.use(
   }),
 );
 
-app.use(express.json());
+app.use("/payment", paymentRoute);   // önce ham veri kaybolmasin diye
+app.use(express.json());             // sonra
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 mongoose

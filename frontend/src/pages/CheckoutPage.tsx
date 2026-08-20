@@ -175,7 +175,6 @@
 // export default CheckoutPage;
 import { useCart } from "../context/cart/CartContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../context/Auth/AuthContext";
 import toast from "react-hot-toast";
 import { checkoutRequest } from "../services/cartService";
@@ -185,27 +184,42 @@ import ShippingForm from "../components/checkout/ShippingForm";
 import type { CheckoutFormData } from "../validation/checkoutSchema";
 
 const CheckoutPage = () => {
-  const { cartItems, totalAmount, clearCart } = useCart();
+  const { cartItems, totalAmount } = useCart();
   // const { token } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
+  // const handleCheckout = async (data: CheckoutFormData) => {
+  //   setLoading(true);
+
+  //   try {
+  //     await checkoutRequest( {
+  //       shipping: data,
+  //     });
+
+  //     await clearCart();
+
+  //     toast.success("Order placed successfully");
+  //     navigate("/order-success");
+  //   } catch {
+  //     toast.error("Checkout failed");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleCheckout = async (data: CheckoutFormData) => {
     setLoading(true);
 
     try {
-      await checkoutRequest( {
-        shipping: data,
-      });
+      const response = await checkoutRequest({ shipping: data });
+      const { checkoutUrl } = response.data;
 
-      await clearCart();
-
-      toast.success("Order placed successfully");
-      navigate("/order-success");
+      // artık /order-success'e navigate etmiyoruz,
+      // kullanıcıyı direkt Stripe'ın ödeme sayfasına yönlendiriyoruz
+      window.location.href = checkoutUrl;
     } catch {
       toast.error("Checkout failed");
-    } finally {
       setLoading(false);
     }
   };

@@ -1,3 +1,5 @@
+// Kullanıcının gönderdiği JWT token'ını doğrular. Token geçerliyse 
+// kullanıcı bilgilerini req.user içine ekler ve isteğin devam etmesini sağlar
 import type { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
