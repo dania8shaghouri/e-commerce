@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { FiCheck, FiClock } from "react-icons/fi";
 import { getOrderStatus } from "../services/paymentService";
+import ResultState from "../components/ui/ResultState";
+import Loading from "../components/ui/Loading";
 
 const PaymentSuccessPage = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const navigate = useNavigate();
 
   const [status, setStatus] = useState<"loading" | "paid" | "pending">(
     "loading",
@@ -25,39 +29,36 @@ const PaymentSuccessPage = () => {
     checkStatus();
   }, [orderId]);
 
-  if (status === "loading") {
+  if (status === "loading") return <Loading />;
+
+  if (status === "paid") {
     return (
-      <div className="max-w-lg mx-auto text-center py-16">
-        <p>Checking payment status...</p>
-      </div>
+      <ResultState
+        icon={FiCheck}
+        title="Payment Successful 🎉"
+        buttonText="Continue Shopping"
+        onClick={() => navigate("/shop")}
+        color="green"
+      >
+        <p>Your order has been placed, thank you!</p>
+        <p className="text-sm text-gray-500">Order No: {orderId}</p>
+      </ResultState>
     );
   }
 
   return (
-    <div className="max-w-lg mx-auto text-center py-16 space-y-4">
-      {status === "paid" ? (
-        <>
-          <h1 className="text-2xl font-bold text-green-600">
-            Payment Successful 🎉
-          </h1>
-          <p>Your order has been placed, thank you!</p>
-          <p className="text-sm text-gray-500">Order No: {orderId}</p>
-        </>
-      ) : (
-        <>
-          <h1 className="text-2xl font-bold text-yellow-600">
-            Confirming Payment
-          </h1>
-          <p>
-            Your payment was processed but our system hasn't confirmed it
-            yet — please refresh in a few seconds.
-          </p>
-        </>
-      )}
-      <Link to="/shop" className="text-primary underline">
-        Continue Shopping
-      </Link>
-    </div>
+    <ResultState
+      icon={FiClock}
+      title="Confirming Payment"
+      buttonText="Refresh"
+      onClick={() => window.location.reload()}
+      color="green"
+    >
+      <p>
+        Your payment was processed but our system hasn't confirmed it yet —
+        please refresh in a few seconds.
+      </p>
+    </ResultState>
   );
 };
 
