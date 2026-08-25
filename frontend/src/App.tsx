@@ -12,8 +12,6 @@ import RegisterPage from "./pages/RegisterPage";
 
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/CheckoutPage";
-import OrderSuccessPage from "./pages/OrderSuccessPage";
-import OrderErrorPage from "./pages/OrderErrorPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 
 import ProtectedRoute from "./context/Auth/ProtectedRoute";
@@ -24,6 +22,8 @@ import AdminProtectedRoute from "./features/admin/routes/AdminProtectedRoute";
 import DashboardPage from "./features/admin/pages/admin/DashboardPage";
 import WishlistProvider from "./context/Wishlist/WishlistProvider";
 import OrderProvider from "./context/Order/OrderProvider";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PaymentCancelPage from "./pages/PaymentCancelPage";
 
 function App() {
   return (
@@ -43,12 +43,16 @@ function App() {
                   <Route element={<ProtectedRoute />}>
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={<Checkout />} />
-                    <Route
-                      path="/order-success"
-                      element={<OrderSuccessPage />}
-                    />
-                    <Route path="/order-failed" element={<OrderErrorPage />} />
                     <Route path="/my-orders" element={<MyOrdersPage />} />
+
+                    <Route
+                      path="/payment-success"
+                      element={<PaymentSuccessPage />}
+                    />
+                    <Route
+                      path="/payment-cancel"
+                      element={<PaymentCancelPage />}
+                    />
                   </Route>
                 </Route>
                 {/* admin layout */}

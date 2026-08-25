@@ -56,15 +56,13 @@ const ShippingForm = ({ onSubmit }: Props) => {
         </div>
       </div>
 
-      {/* PAYMENT */}
+      {/* SUBMIT */}
       <div className="bg-white p-6 rounded-xl shadow-md">
-        <h2 className="mb-4 font-semibold text-lg">Payment Information</h2>
-
         <button
           type="submit"
           className="w-full mt-6 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primaryHover"
         >
-          Pay Now
+          Continue to Payment
         </button>
       </div>
     </form>

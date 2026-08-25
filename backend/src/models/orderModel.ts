@@ -30,7 +30,7 @@ const ShippingSchema = new Schema<IShipping>({
   city: { type: String, required: true },
   address: { type: String, required: true },
 });
-
+  
 /* ------------------ ORDER ------------------ */
 export interface IOrder extends Document {
   orderNumber: string;
