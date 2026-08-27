@@ -1,5 +1,4 @@
-import productModel from "../models/productModel.js";
-
+import productModel, { type Iproduct } from "../models/productModel.js";
 export type ProductSort =
   | "featured"
   | "price-asc"
@@ -269,4 +268,109 @@ export const getProductBrands = async () => {
       },
     },
   ]);
+};
+
+
+// ---------------------------------------------
+export type StockStatus = "in_stock" | "low_stock" | "out_of_stock";
+
+export type AdminProductSort =
+  | "name-asc"
+  | "name-desc"
+  | "price-asc"
+  | "price-desc"
+  | "stock-asc"
+  | "stock-desc"
+  | "newest";
+
+export interface AdminProductFilters {
+  search?: string;
+  category?: string;
+  stockStatus?: StockStatus;
+  sort?: AdminProductSort;
+  page?: number;
+  limit?: number;
+}
+
+const LOW_STOCK_THRESHOLD = 10;
+
+export const getAdminProducts = async (filters?: AdminProductFilters) => {
+  const query: Record<string, unknown> = {};
+  const sortQuery: Record<string, 1 | -1> = {};
+
+  const page = filters?.page ?? 1;
+  const limit = filters?.limit ?? 10;
+  const skip = (page - 1) * limit;
+
+  if (filters?.search) {
+    query.title = { $regex: filters.search, $options: "i" };
+  }
+
+  if (filters?.category && filters.category !== "all") {
+    query.category = filters.category;
+  }
+
+  switch (filters?.stockStatus) {
+    case "in_stock":
+      query.stock = { $gt: LOW_STOCK_THRESHOLD };
+      break;
+    case "low_stock":
+      query.stock = { $gt: 0, $lte: LOW_STOCK_THRESHOLD };
+      break;
+    case "out_of_stock":
+      query.stock = 0;
+      break;
+    default:
+      break;
+  }
+
+  switch (filters?.sort) {
+    case "name-asc":
+      sortQuery.title = 1;
+      break;
+    case "name-desc":
+      sortQuery.title = -1;
+      break;
+    case "price-asc":
+      sortQuery.price = 1;
+      break;
+    case "price-desc":
+      sortQuery.price = -1;
+      break;
+    case "stock-asc":
+      sortQuery.stock = 1;
+      break;
+    case "stock-desc":
+      sortQuery.stock = -1;
+      break;
+    default:
+      sortQuery._id = -1;
+  }
+
+  const totalProducts = await productModel.countDocuments(query);
+
+  const products = await productModel
+    .find(query)
+    .sort(sortQuery)
+    .skip(skip)
+    .limit(limit);
+
+  return {
+    products,
+    totalProducts,
+    totalPages: Math.ceil(totalProducts / limit),
+    currentPage: page,
+  };
+};
+
+export const createProduct = async (data: Partial<Iproduct>) => {
+  return productModel.create(data);
+};
+
+export const updateProduct = async (id: string, data: Partial<Iproduct>) => {
+  return productModel.findByIdAndUpdate(id, data, { new: true });
+};
+
+export const deleteProduct = async (id: string) => {
+  return productModel.findByIdAndDelete(id);
 };
