@@ -33,4 +33,6 @@ export interface AdminProductFilters {
   category?: string;
   stockStatus?: StockStatus;
   sort?: AdminProductSort;
+  page?: number;
+  limit?: number;
 }

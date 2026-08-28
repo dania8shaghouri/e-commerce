@@ -11,6 +11,8 @@ export const getAdminProducts = (filters?: AdminProductFilters) => {
   if (filters?.category) params.set("category", filters.category);
   if (filters?.stockStatus) params.set("stockStatus", filters.stockStatus);
   if (filters?.sort) params.set("sort", filters.sort);
+  if (filters?.page) params.set("page", String(filters.page));
+  if (filters?.limit) params.set("limit", String(filters.limit));
 
   return api.get<AdminProductsResponse>("/admin/products", { params });
 };

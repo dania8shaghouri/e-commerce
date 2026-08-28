@@ -1,20 +1,34 @@
 import { useEffect, useState } from "react";
 import { getAdminProducts } from "../../services/adminProductService";
-import type { AdminProduct, AdminProductFilters } from "../../types/adminProduct";
+import type {
+  AdminProduct,
+  AdminProductFilters,
+} from "../../types/adminProduct";
 import ProductsTable from "../../components/products/ProductsTable";
 import ProductsToolbar from "../../components/products/ProductsToolbar";
+
+const LIMIT = 5;
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<AdminProductFilters>({});
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await getAdminProducts(filters);
+        const response = await getAdminProducts({
+          ...filters,
+          page,
+          limit: LIMIT,
+        });
         setProducts(response.data.products);
+        setTotalPages(response.data.totalPages);
+        setTotalProducts(response.data.totalProducts);
       } catch (error) {
         console.error(error);
       } finally {
@@ -24,7 +38,12 @@ const ProductsPage = () => {
 
     const timeoutId = setTimeout(fetchProducts, 400);
     return () => clearTimeout(timeoutId);
-  }, [filters]);
+  }, [filters, page]);
+
+  const handleFilterChange = (newFilters: AdminProductFilters) => {
+    setFilters(newFilters);
+    setPage(1); // 👈 en kritik satır, aşağıda açıklıyorum
+  };
 
   return (
     <div className="space-y-6">
@@ -44,12 +63,19 @@ const ProductsPage = () => {
         </button>
       </div>
 
-      <ProductsToolbar filters={filters} onFilterChange={setFilters} />
+      <ProductsToolbar filters={filters} onFilterChange={handleFilterChange} />
 
       {loading ? (
         <p className="text-textSecondary">Loading products...</p>
       ) : (
-        <ProductsTable products={products} />
+        <ProductsTable
+          products={products}
+          currentPage={page}
+          totalPages={totalPages}
+          totalProducts={totalProducts}
+          limit={LIMIT}
+          onPageChange={setPage}
+        />
       )}
     </div>
   );
