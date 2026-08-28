@@ -6,6 +6,7 @@ import type {
 } from "../../types/adminProduct";
 import ProductsTable from "../../components/products/ProductsTable";
 import ProductsToolbar from "../../components/products/ProductsToolbar";
+import ProductsTableSkeleton from "../../components/products/ProductsTableSkeleton";
 
 const LIMIT = 5;
 
@@ -42,7 +43,7 @@ const ProductsPage = () => {
 
   const handleFilterChange = (newFilters: AdminProductFilters) => {
     setFilters(newFilters);
-    setPage(1); // 👈 en kritik satır, aşağıda açıklıyorum
+    setPage(1);
   };
 
   return (
@@ -66,7 +67,7 @@ const ProductsPage = () => {
       <ProductsToolbar filters={filters} onFilterChange={handleFilterChange} />
 
       {loading ? (
-        <p className="text-textSecondary">Loading products...</p>
+        <ProductsTableSkeleton />
       ) : (
         <ProductsTable
           products={products}

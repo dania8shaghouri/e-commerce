@@ -1,6 +1,7 @@
 import { FiMoreVertical } from "react-icons/fi";
 import type { AdminProduct } from "../../types/adminProduct";
 import { getImageUrl } from "../../../../utils/getImageUrl";
+import EmptyState from "../../../../components/ui/EmptyState";
 import ProductsPagination from "./ProductsPagination";
 
 interface Props {
@@ -30,6 +31,13 @@ const ProductsTable = ({
   limit,
   onPageChange,
 }: Props) => {
+  if (products.length === 0) {
+    return (
+      <div className="rounded-2xl border border-border bg-white shadow-sm">
+        <EmptyState message="No products found matching your filters." />
+      </div>
+    );
+  }
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
       <div className="overflow-x-auto">
