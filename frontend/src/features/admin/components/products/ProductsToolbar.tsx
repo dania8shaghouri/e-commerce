@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { getCategories } from "../../../../services/categoryService";
 import type {
   AdminProductFilters,
   StockStatus,
@@ -11,15 +9,10 @@ import type { Category } from "../../../../types/Category";
 interface Props {
   filters: AdminProductFilters;
   onFilterChange: (filters: AdminProductFilters) => void;
+  categories: Category[];
 }
 
-const ProductsToolbar = ({ filters, onFilterChange }: Props) => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    getCategories().then(setCategories).catch(console.error);
-  }, []);
-
+const ProductsToolbar = ({ filters, onFilterChange, categories }: Props) => {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <div className="flex flex-1 items-center gap-2 rounded-xl border border-border bg-white px-4 py-2.5">

@@ -11,6 +11,7 @@ interface Props {
   totalProducts: number;
   limit: number;
   onPageChange: (page: number) => void;
+  onEdit: (product: AdminProduct) => void;
 }
 
 const getStockStatus = (stock: number) => {
@@ -30,6 +31,7 @@ const ProductsTable = ({
   totalProducts,
   limit,
   onPageChange,
+  onEdit
 }: Props) => {
   if (products.length === 0) {
     return (
@@ -101,7 +103,9 @@ const ProductsTable = ({
                   </td>
 
                   <td className="px-6 py-4 text-right">
-                    <button className="rounded-lg p-2 text-textSecondary hover:bg-background">
+                    <button
+                    onClick={() => onEdit(product)}
+                     className="rounded-lg p-2 text-textSecondary hover:bg-background">
                       <FiMoreVertical size={18} />
                     </button>
                   </td>

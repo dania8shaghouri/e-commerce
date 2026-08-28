@@ -5,6 +5,7 @@ export interface AdminProduct {
   category: string;
   image: string;
   images: string[];
+  description?: string;
   price: number;
   stock: number;
   rating: number;

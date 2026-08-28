@@ -4,6 +4,8 @@ import type {
   AdminProductFilters,
 } from "../types/adminProduct";
 
+import type { ProductFormValues } from "../validation/productSchema";
+
 export const getAdminProducts = (filters?: AdminProductFilters) => {
   const params = new URLSearchParams();
 
@@ -16,3 +18,9 @@ export const getAdminProducts = (filters?: AdminProductFilters) => {
 
   return api.get<AdminProductsResponse>("/admin/products", { params });
 };
+
+export const createProduct = (data: ProductFormValues) =>
+  api.post("/admin/products", data);
+
+export const updateProduct = (id: string, data: ProductFormValues) =>
+  api.put(`/admin/products/${id}`, data);
