@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { getAdminProducts } from "../../services/adminProductService";
-import type { AdminProduct } from "../../types/adminProduct";
+import type { AdminProduct, AdminProductFilters } from "../../types/adminProduct";
 import ProductsTable from "../../components/products/ProductsTable";
+import ProductsToolbar from "../../components/products/ProductsToolbar";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState<AdminProductFilters>({});
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const response = await getAdminProducts();
+        const response = await getAdminProducts(filters);
         setProducts(response.data.products);
       } catch (error) {
         console.error(error);
@@ -19,8 +22,9 @@ const ProductsPage = () => {
       }
     };
 
-    fetchProducts();
-  }, []);
+    const timeoutId = setTimeout(fetchProducts, 400);
+    return () => clearTimeout(timeoutId);
+  }, [filters]);
 
   return (
     <div className="space-y-6">
@@ -39,6 +43,8 @@ const ProductsPage = () => {
           + Add Product
         </button>
       </div>
+
+      <ProductsToolbar filters={filters} onFilterChange={setFilters} />
 
       {loading ? (
         <p className="text-textSecondary">Loading products...</p>

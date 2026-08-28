@@ -156,6 +156,7 @@ export const getBrands = async (req: Request, res: Response) => {
 };
 
 // --------------------------
+
 export const getAdminProductsHandler = async (req: Request, res: Response) => {
   try {
     const search =
@@ -164,6 +165,7 @@ export const getAdminProductsHandler = async (req: Request, res: Response) => {
     const category =
       typeof req.query.category === "string" ? req.query.category : undefined;
 
+      // TypeScript'e bu değerin StockStatus türünde olduğunu söylüyoruz
     const stockStatus =
       typeof req.query.stockStatus === "string"
         ? (req.query.stockStatus as StockStatus)
@@ -173,17 +175,21 @@ export const getAdminProductsHandler = async (req: Request, res: Response) => {
       typeof req.query.sort === "string"
         ? (req.query.sort as AdminProductSort)
         : undefined;
-
+// 2 ile "2" ayni degil buyuzden URL'den gelen page değeri  string ise onu sayıya çevir
+// page yoksa veya string değilse varsayılan olarak 1 kullan
     const page = typeof req.query.page === "string" ? Number(req.query.page) : 1;
     const limit = typeof req.query.limit === "string" ? Number(req.query.limit) : 10;
 
-    // 👇 değişen kısım burası
+    // page ve limit her zaman varsayılan değere sahip olduğu için baştan ekleniyor. Diğer filtreler yalnızca kullanıcı tarafından gönderilmişse ekleniyor
     const filters: AdminProductFilters = { page, limit };
     if (search) filters.search = search;
     if (category) filters.category = category;
     if (stockStatus) filters.stockStatus = stockStatus;
     if (sort) filters.sort = sort;
 
+    // controller şöyle diyor: ben gerekli bilgileri topladım. 
+    // Şimdi asıl ürün bulma işini service yapsın
+    // await önemli cunku getAdminProducts() mogodb ye gidiyor
     const result = await getAdminProducts(filters);
 
     res.status(200).json(result);
@@ -204,6 +210,7 @@ export const createProductHandler = async (req: Request, res: Response) => {
 };
 
 export const updateProductHandler = async (
+  // Bu request'in params kısmı ProductParams yapısında
   req: Request<ProductParams>,
   res: Response,
 ) => {

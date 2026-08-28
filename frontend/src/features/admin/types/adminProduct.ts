@@ -18,3 +18,19 @@ export interface AdminProductsResponse {
   totalPages: number;
   currentPage: number;
 }
+export type StockStatus = "in_stock" | "low_stock" | "out_of_stock";
+
+export type AdminProductSort =
+  | "name-asc"
+  | "name-desc"
+  | "price-asc"
+  | "price-desc"
+  | "stock-asc"
+  | "stock-desc";
+
+export interface AdminProductFilters {
+  search?: string;
+  category?: string;
+  stockStatus?: StockStatus;
+  sort?: AdminProductSort;
+}

@@ -270,8 +270,8 @@ export const getProductBrands = async () => {
   ]);
 };
 
-
-// ---------------------------------------------
+// StockStatus sadece şu üç değerden biri olabilir
+// Başka bir şey TypeScript açısından geçerli değil
 export type StockStatus = "in_stock" | "low_stock" | "out_of_stock";
 
 export type AdminProductSort =
@@ -283,6 +283,8 @@ export type AdminProductSort =
   | "stock-desc"
   | "newest";
 
+  
+// ?  Bu alan zorunlu değil demek
 export interface AdminProductFilters {
   search?: string;
   category?: string;
@@ -294,27 +296,40 @@ export interface AdminProductFilters {
 
 const LOW_STOCK_THRESHOLD = 10;
 
+// ? filters gönderilebilir ama zorunlu değil
 export const getAdminProducts = async (filters?: AdminProductFilters) => {
+  // {} başlangıçta boş bir obje
+  // Record<string, unknown>: Key'leri string olan bir obje ve değerleri şimdilik herhangi bir bilinmeyen tür olabilir.(cunku typescript sonrasinda type eklenmesi sorun olarak gorebilir)
   const query: Record<string, unknown> = {};
   const sortQuery: Record<string, 1 | -1> = {};
 
+  // ?? Nullish coalescing operator: Sol taraftaki değer null veya undefined ise sağdakini kullan.
   const page = filters?.page ?? 1;
   const limit = filters?.limit ?? 10;
+
+  // (1 - 1) × 10 = 0 İlk 10 üründen başla
+  // (2 - 1) × 10 = 10 İlk 10 ürünü atla
   const skip = (page - 1) * limit;
 
+  // filters?.search : filters varsa search'e bak
+  // $regex MongoDB'de pattern ile arama yapar
+  // $options: "i": büyük/küçük harf duyarsız
   if (filters?.search) {
     query.title = { $regex: filters.search, $options: "i" };
   }
 
+  // category !== "all": Eğer all seçildiyse kategori filtresi hiç eklenmez
   if (filters?.category && filters.category !== "all") {
     query.category = filters.category;
   }
 
   switch (filters?.stockStatus) {
     case "in_stock":
+      // stock > 10
       query.stock = { $gt: LOW_STOCK_THRESHOLD };
       break;
     case "low_stock":
+      // stock <= 10
       query.stock = { $gt: 0, $lte: LOW_STOCK_THRESHOLD };
       break;
     case "out_of_stock":
@@ -331,9 +346,11 @@ export const getAdminProducts = async (filters?: AdminProductFilters) => {
     case "name-desc":
       sortQuery.title = -1;
       break;
+      // Price Low → High
     case "price-asc":
       sortQuery.price = 1;
       break;
+      // Price High → Low
     case "price-desc":
       sortQuery.price = -1;
       break;
@@ -347,14 +364,18 @@ export const getAdminProducts = async (filters?: AdminProductFilters) => {
       sortQuery._id = -1;
   }
 
+  // countDocuments: mongoDB'ye şunu sorar:bu filtreye uyan toplam kaç ürün var?
   const totalProducts = await productModel.countDocuments(query);
 
+  // ürünleri çekiyor
   const products = await productModel
     .find(query)
     .sort(sortQuery)
     .skip(skip)
     .limit(limit);
 
+    // Service şunu döndürüyor
+    // yani bu obje controller'a geri doner result te
   return {
     products,
     totalProducts,
@@ -363,10 +384,14 @@ export const getAdminProducts = async (filters?: AdminProductFilters) => {
   };
 };
 
+// Partial tum alanlari doldurmak zorunda degilsin
 export const createProduct = async (data: Partial<Iproduct>) => {
   return productModel.create(data);
 };
 
+// findByIdAndUpdate:Mongoose'a ait bir fonksiyon Bu ID'ye sahip ürünü bul    
+// Gönderilen bilgilerle güncelle
+//{ new: true } Güncellemeden sonraki yeni ürünü döndür
 export const updateProduct = async (id: string, data: Partial<Iproduct>) => {
   return productModel.findByIdAndUpdate(id, data, { new: true });
 };
