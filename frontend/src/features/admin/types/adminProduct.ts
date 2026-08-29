@@ -11,6 +11,26 @@ export interface AdminProduct {
   rating: number;
   reviewCount: number;
   isFeatured: boolean;
+
+  cpu?: string;
+  ram?: string;
+  storage?: string;
+  gpu?: string;
+
+  resolution?: string;
+  refreshRate?: string;
+  panel?: string;
+  size?: string;
+
+  type?: string;
+  connectivity?: string;
+  switches?: string;
+  dpi?: string;
+  rgb?: boolean;
+
+  capacity?: string;
+  interface?: string;
+  readSpeed?: string;
 }
 
 export interface AdminProductsResponse {

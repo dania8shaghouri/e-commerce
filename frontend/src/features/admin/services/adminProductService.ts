@@ -25,4 +25,12 @@ export const createProduct = (data: ProductFormValues) =>
 export const updateProduct = (id: string, data: ProductFormValues) =>
   api.put(`/admin/products/${id}`, data);
 
-export const deleteProduct = (id: string) => api.delete(`/admin/products/${id}`);
+export const deleteProduct = (id: string) =>
+  api.delete(`/admin/products/${id}`);
+
+export const uploadProductImages = (files: File[]) => {
+  const formData = new FormData();
+  files.forEach((file) => formData.append("images", file));
+
+  return api.post<{ filenames: string[] }>("/admin/products/upload", formData);
+};
