@@ -1,6 +1,7 @@
 import express from "express";
 import validateJWT from "../middlewares/validateJWT.js";
 import requireAdmin from "../middlewares/requireAdmin.js";
+import upload from "../middlewares/uploadMiddleware.js";
 import {
   getAdminProductsHandler,
   createProductHandler,
@@ -21,5 +22,21 @@ router.get("/products", validateJWT, requireAdmin, getAdminProductsHandler);
 router.post("/products", validateJWT, requireAdmin, createProductHandler);
 router.put("/products/:id", validateJWT, requireAdmin, updateProductHandler);
 router.delete("/products/:id", validateJWT, requireAdmin, deleteProductHandler);
+router.post(
+  "/products/upload",
+  validateJWT,
+  requireAdmin,
+  upload.array("images", 5),
+  (req, res) => {
+    const files = req.files as Express.Multer.File[];
 
+    if (!files || files.length === 0) {
+      return res.status(400).json({ message: "No files uploaded" });
+    }
+
+    const filenames = files.map((file) => file.filename);
+
+    res.status(200).json({ filenames });
+  },
+);
 export default router;
