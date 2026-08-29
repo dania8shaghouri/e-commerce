@@ -24,3 +24,5 @@ export const createProduct = (data: ProductFormValues) =>
 
 export const updateProduct = (id: string, data: ProductFormValues) =>
   api.put(`/admin/products/${id}`, data);
+
+export const deleteProduct = (id: string) => api.delete(`/admin/products/${id}`);

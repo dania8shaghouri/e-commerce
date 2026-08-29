@@ -10,6 +10,9 @@ import ProductsTable from "../../components/products/ProductsTable";
 import ProductsToolbar from "../../components/products/ProductsToolbar";
 import ProductsTableSkeleton from "../../components/products/ProductsTableSkeleton";
 import ProductFormModal from "../../components/products/ProductFormModal";
+import { deleteProduct } from "../../services/adminProductService";
+import toast from "react-hot-toast";
+import DeleteConfirmModal from "../../components/products/DeleteConfirmModal";
 
 const LIMIT = 5;
 
@@ -23,7 +26,14 @@ const ProductsPage = () => {
   const [totalProducts, setTotalProducts] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
+  const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(
+    null,
+  );
+
+  const [deletingProduct, setDeletingProduct] = useState<AdminProduct | null>(
+    null,
+  );
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     getCategories().then(setCategories).catch(console.error);
@@ -32,7 +42,11 @@ const ProductsPage = () => {
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await getAdminProducts({ ...filters, page, limit: LIMIT });
+      const response = await getAdminProducts({
+        ...filters,
+        page,
+        limit: LIMIT,
+      });
       setProducts(response.data.products);
       setTotalPages(response.data.totalPages);
       setTotalProducts(response.data.totalProducts);
@@ -63,12 +77,33 @@ const ProductsPage = () => {
     setIsModalOpen(true);
   };
 
+  const handleDeleteClick = (product: AdminProduct) => {
+    setDeletingProduct(product);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deletingProduct) return;
+
+    setIsDeleting(true);
+    try {
+      await deleteProduct(deletingProduct._id);
+      toast.success("Product deleted");
+      setDeletingProduct(null);
+      fetchProducts();
+    } catch {
+      toast.error("Failed to delete product");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-textSecondary">Dashboard / Products</p>
-          <h1 className="mt-1 text-2xl font-semibold text-textPrimary">Products</h1>
+          <h1 className="mt-1 text-2xl font-semibold text-textPrimary">
+            Products
+          </h1>
           <p className="mt-1 text-sm text-textSecondary">
             Manage and organize your store products.
           </p>
@@ -99,6 +134,7 @@ const ProductsPage = () => {
           limit={LIMIT}
           onPageChange={setPage}
           onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
         />
       )}
 
@@ -108,6 +144,13 @@ const ProductsPage = () => {
         onSuccess={fetchProducts}
         product={editingProduct}
         categories={categories}
+      />
+      <DeleteConfirmModal
+        isOpen={Boolean(deletingProduct)}
+        onClose={() => setDeletingProduct(null)}
+        onConfirm={handleConfirmDelete}
+        product={deletingProduct}
+        isDeleting={isDeleting}
       />
     </div>
   );

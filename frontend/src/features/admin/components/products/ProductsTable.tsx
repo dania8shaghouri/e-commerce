@@ -1,9 +1,8 @@
-import { FiMoreVertical } from "react-icons/fi";
 import type { AdminProduct } from "../../types/adminProduct";
 import { getImageUrl } from "../../../../utils/getImageUrl";
 import EmptyState from "../../../../components/ui/EmptyState";
 import ProductsPagination from "./ProductsPagination";
-
+import ProductActionsMenu from "./ProductActionsMenu";
 interface Props {
   products: AdminProduct[];
   currentPage: number;
@@ -12,6 +11,7 @@ interface Props {
   limit: number;
   onPageChange: (page: number) => void;
   onEdit: (product: AdminProduct) => void;
+  onDelete: (product: AdminProduct) => void;
 }
 
 const getStockStatus = (stock: number) => {
@@ -31,7 +31,8 @@ const ProductsTable = ({
   totalProducts,
   limit,
   onPageChange,
-  onEdit
+  onEdit,
+  onDelete
 }: Props) => {
   if (products.length === 0) {
     return (
@@ -103,11 +104,11 @@ const ProductsTable = ({
                   </td>
 
                   <td className="px-6 py-4 text-right">
-                    <button
-                    onClick={() => onEdit(product)}
-                     className="rounded-lg p-2 text-textSecondary hover:bg-background">
-                      <FiMoreVertical size={18} />
-                    </button>
+                    <ProductActionsMenu
+                      product={product}
+                      onEdit={onEdit}
+                      onDelete={onDelete}
+                    />
                   </td>
                 </tr>
               );
