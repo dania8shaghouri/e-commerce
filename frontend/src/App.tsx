@@ -22,6 +22,7 @@ import AdminProtectedRoute from "./features/admin/routes/AdminProtectedRoute";
 import DashboardPage from "./features/admin/pages/admin/DashboardPage";
 import ProductsPage from "./features/admin/pages/admin/ProductsPage";
 import OrdersPage from "./features/admin/pages/admin/OrdersPage";
+import OrderDetailPage from "./features/admin/pages/admin/OrderDetailPage";
 
 import WishlistProvider from "./context/Wishlist/WishlistProvider";
 import OrderProvider from "./context/Order/OrderProvider";
@@ -73,6 +74,7 @@ function App() {
                       element={<ProductFormPage />}
                     />
                     <Route path="orders" element={<OrdersPage />} />
+                    <Route path="orders/:id" element={<OrderDetailPage />} />
                   </Route>
                 </Route>
               </Routes>
