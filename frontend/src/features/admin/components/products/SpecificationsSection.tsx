@@ -1,3 +1,4 @@
+// Bu component category'ye göre farklı alanlar gösteriyor
 import type { UseFormRegister } from "react-hook-form";
 import Input from "../../../../components/ui/Input";
 import type { ProductFormInput } from "../../validation/productSchema";
@@ -6,7 +7,7 @@ interface Props {
   register: UseFormRegister<ProductFormInput>;
   category: string;
 }
-
+// tekrar eden form input yapısını reusable hale getirmek için oluşturuldu
 const FieldRow = ({
   register,
   name,

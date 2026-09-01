@@ -1,3 +1,4 @@
+// animate-pulse ile gri alanlar hareket eder
 const ProductsTableSkeleton = () => {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">

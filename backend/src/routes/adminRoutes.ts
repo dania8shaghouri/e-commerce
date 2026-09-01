@@ -8,6 +8,11 @@ import {
   updateProductHandler,
   deleteProductHandler,
 } from "../controllers/productController.js";
+import {
+  getAdminOrdersHandler,
+  getAdminOrderByIdHandler,
+  updateOrderStatusHandler,
+} from "../controllers/orderController.js";
 
 const router = express.Router();
 
@@ -38,5 +43,15 @@ router.post(
 
     res.status(200).json({ filenames });
   },
+);
+
+// order
+router.get("/orders", validateJWT, requireAdmin, getAdminOrdersHandler);
+router.get("/orders/:id", validateJWT, requireAdmin, getAdminOrderByIdHandler);
+router.patch(
+  "/orders/:id/status",
+  validateJWT,
+  requireAdmin,
+  updateOrderStatusHandler,
 );
 export default router;

@@ -12,16 +12,21 @@ interface Props {
 }
 
 const ProductImagesSection = ({ setValue, initialImages = [] }: Props) => {
+  // Upload edilmiş image filename'lerini tutuyor
   const [images, setImages] = useState<string[]>(initialImages);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  // useRef Bir HTML elementine React üzerinden erişmemizi sağlar
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // images değiştiğinde React Hook Form'a bilgi gönderiyoruz
   useEffect(() => {
     setValue("images", images);
     setValue("image", images[0] ?? "");
   }, [images, setValue]);
 
+  // adminin seçtiği veya sürükleyip bıraktığı dosyaları işler
+  // FileList:Browser'ın dosya inputundan gelen özel veri tipi
   const handleFiles = async (fileList: FileList | null) => {
     if (!fileList || fileList.length === 0) return;
 
@@ -36,6 +41,8 @@ const ProductImagesSection = ({ setValue, initialImages = [] }: Props) => {
     }
   };
 
+  // filter: Verilen koşulu sağlayan elemanları yeni array'de tut
+  // prev Önceki state'i al, onun üzerinden yeni state oluştur
   const handleRemove = (filename: string) => {
     setImages((prev) => prev.filter((img) => img !== filename));
   };
@@ -57,12 +64,16 @@ const ProductImagesSection = ({ setValue, initialImages = [] }: Props) => {
         }}
         onClick={() => fileInputRef.current?.click()}
         className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed py-10 text-center transition ${
-          isDragging ? "border-primary bg-blue-50" : "border-primary/40 bg-blue-50/30"
+          isDragging
+            ? "border-primary bg-blue-50"
+            : "border-primary/40 bg-blue-50/30"
         }`}
       >
         <FiUploadCloud className="mb-2 text-2xl text-primary" />
         <p className="text-sm text-textPrimary">
-          {isUploading ? "Uploading..." : "Drag and drop images here or click to browse"}
+          {isUploading
+            ? "Uploading..."
+            : "Drag and drop images here or click to browse"}
         </p>
         <p className="mt-1 text-xs text-textSecondary">PNG, JPG up to 5MB</p>
 

@@ -8,7 +8,10 @@ import {
   type ProductFormInput,
   type ProductFormValues,
 } from "../../validation/productSchema";
-import { createProduct, updateProduct } from "../../services/adminProductService";
+import {
+  createProduct,
+  updateProduct,
+} from "../../services/adminProductService";
 import { getProductById } from "../../../../services/productService";
 import { getCategories } from "../../../../services/categoryService";
 import type { Category } from "../../../../types/Category";
@@ -20,21 +23,23 @@ import Loading from "../../../../components/ui/Loading";
 
 const ProductFormPage = () => {
   const { id } = useParams();
+  // ID varsa edit
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [initialImages, setInitialImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(isEditMode);
-
+  // burada form yönetimini react-hook-form yapıyor
   const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    reset,
+    register, //Input'u form sistemine bağlar
+    handleSubmit, //Form submit edildiğinde validation + onSubmit çalıştırır
+    watch, //Bir form alanını izler biseyler degistiginde
+    setValue, //Formdaki belirli bir alanın değerini kodla değiştirmek için
+    reset, //Formun bütün değerlerini değiştirmek için
     formState: { errors, isSubmitting },
   } = useForm<ProductFormInput, unknown, ProductFormValues>({
+    // zodResolver React Hook Form ile Zod'u birbirine bağlıyor
     resolver: zodResolver(productSchema),
     defaultValues: {
       title: "",
@@ -109,7 +114,9 @@ const ProductFormPage = () => {
       }
       navigate("/admin/products");
     } catch {
-      toast.error(isEditMode ? "Failed to update product" : "Failed to create product");
+      toast.error(
+        isEditMode ? "Failed to update product" : "Failed to create product",
+      );
     }
   };
 
@@ -128,7 +135,11 @@ const ProductFormPage = () => {
         </p>
       </div>
 
-      <ProductInfoSection register={register} errors={errors} categories={categories} />
+      <ProductInfoSection
+        register={register}
+        errors={errors}
+        categories={categories}
+      />
       <PricingInventorySection register={register} errors={errors} />
       <SpecificationsSection register={register} category={selectedCategory} />
       <ProductImagesSection setValue={setValue} initialImages={initialImages} />

@@ -32,7 +32,7 @@ const ProductsTable = ({
   limit,
   onPageChange,
   onEdit,
-  onDelete
+  onDelete,
 }: Props) => {
   if (products.length === 0) {
     return (

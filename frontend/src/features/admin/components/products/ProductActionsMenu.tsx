@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
 import type { AdminProduct } from "../../types/adminProduct";
 
+// product isimli prop bir ürün olacak ve bu ürün AdminProduct yapısına uyacak
 interface Props {
   product: AdminProduct;
   onEdit: (product: AdminProduct) => void;
@@ -12,6 +13,7 @@ const ProductActionsMenu = ({ product, onEdit, onDelete }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // Eğer menünün DOM elementi varsa VE tıklanan element menünün içinde değilse, menüyü kapat
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {

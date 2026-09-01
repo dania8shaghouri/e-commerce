@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// ürün formunun alanlarını tanımlıyoruz
 export const productSchema = z.object({
   title: z.string().min(2, "Title is required"),
   brand: z.string().min(1, "Brand is required"),
@@ -36,6 +37,7 @@ export const productSchema = z.object({
   image: z.string().min(1, "At least one image is required"),
   images: z.array(z.string()).optional(),
 });
-
+// Burada Zod schema'dan TypeScript type üretiyoruz
+// Bu schema'nın input olarak kabul ettiği verinin TypeScript tipini oluştur ve adına ProductFormInput de
 export type ProductFormInput = z.input<typeof productSchema>;
 export type ProductFormValues = z.output<typeof productSchema>;

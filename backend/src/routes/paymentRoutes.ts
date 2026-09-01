@@ -32,7 +32,7 @@ router.post(
       if (orderId) {
         await orderModel.findByIdAndUpdate(orderId, {
           paymentStatus: "paid",
-          status: "completed",
+          status: "processing",
           stripeSessionId: session.id,
         });
       }

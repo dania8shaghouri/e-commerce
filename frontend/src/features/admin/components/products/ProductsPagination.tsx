@@ -17,7 +17,9 @@ const ProductsPagination = ({
 
   const start = (currentPage - 1) * limit + 1;
   const end = Math.min(currentPage * limit, totalProducts);
-
+  // Array.from belirli uzunlukta yeni bir array oluşturmak için kullanılır
+  // totalPages kadar elemanı olan bir array oluştu
+  // İlk parametre bana lazım değil(elemanin degeri) o yüzden _ adını veriyorum
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
@@ -29,6 +31,7 @@ const ProductsPagination = ({
       <div className="flex items-center gap-1">
         <button
           onClick={() => onPageChange(currentPage - 1)}
+          // 1.sayfadaysak Previous kapalı
           disabled={currentPage === 1}
           className="rounded-lg px-3 py-1.5 text-sm text-textSecondary hover:bg-background disabled:cursor-not-allowed disabled:opacity-40"
         >

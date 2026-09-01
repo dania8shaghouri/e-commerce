@@ -1,7 +1,11 @@
+// Multer, Express uygulamalarında multipart/form-data şeklinde gönderilen dosyaları almak için kullanılan bir middleware'dir
+// path: Node.js'in path utility'sidir Dosya yollarını güvenli şekilde oluşturmak için kullanılır
 import multer from "multer";
 import path from "path";
 
+// diskStorage → dosyanın fiziksel olarak bilgisayardaki/server'daki klasöre kaydedilmesini sağlar
 const storage = multer.diskStorage({
+  // destination Dosyaları nereye kaydedilecegini
   destination: (req, file, cb) => {
     cb(null, path.join(process.cwd(), "src/images"));
   },

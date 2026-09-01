@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
 
+// children, component'in açılış ve kapanış tagleri arasına gönderilen içeriği temsil eder. Böylece component reusable olur.
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const Modal = ({ isOpen, onClose, title, children }: Props) => {
+  // Klavyede Escape tuşuna basılırsa modalı kapat
+  // useEffect içinde eklenen event listener component kaldırılırken removeEventListener ile temizlenir. Buna cleanup denir
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -17,6 +20,7 @@ const Modal = ({ isOpen, onClose, title, children }: Props) => {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
+  // ekranda hiçbir şey render etme
   if (!isOpen) return null;
 
   return (

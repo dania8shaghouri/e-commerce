@@ -4,6 +4,8 @@ import Textarea from "../../../../components/ui/Textarea";
 import type { ProductFormInput } from "../../validation/productSchema";
 import type { Category } from "../../../../types/Category";
 
+// UseFormRegister, FieldErrors: React Hook Form kütüphanesinin TypeScript type'larıdır
+// register objenin ismi , UseFormRegister ise bu fonk.tipidir , ProductFormInput bizim olusturdugumuz form type
 interface Props {
   register: UseFormRegister<ProductFormInput>;
   errors: FieldErrors<ProductFormInput>;
