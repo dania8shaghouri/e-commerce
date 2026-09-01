@@ -14,7 +14,7 @@ import DeleteConfirmModal from "../../components/products/DeleteConfirmModal";
 import { deleteProduct } from "../../services/adminProductService";
 import toast from "react-hot-toast";
 
-const LIMIT = 10;
+const LIMIT = 5;
 
 const ProductsPage = () => {
   const navigate = useNavigate();
