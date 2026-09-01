@@ -21,6 +21,8 @@ import AdminLayout from "./features/admin/layouts/AdminLayout";
 import AdminProtectedRoute from "./features/admin/routes/AdminProtectedRoute";
 import DashboardPage from "./features/admin/pages/admin/DashboardPage";
 import ProductsPage from "./features/admin/pages/admin/ProductsPage";
+import OrdersPage from "./features/admin/pages/admin/OrdersPage";
+
 import WishlistProvider from "./context/Wishlist/WishlistProvider";
 import OrderProvider from "./context/Order/OrderProvider";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
@@ -70,6 +72,7 @@ function App() {
                       path="products/:id/edit"
                       element={<ProductFormPage />}
                     />
+                    <Route path="orders" element={<OrdersPage />} />
                   </Route>
                 </Route>
               </Routes>
