@@ -37,7 +37,7 @@ const menuItems = [
   {
     label: "Users",
     icon: FiUsers,
-    path: "/admin/users",
+    path: "/admin/customers",
   },
 
   {
