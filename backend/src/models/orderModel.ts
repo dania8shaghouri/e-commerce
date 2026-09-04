@@ -9,6 +9,7 @@ export interface IOrderItem {
   quantity: number;
 }
 
+// TypeScript interface ile MongoDB validation/schema'yı birleştiriyoruz
 const OrderItemSchema = new Schema<IOrderItem>({
   productTitle: { type: String, required: true },
   productImage: { type: String, required: true },
@@ -17,6 +18,7 @@ const OrderItemSchema = new Schema<IOrderItem>({
 });
 
 /* ------------------ SHIPPING ------------------ */
+// Siparişin delivery bilgileri
 export interface IShipping {
   fullName: string;
   phone: string;
@@ -32,6 +34,8 @@ const ShippingSchema = new Schema<IShipping>({
 });
 
 /* ------------------ ORDER ------------------ */
+// Status hem TypeScript'te hem de Mongoose'da tanıml cunku
+// biri compile-time, diğeri runtime/database validation için
 export interface IOrder extends Document {
   orderNumber: string;
   orderItems: IOrderItem[];

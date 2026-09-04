@@ -7,6 +7,7 @@ import type {
 } from "../types/adminOrder";
 
 export const getAdminOrders = (filters?: AdminOrderFilters) => {
+  // URL query oluşturmak için
   const params = new URLSearchParams();
 
   if (filters?.search) params.set("search", filters.search);
@@ -17,6 +18,7 @@ export const getAdminOrders = (filters?: AdminOrderFilters) => {
   if (filters?.page) params.set("page", String(filters.page));
   if (filters?.limit) params.set("limit", String(filters.limit));
 
+  // Bu endpoint'ten dönecek response'un data'sı AdminOrdersResponse yapısında
   return api.get<AdminOrdersResponse>("/admin/orders", { params });
 };
 

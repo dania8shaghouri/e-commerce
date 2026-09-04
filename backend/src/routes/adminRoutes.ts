@@ -13,7 +13,10 @@ import {
   getAdminOrderByIdHandler,
   updateOrderStatusHandler,
 } from "../controllers/orderController.js";
-
+import {
+  getAdminCustomersHandler,
+  getAdminCustomerByIdHandler,
+} from "../controllers/customerController.js";
 const router = express.Router();
 
 // Express fonksiyonları sırayla çalıştırır : İlk middleware
@@ -54,4 +57,8 @@ router.patch(
   requireAdmin,
   updateOrderStatusHandler,
 );
+
+// customers
+router.get("/customers", validateJWT, requireAdmin, getAdminCustomersHandler);
+router.get("/customers/:id", validateJWT, requireAdmin, getAdminCustomerByIdHandler);
 export default router;

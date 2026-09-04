@@ -14,6 +14,8 @@ const OrdersPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalOrders, setTotalOrders] = useState(0);
 
+  // Backend'den güncel sipariş listesini çek
+  // useCallback: Bu function'ı dependency'ler değişmedikçe aynı referansla tut
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
@@ -28,6 +30,8 @@ const OrdersPage = () => {
     }
   }, [filters, page]);
 
+  // İlk render'dan sonra çalışır
+  // Search input için 400s bekle
   useEffect(() => {
     const timeoutId = setTimeout(fetchOrders, 400);
     return () => clearTimeout(timeoutId);

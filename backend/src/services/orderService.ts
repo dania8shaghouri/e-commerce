@@ -1,7 +1,12 @@
 import { orderModel, type IOrder } from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
-export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+export type OrderStatus =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
 export type OrderSort = "newest" | "oldest" | "total-asc" | "total-desc";
 
 export interface AdminOrderFilters {
@@ -10,10 +15,11 @@ export interface AdminOrderFilters {
   startDate?: string;
   endDate?: string;
   sort?: OrderSort;
+  userId?: string;
   page?: number;
   limit?: number;
 }
-
+// Admin için siparişleri MongoDB'den getir
 export const getAdminOrders = async (filters?: AdminOrderFilters) => {
   const query: Record<string, unknown> = {};
   const sortQuery: Record<string, 1 | -1> = {};
@@ -24,6 +30,9 @@ export const getAdminOrders = async (filters?: AdminOrderFilters) => {
 
   if (filters?.status) {
     query.status = filters.status;
+  }
+  if (filters?.userId) {
+    query.userId = filters.userId;
   }
 
   if (filters?.startDate || filters?.endDate) {
