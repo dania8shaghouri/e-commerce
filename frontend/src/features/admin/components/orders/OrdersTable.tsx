@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { FiEye } from "react-icons/fi";
-import type { AdminOrder, OrderStatus, PaymentStatus } from "../../types/adminOrder";
+import type {
+  AdminOrder,
+  OrderStatus,
+  PaymentStatus,
+} from "../../types/adminOrder";
 import EmptyState from "../../../../components/ui/EmptyState";
 import Pagination from "../../../../components/ui/Pagination";
 
@@ -11,6 +15,7 @@ interface Props {
   totalOrders: number;
   limit: number;
   onPageChange: (page: number) => void;
+  showCustomerColumn?: boolean;
 }
 
 const statusStyles: Record<OrderStatus, string> = {
@@ -38,6 +43,7 @@ const OrdersTable = ({
   totalOrders,
   limit,
   onPageChange,
+  showCustomerColumn = true,
 }: Props) => {
   if (orders.length === 0) {
     return (
@@ -54,7 +60,9 @@ const OrdersTable = ({
           <thead>
             <tr className="border-b border-border bg-background text-xs uppercase tracking-wide text-textSecondary">
               <th className="px-6 py-4 font-medium">Order ID</th>
-              <th className="px-6 py-4 font-medium">Customer</th>
+              {showCustomerColumn && (
+                <th className="px-6 py-4 font-medium">Customer</th>
+              )}
               <th className="px-6 py-4 font-medium">Date</th>
               <th className="px-6 py-4 font-medium">Total</th>
               <th className="px-6 py-4 font-medium">Payment</th>
@@ -77,13 +85,13 @@ const OrdersTable = ({
                     #{order.orderNumber}
                   </Link>
                 </td>
-
-                <td className="px-6 py-4 text-textPrimary">
-                  {order.userId
-                    ? `${order.userId.firstName} ${order.userId.lastName}`
-                    : "—"}
-                </td>
-
+                {showCustomerColumn && (
+                  <td className="px-6 py-4 text-textPrimary">
+                    {order.userId
+                      ? `${order.userId.firstName} ${order.userId.lastName}`
+                      : "—"}
+                  </td>
+                )}
                 <td className="px-6 py-4 text-textSecondary">
                   {new Date(order.createdAt).toLocaleDateString("en-US", {
                     month: "short",
@@ -96,7 +104,9 @@ const OrdersTable = ({
                   ${order.total.toFixed(2)}
                 </td>
 
-                <td className={`px-6 py-4 font-medium ${paymentStyles[order.paymentStatus]}`}>
+                <td
+                  className={`px-6 py-4 font-medium ${paymentStyles[order.paymentStatus]}`}
+                >
                   {formatStatusLabel(order.paymentStatus)}
                 </td>
 
