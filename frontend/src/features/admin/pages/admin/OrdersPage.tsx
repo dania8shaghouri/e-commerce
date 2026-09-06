@@ -3,6 +3,7 @@ import { getAdminOrders } from "../../services/adminOrderService";
 import type { AdminOrder, AdminOrderFilters } from "../../types/adminOrder";
 import OrdersTable from "../../components/orders/OrdersTable";
 import OrdersToolbar from "../../components/orders/OrdersToolbar";
+import OrdersTableSkeleton from "../../components/orders/OrdersTableSkeleton";
 
 const LIMIT = 10;
 
@@ -55,7 +56,7 @@ const OrdersPage = () => {
       <OrdersToolbar filters={filters} onFilterChange={handleFilterChange} />
 
       {loading ? (
-        <p className="text-textSecondary">Loading orders...</p>
+        <OrdersTableSkeleton />
       ) : (
         <OrdersTable
           orders={orders}

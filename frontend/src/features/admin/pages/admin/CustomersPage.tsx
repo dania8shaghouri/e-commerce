@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { getAdminCustomers } from "../../services/adminCustomerService";
-import type { AdminCustomer, AdminCustomerFilters } from "../../types/adminCustomer";
+import type {
+  AdminCustomer,
+  AdminCustomerFilters,
+} from "../../types/adminCustomer";
 import CustomersTable from "../../components/customers/CustomersTable";
 import CustomersToolbar from "../../components/customers/CustomersToolbar";
+import CustomersTableSkeleton from "../../components/customers/CustomersTableSkeleton";
 
 const LIMIT = 10;
 
@@ -17,7 +21,11 @@ const CustomersPage = () => {
   const fetchCustomers = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await getAdminCustomers({ ...filters, page, limit: LIMIT });
+      const response = await getAdminCustomers({
+        ...filters,
+        page,
+        limit: LIMIT,
+      });
       setCustomers(response.data.customers);
       setTotalPages(response.data.totalPages);
       setTotalCustomers(response.data.totalCustomers);
@@ -42,7 +50,9 @@ const CustomersPage = () => {
     <div className="space-y-6">
       <div>
         <p className="text-sm text-textSecondary">Dashboard / Customers</p>
-        <h1 className="mt-1 text-2xl font-semibold text-textPrimary">Customers</h1>
+        <h1 className="mt-1 text-2xl font-semibold text-textPrimary">
+          Customers
+        </h1>
         <p className="mt-1 text-sm text-textSecondary">
           Manage and view your customer information.
         </p>
@@ -51,7 +61,7 @@ const CustomersPage = () => {
       <CustomersToolbar filters={filters} onFilterChange={handleFilterChange} />
 
       {loading ? (
-        <p className="text-textSecondary">Loading customers...</p>
+        <CustomersTableSkeleton />
       ) : (
         <CustomersTable
           customers={customers}

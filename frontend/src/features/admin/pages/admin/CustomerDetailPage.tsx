@@ -7,6 +7,7 @@ import type { AdminCustomerDetail } from "../../types/adminCustomer";
 import type { AdminOrder } from "../../types/adminOrder";
 import Loading from "../../../../components/ui/Loading";
 import OrdersTable from "../../components/orders/OrdersTable";
+import OrdersTableSkeleton from "../../components/orders/OrdersTableSkeleton";
 
 const LIMIT = 8;
 
@@ -173,7 +174,7 @@ const CustomerDetailPage = () => {
       <div>
         <h2 className="mb-3 font-semibold text-textPrimary">Order History</h2>
         {ordersLoading ? (
-          <p className="text-textSecondary">Loading orders...</p>
+          <OrdersTableSkeleton />
         ) : (
           <OrdersTable
             orders={orders}
