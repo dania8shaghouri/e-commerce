@@ -41,50 +41,55 @@ export interface Iproduct extends Document {
   reviewCount: number;
 
   isFeatured: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const productSchema = new Schema<Iproduct>({
-  title: { type: String, required: true },
-  brand: { type: String, required: true },
-  category: { type: String, required: true },
+const productSchema = new Schema<Iproduct>(
+  {
+    title: { type: String, required: true },
+    brand: { type: String, required: true },
+    category: { type: String, required: true },
 
-  image: { type: String, required: true },
-  images: [{ type: String }],
+    image: { type: String, required: true },
+    images: [{ type: String }],
 
-  description: { type: String },
+    description: { type: String },
 
-  // Laptop
-  cpu: { type: String },
-  ram: { type: String },
-  storage: { type: String },
-  gpu: { type: String },
+    // Laptop
+    cpu: { type: String },
+    ram: { type: String },
+    storage: { type: String },
+    gpu: { type: String },
 
-  // Monitor
-  resolution: { type: String },
-  refreshRate: { type: String },
-  panel: { type: String },
-  size: { type: String },
+    // Monitor
+    resolution: { type: String },
+    refreshRate: { type: String },
+    panel: { type: String },
+    size: { type: String },
 
-  // Gaming
-  type: { type: String },
-  connectivity: { type: String },
-  switches: { type: String },
-  dpi: { type: String },
-  rgb: { type: Boolean },
+    // Gaming
+    type: { type: String },
+    connectivity: { type: String },
+    switches: { type: String },
+    dpi: { type: String },
+    rgb: { type: Boolean },
 
-  // Storage
-  capacity: { type: String },
-  interface: { type: String },
-  readSpeed: { type: String },
+    // Storage
+    capacity: { type: String },
+    interface: { type: String },
+    readSpeed: { type: String },
 
-  price: { type: Number, required: true },
-  stock: { type: Number, default: 0 },
+    price: { type: Number, required: true },
+    stock: { type: Number, default: 0 },
 
-  rating: { type: Number, default: 0 },
-  reviewCount: { type: Number, default: 0 },
+    rating: { type: Number, default: 0 },
+    reviewCount: { type: Number, default: 0 },
 
-  isFeatured: { type: Boolean, default: false },
-});
+    isFeatured: { type: Boolean, default: false },
+  },
+  { timestamps: true },
+);
 
 const productModel = mongoose.model<Iproduct>("product", productSchema);
 
