@@ -78,6 +78,7 @@ export const login = async ({ email, password }: LoginParams) => {
       role: findUser.role,
     }),
     role: findUser.role,
+    firstName: findUser.firstName,
     message: "Login successful",
   };
 };
