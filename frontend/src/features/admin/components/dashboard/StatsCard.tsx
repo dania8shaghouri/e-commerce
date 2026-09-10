@@ -4,15 +4,23 @@ interface StatsCardProps {
   title: string;
   value: string;
   change: string;
+  trend?: "up" | "down" | "neutral";
   icon: IconType;
   iconColor: string;
   iconBg: string;
 }
 
+const trendColor: Record<"up" | "down" | "neutral", string> = {
+  up: "text-green-500",
+  down: "text-danger",
+  neutral: "text-textSecondary",
+};
+
 const StatsCard = ({
   title,
   value,
   change,
+  trend = "neutral",
   icon: Icon,
   iconColor,
   iconBg,
@@ -28,10 +36,8 @@ const StatsCard = ({
 
         <div className="flex flex-col min-w-0">
           <p className="text-sm text-gray-500">{title}</p>
-
           <h3 className="text-2xl font-bold leading-tight">{value}</h3>
-
-          <span className="text-sm text-green-500 font-medium">
+          <span className={`text-sm font-medium ${trendColor[trend]}`}>
             {change}
           </span>
         </div>
