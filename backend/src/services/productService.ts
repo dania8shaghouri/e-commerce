@@ -283,7 +283,6 @@ export type AdminProductSort =
   | "stock-desc"
   | "newest";
 
-  
 // ?  Bu alan zorunlu değil demek
 export interface AdminProductFilters {
   search?: string;
@@ -294,7 +293,7 @@ export interface AdminProductFilters {
   limit?: number;
 }
 
-const LOW_STOCK_THRESHOLD = 10;
+export const LOW_STOCK_THRESHOLD = 10;
 
 // ? filters gönderilebilir ama zorunlu değil
 export const getAdminProducts = async (filters?: AdminProductFilters) => {
@@ -346,11 +345,11 @@ export const getAdminProducts = async (filters?: AdminProductFilters) => {
     case "name-desc":
       sortQuery.title = -1;
       break;
-      // Price Low → High
+    // Price Low → High
     case "price-asc":
       sortQuery.price = 1;
       break;
-      // Price High → Low
+    // Price High → Low
     case "price-desc":
       sortQuery.price = -1;
       break;
@@ -374,8 +373,8 @@ export const getAdminProducts = async (filters?: AdminProductFilters) => {
     .skip(skip)
     .limit(limit);
 
-    // Service şunu döndürüyor
-    // yani bu obje controller'a geri doner result te
+  // Service şunu döndürüyor
+  // yani bu obje controller'a geri doner result te
   return {
     products,
     totalProducts,
@@ -389,7 +388,7 @@ export const createProduct = async (data: Partial<Iproduct>) => {
   return productModel.create(data);
 };
 
-// findByIdAndUpdate:Mongoose'a ait bir fonksiyon Bu ID'ye sahip ürünü bul    
+// findByIdAndUpdate:Mongoose'a ait bir fonksiyon Bu ID'ye sahip ürünü bul
 // Gönderilen bilgilerle güncelle
 //{ new: true } Güncellemeden sonraki yeni ürünü döndür
 export const updateProduct = async (id: string, data: Partial<Iproduct>) => {
