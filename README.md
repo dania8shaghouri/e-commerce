@@ -4,12 +4,13 @@
 
 # 💻 Novatech Store
 
-![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![React](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=20232A)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express_5-339933?logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_9-47A248?logo=mongodb&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-22.5-635BFF?logo=stripe&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 A modern **Full-Stack E-Commerce** application built with **React, TypeScript, Node.js, Express.js and MongoDB** — with an integrated Stripe payment system and a complete admin dashboard.
@@ -152,37 +153,50 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 - Low-stock alerts
 ---
 
+
 # 🛠️ Tech Stack
 
 ## Frontend
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- React Router
-- Axios
-- React Hook Form
-- Zod
-- React Hot Toast
-- Swiper
-- Recharts
-- React Icons
-
----
+- React 19.2.4
+- React DOM 19.2.4
+- TypeScript 5.9
+- Vite 8
+- Tailwind CSS 3.4
+- React Router DOM 7
+- Axios 1.14
+- React Hook Form 7
+- Zod 4
+- Recharts 3
+- Swiper 14
+- React Hot Toast 2
+- React Icons 5
 
 ## Backend
 
 - Node.js
-- Express.js
+- Express.js 5
+- TypeScript 5.9
 - MongoDB
-- Mongoose (incl. aggregation pipelines: $lookup, $group, $facet)
+- Mongoose 9
 - JWT Authentication
-- bcrypt
-- Stripe (Checkout + Webhooks)
-- Multer (image uploads)
+- bcrypt 6
+- Stripe 22
+- Multer 2
+- Zod 4
 - CORS
+- Helmet
+- express-rate-limit
 - dotenv
+
+## Development Tools
+
+- ESLint 9
+- TypeScript ESLint 8
+- tsx
+- Nodemon
+- PostCSS
+- Autoprefixer
 
 ---
 
