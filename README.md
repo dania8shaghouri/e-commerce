@@ -240,6 +240,15 @@ npm install
 
 npm run dev
 ```
+## Frontend
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
 
 Create a `.env` file
 
@@ -251,15 +260,7 @@ JWT_SECRET=
 
 ---
 
-## Frontend
 
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
 
 ---
 
