@@ -109,36 +109,47 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 
 ---
 
-## 👨‍💼 Admin
 
-- A fully built, data-driven admin panel — every number and chart is computed from real data, not mocked.
+## 👨‍💼 Admin Dashboard
 
-Products
+### Products
 
 - Full CRUD with a dedicated Add/Edit page
-- Dynamic, category-specific spec fields (Laptops, Monitors, Gaming, Storage)
+- Dynamic, category-specific specification fields
 - Drag-and-drop multi-image upload
-- Search, category & stock-status filters, sorting, pagination
+- Search, filters, sorting, and pagination
 
-Orders
+### Orders
 
-- Full status lifecycle: pending → processing → shipped → delivered → cancelled
-- Order detail view with items, customer info, shipping address, payment status, and a visual status timeline
-- Search, status & date-range filters, sorting, pagination
+- Order status lifecycle management
+- Order detail page
+- Customer and shipping information
+- Payment status
+- Status timeline
+- Search, filters, sorting, and pagination
 
-Customers
+### Customers
 
-- Aggregated stats per customer — total orders, total spent, average order value (via MongoDB aggregation)
-- Customer detail page with full order history
-- Dashboard
+- Customer statistics using MongoDB aggregation
+- Total orders and total spent
+- Average order value
+- Customer detail page
+- Full order history
 
-- Real-time KPIs (revenue, orders, customers, products) with month-over-month change
+### Dashboard Analytics
+
+- Revenue, orders, customers, and products KPIs
+- Month-over-month changes
 - 6-month revenue trend chart
-- Order status breakdown chart
-- Recent orders feed & top-selling products
+- Order status breakdown
+- Recent orders
+- Top-selling products
 
-Also included: global topbar search across products/orders/customers, and a polling-based notification system for new orders and low-stock alerts.
+### Additional Admin Features
 
+- Global search across products, orders, and customers
+- Polling-based notifications
+- Low-stock alerts
 ---
 
 # 🛠️ Tech Stack
@@ -221,53 +232,39 @@ e-commerce/
 
 ---
 
+
 # ⚙️ Installation
+
+## Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm
+- MongoDB Atlas account
+- Stripe account (for payment features)
 
 ## Clone the repository
 
 ```bash
 git clone https://github.com/dania8shaghouri/e-commerce.git
+cd e-commerce
 ```
 
----
+## Backend Setup
 
-## Backend
+Open a terminal in the project root:
 
 ```bash
 cd backend
-
 npm install
-
-npm run dev
-```
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
 ```
 
-Create a `.env` file
+Create a `.env` file inside the `backend/` directory.
+
+Add the required environment variables:
 
 ```env
-MONGODB_URI=
-
-JWT_SECRET=
-```
-
----
-
-
-
----
-
-## 🔑 Environment Variables
-
-Create a .env file inside backend/:
-
 MONGODB_URI=
 JWT_SECRET=
 PORT=3001
@@ -276,6 +273,25 @@ ALLOWED_ORIGINS=http://localhost:5173
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 FRONTEND_URL=http://localhost:5173
+```
+
+Start the backend development server:
+
+```bash
+npm run dev
+```
+
+## Frontend Setup
+
+Open a new terminal in the project root:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will run on the local development URL provided by Vite.
 
 ---
 
@@ -300,28 +316,43 @@ Throughout this project I improved my knowledge of:
 
 ---
 
+
 # 🚧 Roadmap
 
 Planned improvements include:
 
-- Wishlist page
-  Cloudinary migration for image uploads (Render's local disk storage - doesn't persist across restarts)
-  Production Stripe webhook registration (Dashboard-side confirmation)
-- "Mark as Paid" manual override for admins
-- Order status history with per-step timestamps
-- Card detail display on order pages (via Stripe payment intent)
-- Real shipping cost & discount system
+### Testing & Quality
+
+- Unit testing with Jest
+- Component testing with React Testing Library
+- Integration testing
+- CI/CD pipeline with GitHub Actions
+
+### Infrastructure
+
+- Cloudinary migration for image uploads
+- Docker support
+- Production Stripe webhook registration
+
+### E-Commerce Features
+
+- Dedicated wishlist page (if not completed)
 - Product reviews and ratings
-- Settings & Analytics admin pages
-- Email verification
-- Password reset
+- Real shipping cost and discount system
 - Coupon system
 - Search suggestions
-- AI-powered product recommendations
-- Docker support
-- Unit & integration testing
-- CI/CD pipeline
+- Email verification
+- Password reset
 
+### Admin Improvements
+
+- Mark as Paid manual override
+- Order status history with per-step timestamps
+- Settings & Analytics pages
+
+### Future Improvements
+
+- AI-powered product recommendations
 ---
 
 # 📷 Screenshots
