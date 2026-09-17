@@ -154,49 +154,40 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 ---
 
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
-- React 19.2.4
-- React DOM 19.2.4
-- TypeScript 5.9
-- Vite 8
-- Tailwind CSS 3.4
-- React Router DOM 7
-- Axios 1.14
-- React Hook Form 7
-- Zod 4
-- Recharts 3
-- Swiper 14
-- React Hot Toast 2
-- React Icons 5
+![React](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=20232A)
+![React Router](https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1-5A29E4?logo=axios&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7-EC5990?logo=reacthookform&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-4-3E67B1)
+![Recharts](https://img.shields.io/badge/Recharts-3-22B5BF)
+![Swiper](https://img.shields.io/badge/Swiper-14-6332F6?logo=swiper&logoColor=white)
 
-## Backend
+### Backend
 
-- Node.js
-- Express.js 5
-- TypeScript 5.9
-- MongoDB
-- Mongoose 9
-- JWT Authentication
-- bcrypt 6
-- Stripe 22
-- Multer 2
-- Zod 4
-- CORS
-- Helmet
-- express-rate-limit
-- dotenv
+![Node.js](https://img.shields.io/badge/Node.js-Express_5-339933?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_9-47A248?logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)
+![bcrypt](https://img.shields.io/badge/bcrypt-6-338833)
+![Stripe](https://img.shields.io/badge/Stripe-22-635BFF?logo=stripe&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-2-333333)
+![Zod](https://img.shields.io/badge/Zod-4-3E67B1)
+![Helmet](https://img.shields.io/badge/Helmet-8-000000)
+![CORS](https://img.shields.io/badge/CORS-2.8-333333)
 
-## Development Tools
+### Development Tools
 
-- ESLint 9
-- TypeScript ESLint 8
-- tsx
-- Nodemon
-- PostCSS
-- Autoprefixer
+![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint&logoColor=white)
+![TypeScript ESLint](https://img.shields.io/badge/TypeScript--ESLint-8-3178C6?logo=typescript&logoColor=white)
+![tsx](https://img.shields.io/badge/tsx-4-3178C6)
+![Nodemon](https://img.shields.io/badge/Nodemon-3-76D04B?logo=nodemon&logoColor=white)
 
 ---
 
