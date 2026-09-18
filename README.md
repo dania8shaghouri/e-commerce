@@ -4,17 +4,18 @@
 
 # 💻 Novatech Store
 
-![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![React](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=20232A)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express_5-339933?logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_9-47A248?logo=mongodb&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-22.5-635BFF?logo=stripe&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 A modern **Full-Stack E-Commerce** application built with **React, TypeScript, Node.js, Express.js and MongoDB** — with an integrated Stripe payment system and a complete admin dashboard.
 
-## Novatech Store was developed to strengthen my full-stack development skills by building a real-world e-commerce application from scratch. The project focuses on clean architecture, reusable components, responsive design, authentication, a full payment flow, and a data-driven admin dashboard for managing the store.
+ Novatech Store was developed to strengthen my full-stack development skills by building a real-world e-commerce application from scratch. The project focuses on clean architecture, reusable components, responsive design, authentication, a full payment flow, and a data-driven admin dashboard for managing the store.
 
 # 🚀 Live Demo
 
@@ -109,69 +110,84 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 
 ---
 
-## 👨‍💼 Admin
 
-- A fully built, data-driven admin panel — every number and chart is computed from real data, not mocked.
+## 👨‍💼 Admin Dashboard
 
-Products
+### Products
 
 - Full CRUD with a dedicated Add/Edit page
-- Dynamic, category-specific spec fields (Laptops, Monitors, Gaming, Storage)
+- Dynamic, category-specific specification fields
 - Drag-and-drop multi-image upload
-- Search, category & stock-status filters, sorting, pagination
+- Search, filters, sorting, and pagination
 
-Orders
+### Orders
 
-- Full status lifecycle: pending → processing → shipped → delivered → cancelled
-- Order detail view with items, customer info, shipping address, payment status, and a visual status timeline
-- Search, status & date-range filters, sorting, pagination
+- Order status lifecycle management
+- Order detail page
+- Customer and shipping information
+- Payment status
+- Status timeline
+- Search, filters, sorting, and pagination
 
-Customers
+### Customers
 
-- Aggregated stats per customer — total orders, total spent, average order value (via MongoDB aggregation)
-- Customer detail page with full order history
-- Dashboard
+- Customer statistics using MongoDB aggregation
+- Total orders and total spent
+- Average order value
+- Customer detail page
+- Full order history
 
-- Real-time KPIs (revenue, orders, customers, products) with month-over-month change
+### Dashboard Analytics
+
+- Revenue, orders, customers, and products KPIs
+- Month-over-month changes
 - 6-month revenue trend chart
-- Order status breakdown chart
-- Recent orders feed & top-selling products
+- Order status breakdown
+- Recent orders
+- Top-selling products
 
-Also included: global topbar search across products/orders/customers, and a polling-based notification system for new orders and low-stock alerts.
+### Additional Admin Features
 
+- Global search across products, orders, and customers
+- Polling-based notifications
+- Low-stock alerts
 ---
 
-# 🛠️ Tech Stack
 
-## Frontend
+## 🛠️ Tech Stack
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- React Router
-- Axios
-- React Hook Form
-- Zod
-- React Hot Toast
-- Swiper
-- Recharts
-- React Icons
+### Frontend
 
----
+![React](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=20232A)
+![React Router](https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1-5A29E4?logo=axios&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7-EC5990?logo=reacthookform&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-4-3E67B1)
+![Recharts](https://img.shields.io/badge/Recharts-3-22B5BF)
+![Swiper](https://img.shields.io/badge/Swiper-14-6332F6?logo=swiper&logoColor=white)
 
-## Backend
+### Backend
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose (incl. aggregation pipelines: $lookup, $group, $facet)
-- JWT Authentication
-- bcrypt
-- Stripe (Checkout + Webhooks)
-- Multer (image uploads)
-- CORS
-- dotenv
+![Node.js](https://img.shields.io/badge/Node.js-Express_5-339933?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_9-47A248?logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)
+![bcrypt](https://img.shields.io/badge/bcrypt-6-338833)
+![Stripe](https://img.shields.io/badge/Stripe-22-635BFF?logo=stripe&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-2-333333)
+![Zod](https://img.shields.io/badge/Zod-4-3E67B1)
+![Helmet](https://img.shields.io/badge/Helmet-8-000000)
+![CORS](https://img.shields.io/badge/CORS-2.8-333333)
+
+### Development Tools
+
+![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint&logoColor=white)
+![TypeScript ESLint](https://img.shields.io/badge/TypeScript--ESLint-8-3178C6?logo=typescript&logoColor=white)
+![tsx](https://img.shields.io/badge/tsx-4-3178C6)
+![Nodemon](https://img.shields.io/badge/Nodemon-3-76D04B?logo=nodemon&logoColor=white)
 
 ---
 
@@ -221,52 +237,39 @@ e-commerce/
 
 ---
 
+
 # ⚙️ Installation
+
+## Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm
+- MongoDB Atlas account
+- Stripe account (for payment features)
 
 ## Clone the repository
 
 ```bash
 git clone https://github.com/dania8shaghouri/e-commerce.git
+cd e-commerce
 ```
 
----
+## Backend Setup
 
-## Backend
+Open a terminal in the project root:
 
 ```bash
 cd backend
-
 npm install
-
-npm run dev
 ```
 
-Create a `.env` file
+Create a `.env` file inside the `backend/` directory.
+
+Add the required environment variables:
 
 ```env
-MONGODB_URI=
-
-JWT_SECRET=
-```
-
----
-
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
-
----
-
-## 🔑 Environment Variables
-
-Create a .env file inside backend/:
-
 MONGODB_URI=
 JWT_SECRET=
 PORT=3001
@@ -275,6 +278,25 @@ ALLOWED_ORIGINS=http://localhost:5173
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 FRONTEND_URL=http://localhost:5173
+```
+
+Start the backend development server:
+
+```bash
+npm run dev
+```
+
+## Frontend Setup
+
+Open a new terminal in the project root:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will run on the local development URL provided by Vite.
 
 ---
 
@@ -299,28 +321,43 @@ Throughout this project I improved my knowledge of:
 
 ---
 
+
 # 🚧 Roadmap
 
 Planned improvements include:
 
-- Wishlist page
-  Cloudinary migration for image uploads (Render's local disk storage - doesn't persist across restarts)
-  Production Stripe webhook registration (Dashboard-side confirmation)
-- "Mark as Paid" manual override for admins
-- Order status history with per-step timestamps
-- Card detail display on order pages (via Stripe payment intent)
-- Real shipping cost & discount system
+### Testing & Quality
+
+- Unit testing with Jest
+- Component testing with React Testing Library
+- Integration testing
+- CI/CD pipeline with GitHub Actions
+
+### Infrastructure
+
+- Cloudinary migration for image uploads
+- Docker support
+- Production Stripe webhook registration
+
+### E-Commerce Features
+
+- Dedicated wishlist page (if not completed)
 - Product reviews and ratings
-- Settings & Analytics admin pages
-- Email verification
-- Password reset
+- Real shipping cost and discount system
 - Coupon system
 - Search suggestions
-- AI-powered product recommendations
-- Docker support
-- Unit & integration testing
-- CI/CD pipeline
+- Email verification
+- Password reset
 
+### Admin Improvements
+
+- Mark as Paid manual override
+- Order status history with per-step timestamps
+- Settings & Analytics pages
+
+### Future Improvements
+
+- AI-powered product recommendations
 ---
 
 # 📷 Screenshots
