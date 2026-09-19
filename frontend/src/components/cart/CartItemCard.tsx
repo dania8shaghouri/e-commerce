@@ -1,6 +1,6 @@
 import { FiTrash2 } from "react-icons/fi";
-import { BASE_URL } from "../../constants/baseUrl";
 import type { CartItem } from "../../types/CartItem";
+import { getImageUrl } from "../../utils/getImageUrl";
 
 interface Props {
   item: CartItem;
@@ -27,7 +27,7 @@ const CartItemCard = ({ item, onRemove, onUpdate, onNavigate }: Props) => {
 
       <div className="flex items-center gap-4">
         <img
-          src={`${BASE_URL}/images/${item.productImage}`}
+          src={getImageUrl(item.productImage)} 
           className="w-20 h-20 object-contain"
         />
 

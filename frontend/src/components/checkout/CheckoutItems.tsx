@@ -1,5 +1,5 @@
-import { BASE_URL } from "../../constants/baseUrl";
 import type { CartItem } from "../../types/CartItem";
+import { getImageUrl } from "../../utils/getImageUrl";
 
 interface Props {
   items: CartItem[];
@@ -22,7 +22,7 @@ const CheckoutItems = ({ items }: Props) => {
         >
           <div className="col-span-2 flex items-center gap-4">
             <img
-              src={`${BASE_URL}/images/${item.productImage}`}
+              src={getImageUrl(item.productImage)}
               className="w-16 h-16 object-contain"
             />
             <span>{item.title}</span>
@@ -31,9 +31,7 @@ const CheckoutItems = ({ items }: Props) => {
           <span>₺{item.unitPrice}</span>
           <span>{item.quantity}</span>
 
-          <span className="text-right">
-            ₺{item.unitPrice * item.quantity}
-          </span>
+          <span className="text-right">₺{item.unitPrice * item.quantity}</span>
         </div>
       ))}
     </div>

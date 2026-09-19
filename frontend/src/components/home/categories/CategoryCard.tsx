@@ -1,5 +1,5 @@
 import type { Category } from "../../../types/Category";
-import { BASE_URL } from "../../../constants/baseUrl";
+import { getImageUrl } from "../../../utils/getImageUrl";
 interface Props {
   category: Category;
 }
@@ -72,7 +72,7 @@ const CategoryCard = ({ category }: Props) => {
         {/* Product */}
 
         <img
-          src={`${BASE_URL}/images/${category.image}`}
+          src={getImageUrl(category.image)}
           draggable={false}
           className="
             relative
