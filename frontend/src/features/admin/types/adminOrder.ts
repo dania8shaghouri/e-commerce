@@ -19,6 +19,13 @@ export interface OrderShipping {
   address: string;
 }
 
+export interface OrderPaymentMethod {
+  brand: string;
+  last4: string;
+  expMonth: number;
+  expYear: number;
+}
+
 export type OrderStatus =
   | "pending"
   | "processing"
@@ -37,6 +44,7 @@ export interface AdminOrder {
   userId: OrderCustomer;
   status: OrderStatus;
   paymentStatus: PaymentStatus;
+  stripeSessionId?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -54,7 +62,7 @@ export interface AdminOrderFilters {
   startDate?: string;
   endDate?: string;
   sort?: OrderSort;
-  userId?: string;   
+  userId?: string;
   page?: number;
   limit?: number;
 }

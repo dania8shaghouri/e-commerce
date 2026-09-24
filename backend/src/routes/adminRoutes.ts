@@ -12,6 +12,7 @@ import {
   getAdminOrdersHandler,
   getAdminOrderByIdHandler,
   updateOrderStatusHandler,
+  getOrderPaymentMethodHandler,
 } from "../controllers/orderController.js";
 import {
   getAdminCustomersHandler,
@@ -30,7 +31,12 @@ router.get(
   requireAdmin,
   getDashboardOverviewHandler,
 );
-router.get("/notifications", validateJWT, requireAdmin, getAdminNotificationsHandler);
+router.get(
+  "/notifications",
+  validateJWT,
+  requireAdmin,
+  getAdminNotificationsHandler,
+);
 
 router.get("/products", validateJWT, requireAdmin, getAdminProductsHandler);
 router.post("/products", validateJWT, requireAdmin, createProductHandler);
@@ -48,7 +54,7 @@ router.post(
       return res.status(400).json({ message: "No files uploaded" });
     }
 
-    const urls = files.map((file) => file.path);   
+    const urls = files.map((file) => file.path);
 
     res.status(200).json({ filenames: urls });
   },
@@ -63,7 +69,12 @@ router.patch(
   requireAdmin,
   updateOrderStatusHandler,
 );
-
+router.get(
+  "/orders/:id/payment-method",
+  validateJWT,
+  requireAdmin,
+  getOrderPaymentMethodHandler,
+);
 // customers
 router.get("/customers", validateJWT, requireAdmin, getAdminCustomersHandler);
 router.get(

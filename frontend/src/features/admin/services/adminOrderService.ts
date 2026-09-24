@@ -4,6 +4,7 @@ import type {
   AdminOrder,
   AdminOrderFilters,
   OrderStatus,
+  OrderPaymentMethod,
 } from "../types/adminOrder";
 
 export const getAdminOrders = (filters?: AdminOrderFilters) => {
@@ -28,3 +29,6 @@ export const getAdminOrderById = (id: string) =>
 
 export const updateOrderStatus = (id: string, status: OrderStatus) =>
   api.patch<AdminOrder>(`/admin/orders/${id}/status`, { status });
+
+export const getOrderPaymentMethod = (id: string) =>
+  api.get<OrderPaymentMethod | null>(`/admin/orders/${id}/payment-method`);

@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
-import { getAdminOrderById } from "../../services/adminOrderService";
+import {
+  getAdminOrderById,
+  getOrderPaymentMethod,
+} from "../../services/adminOrderService";
 import type {
   AdminOrder,
+  OrderPaymentMethod,
   OrderStatus,
   PaymentStatus,
 } from "../../types/adminOrder";
@@ -35,6 +39,9 @@ const OrderDetailPage = () => {
 
   const [order, setOrder] = useState<AdminOrder | null>(null);
   const [loading, setLoading] = useState(true);
+  const [paymentMethod, setPaymentMethod] = useState<OrderPaymentMethod | null>(
+    null,
+  );
 
   const fetchOrder = useCallback(async () => {
     if (!id) return;
@@ -52,6 +59,21 @@ const OrderDetailPage = () => {
   useEffect(() => {
     fetchOrder();
   }, [fetchOrder]);
+
+  useEffect(() => {
+    if (!order?.stripeSessionId) return;
+
+    const fetchPaymentMethod = async () => {
+      try {
+        const response = await getOrderPaymentMethod(order._id);
+        setPaymentMethod(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPaymentMethod();
+  }, [order]);
 
   if (loading) return <Loading />;
   if (!order) return null;
@@ -181,6 +203,26 @@ const OrderDetailPage = () => {
 
           <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
             <h2 className="mb-4 font-semibold text-textPrimary">Payment</h2>
+
+            {paymentMethod && (
+              <div className="mb-3 flex items-center gap-3 rounded-xl border border-border bg-background p-3">
+                <div className="flex h-8 w-12 items-center justify-center rounded bg-textPrimary text-xs font-bold uppercase text-white">
+                  {paymentMethod.brand}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-textPrimary">
+                    {paymentMethod.brand.charAt(0).toUpperCase() +
+                      paymentMethod.brand.slice(1)}{" "}
+                    ending in {paymentMethod.last4}
+                  </p>
+                  <p className="text-xs text-textSecondary">
+                    Expiry {String(paymentMethod.expMonth).padStart(2, "0")}/
+                    {String(paymentMethod.expYear).slice(-2)}
+                  </p>
+                </div>
+              </div>
+            )}
+
             <span
               className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${paymentStyles[order.paymentStatus]}`}
             >
