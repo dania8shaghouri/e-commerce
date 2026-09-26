@@ -20,6 +20,8 @@ import {
 } from "../controllers/customerController.js";
 import { getDashboardOverviewHandler } from "../controllers/dashboardController.js";
 import { getAdminNotificationsHandler } from "../controllers/notificationController.js";
+import { generateDescriptionHandler } from "../controllers/productController.js";
+
 const router = express.Router();
 
 // Express fonksiyonları sırayla çalıştırır : İlk middleware
@@ -84,4 +86,11 @@ router.get(
   getAdminCustomerByIdHandler,
 );
 
+
+router.post(
+  "/products/generate-description",
+  validateJWT,
+  requireAdmin,
+  generateDescriptionHandler,
+);
 export default router;

@@ -41,3 +41,10 @@ export const uploadProductImages = (files: File[]) => {
 
   return api.post<{ filenames: string[] }>("/admin/products/upload", formData);
 };
+
+export const generateProductDescription = (data: {
+  title: string;
+  brand?: string;
+  category?: string;
+  specs?: Record<string, unknown>;
+}) => api.post<{ description: string }>("/admin/products/generate-description", data);

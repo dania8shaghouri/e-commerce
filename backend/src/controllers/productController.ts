@@ -23,6 +23,8 @@ import type {
   AdminProductSort,
 } from "../services/productService.js";
 
+import { generateProductDescription } from "../services/aiService.js";
+
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const category =
@@ -245,5 +247,22 @@ export const deleteProductHandler = async (
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to delete product" });
+  }
+};
+
+// ---------------------------
+export const generateDescriptionHandler = async (req: Request, res: Response) => {
+  try {
+    const { title, brand, category, specs } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ message: "Product title is required" });
+    }
+
+    const description = await generateProductDescription({ title, brand, category, specs });
+    res.status(200).json({ description });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to generate description" });
   }
 };

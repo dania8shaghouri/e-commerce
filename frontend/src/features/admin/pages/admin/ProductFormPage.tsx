@@ -139,6 +139,8 @@ const ProductFormPage = () => {
         register={register}
         errors={errors}
         categories={categories}
+        watch={watch}
+        setValue={setValue}
       />
       <PricingInventorySection register={register} errors={errors} />
       <SpecificationsSection register={register} category={selectedCategory} />
