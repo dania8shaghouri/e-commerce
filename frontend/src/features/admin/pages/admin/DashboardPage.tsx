@@ -25,6 +25,7 @@ const DashboardPage = () => {
   useEffect(() => {
     let cancelled = false;
 
+    // Bu fonksiyon dashboard verisini backend'den alacak
     const fetchOverview = async () => {
       setIsRefreshing(true);
       try {

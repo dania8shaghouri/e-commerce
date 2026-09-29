@@ -42,6 +42,7 @@ export const uploadProductImages = (files: File[]) => {
   return api.post<{ filenames: string[] }>("/admin/products/upload", formData);
 };
 
+// Burada frontend doğrudan Gemini'ye gitmiyor. Kendi backend'ine gidiyo
 export const generateProductDescription = (data: {
   title: string;
   brand?: string;
