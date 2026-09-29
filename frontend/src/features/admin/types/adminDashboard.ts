@@ -1,14 +1,16 @@
 import type { AdminOrder, OrderStatus } from "./adminOrder";
 
+export interface PeriodMetric {
+  current: number;
+  previous: number;
+  changePct: number | null;
+}
+
 export interface DashboardSummary {
-  totalRevenue: number;
-  revenueChangePct: number | null;
-  totalOrders: number;
-  ordersChangePct: number | null;
-  totalCustomers: number;
-  customersChangePct: number | null;
-  totalProducts: number;
-  productsChangePct: number | null;
+  revenue: PeriodMetric;
+  orders: PeriodMetric;
+  customers: PeriodMetric;
+  products: PeriodMetric;
 }
 
 export interface MonthlyRevenuePoint {

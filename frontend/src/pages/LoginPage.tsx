@@ -46,7 +46,6 @@ const LoginPage = () => {
           data.token,
           data.role ?? "customer",
         );
-
         if (data.role === "admin") {
           navigate("/admin/dashboard");
         } else {
