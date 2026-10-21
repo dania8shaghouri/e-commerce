@@ -213,14 +213,19 @@ export const getTopProducts = async (limit = 5) => {
 
 // HEPSİNİ BİRLEŞTİRİR
 export const getDashboardOverview = async (days = 30) => {
-  const [summary, monthlyRevenue, orderStatusBreakdown, topProducts, recentOrdersResult] =
-    await Promise.all([
-      getDashboardSummary(days),   
-      getMonthlyRevenue(),
-      getOrderStatusBreakdown(),
-      getTopProducts(5),
-      getAdminOrders({ sort: "newest", page: 1, limit: 5 }),
-    ]);
+  const [
+    summary,
+    monthlyRevenue,
+    orderStatusBreakdown,
+    topProducts,
+    recentOrdersResult,
+  ] = await Promise.all([
+    getDashboardSummary(days),
+    getMonthlyRevenue(),
+    getOrderStatusBreakdown(),
+    getTopProducts(5),
+    getAdminOrders({ sort: "newest", page: 1, limit: 5 }),
+  ]);
 
   return {
     summary,
