@@ -13,9 +13,9 @@
 ![Stripe](https://img.shields.io/badge/Stripe-22.5-635BFF?logo=stripe&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-A modern **Full-Stack E-Commerce** application built with **React, TypeScript, Node.js, Express.js and MongoDB** — with an integrated Stripe payment system and a complete admin dashboard.
+A modern Full-Stack E-Commerce application built with React, TypeScript, Node.js, Express.js and MongoDB — with an integrated Stripe payment flow, cloud image storage, an AI-assisted product description generator, and a complete, data-driven admin dashboard.
 
- Novatech Store was developed to strengthen my full-stack development skills by building a real-world e-commerce application from scratch. The project focuses on clean architecture, reusable components, responsive design, authentication, a full payment flow, and a data-driven admin dashboard for managing the store.
+Novatech Store was developed to strengthen my full-stack development skills by building a real-world e-commerce application from scratch. The project focuses on clean architecture, reusable components, responsive design, authentication, a full payment flow, and an admin panel where every number is computed from real data.
 
 # 🚀 Live Demo
 
@@ -36,6 +36,7 @@ A modern **Full-Stack E-Commerce** application built with **React, TypeScript, N
 - Environment Variables
 - Learning Outcomes
 - Roadmap
+- Screenshots
 
 ---
 
@@ -43,9 +44,9 @@ A modern **Full-Stack E-Commerce** application built with **React, TypeScript, N
 
 Novatech Store is a responsive MERN-style e-commerce application that simulates the core functionality of a modern online shopping platform.
 
-Users can create an account, securely authenticate, browse products, filter and sort items, manage their shopping cart, pay through a real Stripe checkout flow, and track their orders.
+Customers can create an account, securely authenticate, browse products, filter and sort items, manage their cart and wishlist, pay through a real Stripe Checkout flow, and track their orders.
 
-On the admin side, the store owner has a fully data-driven dashboard to manage products, fulfill orders, view customer insights, and monitor store performance in real time — no mock data anywhere in the admin panel.
+On the admin side, the store owner has a role-protected dashboard to manage products (with AI-generated descriptions), fulfill orders, view customer insights, and monitor store performance — with no mock data anywhere in the admin panel.
 
 ---
 
@@ -53,10 +54,8 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 
 ## 🔐 Authentication
 
-- User registration
-- User login
-- JWT authentication
-- Protected routes
+- User registration and login
+- JWT authentication with protected routes
 - Persistent authentication
 - Role-based authorization (customer / admin)
 - Secure password hashing using bcrypt
@@ -65,13 +64,12 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 
 ## 🛒 Shopping Experience
 
-- Browse products
-- Product detail page
+- Browse products and product detail pages
 - Shopping cart
+- Wishlist support
 - Checkout with Stripe's hosted payment page
 - Real-time payment status confirmation (success / cancel pages)
 - Order history
-- Wishlist support
 - Responsive shopping experience
 
 ---
@@ -81,20 +79,14 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 - Stripe Checkout Sessions for secure, PCI-compliant payments
 - Webhook-based payment confirmation (checkout.session.completed) with signature verification
 - Order paymentStatus and status synced automatically once payment is confirmed
-- Local development tested end-to-end with the Stripe CLI
+- Webhook tested locally with the Stripe CLI, and registered as a production endpoint
 
 ---
 
 ## 🔎 Product Discovery
 
-- Filter by category
-- Filter by brand
-- Filter by availability
-- Filter by price
-- Sort by newest
-- Sort by price (Low → High)
-- Sort by price (High → Low)
-- Sort by popularity
+- Filter by category, brand, availability, and price
+- Sort by newest, price (low → high), price (high → low), and popularity
 
 ---
 
@@ -103,8 +95,7 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 - Responsive design
 - Skeleton loading screens
 - Toast notifications
-- Animated landing page
-- Custom SVG Orbit animation
+- Animated landing page with a custom SVG orbit animation
 - Popular Categories section
 - Modern UI built with Tailwind CSS
 
@@ -117,40 +108,37 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 
 - Full CRUD with a dedicated Add/Edit page
 - Dynamic, category-specific specification fields
-- Drag-and-drop multi-image upload
+- Drag-and-drop multi-image upload, stored permanently on Cloudinary
 - Search, filters, sorting, and pagination
+- AI-generated product descriptions (Google Gemini) built from the product name, category, and specs — editable before saving
+- Delete confirmation modal
 
 ### Orders
 
-- Order status lifecycle management
-- Order detail page
-- Customer and shipping information
-- Payment status
-- Status timeline
+-Order status lifecycle management (pending → processing → shipped → delivered → cancelled)
+- Order detail page with items, customer and shipping information
+- Payment status and real card details (brand, last 4 digits, expiry) fetched from Stripe
+- Visual status timeline
 - Search, filters, sorting, and pagination
 
 ### Customers
 
-- Customer statistics using MongoDB aggregation
-- Total orders and total spent
-- Average order value
-- Customer detail page
-- Full order history
+- Per-customer statistics computed with MongoDB aggregation pipelines
+- Total orders, total spent, and average order value
+- Customer detail page with full order history
 
 ### Dashboard Analytics
 
-- Revenue, orders, customers, and products KPIs
-- Month-over-month changes
+- Revenue, orders, new customers, and new products KPIs
+- Selectable period (7 / 30 / 90 days) with a like-for-like comparison against the previous period
 - 6-month revenue trend chart
 - Order status breakdown
-- Recent orders
-- Top-selling products
+- Recent orders and top-selling products
 
 ### Additional Admin Features
 
 - Global search across products, orders, and customers
-- Polling-based notifications
-- Low-stock alerts
+- Polling-based notifications for new orders and low-stock alerts
 ---
 
 
@@ -196,13 +184,15 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 ```text
             React + TypeScript (customer + admin)
                     │
-                 Axios API
+                 Axios 
                     │
           Express.js REST API
                     │
         Controllers → Services → Models
-                    │
-            MongoDB   Stripe (payments)
+                         │
+   │             │                 │             │
+MongoDB   Stripe (payments)     Cloudinary     Gemini
+                                 (images)     (AI text)
 
 ```
 
@@ -214,6 +204,7 @@ On the admin side, the store owner has a fully data-driven dashboard to manage p
 e-commerce/
 │
 ├── frontend/
+│   ├── api
 │   ├── components
 │   ├── context
 │   ├── hooks
@@ -221,18 +212,19 @@ e-commerce/
 │   ├── pages
 │   ├── features/admin
 │   ├── services
+│   ├── shared
 │   ├── types
 │   ├── utils
 │   └── validation
 │
 └── backend/
-    ├── config
     ├── controllers
     ├── middleware
     ├── models
     ├── routes
     ├── services
-    └── utils
+    ├── types
+    └── validation
 ```
 
 ---
@@ -244,10 +236,11 @@ e-commerce/
 
 Make sure you have the following installed:
 
-- Node.js
-- npm
+- Node.js and npm
 - MongoDB Atlas account
 - Stripe account (for payment features)
+- A Cloudinary account (free tier)
+- A Google AI Studio API key (free tier) — for the AI description feature
 
 ## Clone the repository
 
@@ -304,20 +297,19 @@ The frontend will run on the local development URL provided by Vite.
 
 Throughout this project I improved my knowledge of:
 
-- Building scalable React applications
-- Developing RESTful APIs
-- JWT authentication and authorization
-- Integrating third-party payment systems (Stripe Checkout + webhooks)
+- Building scalable React applications with reusable components (no prop drilling)
+- Developing RESTful APIs with a layered architecture
+- JWT authentication and role-based authorization
+- Integrating third-party payments (Stripe Checkout + signature-verified webhooks)
 - MongoDB aggregation pipelines for computed, data-driven views
+- Integrating an LLM API: prompt design, limiting hallucinations, and keeping API keys server-side
+- Persistent cloud file storage and why local disk storage fails on ephemeral hosts
 - Context API state management
-- TypeScript best practices (incl. resolving react-hook-form/Zod type edge cases)
-- Form validation using React Hook Form and Zod
-- Reusable component architecture (no prop drilling, shared components generalized on reuse)
-- Responsive UI development
-- Full-stack application deployment (Vercel + Render)
-- Diagnosing real production issues (e.g. ephemeral filesystem storage on Render, webhook signature verification)
-- Client–server communication
-- Modern project organization
+- Advanced TypeScript (generics, strict config, resolving form/schema type edge cases)
+- Form handling and validation with React Hook Form and Zod
+- Async UI patterns: debouncing, race-condition handling, skeleton loading, polling
+- Full-stack deployment (Vercel + Render) and diagnosing real production issues
+- Keeping multiple repositories and environments in sync
 
 ---
 
@@ -335,13 +327,11 @@ Planned improvements include:
 
 ### Infrastructure
 
-- Cloudinary migration for image uploads
 - Docker support
-- Production Stripe webhook registration
 
 ### E-Commerce Features
 
-- Dedicated wishlist page (if not completed)
+- Dedicated wishlist page 
 - Product reviews and ratings
 - Real shipping cost and discount system
 - Coupon system
