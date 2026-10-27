@@ -45,6 +45,9 @@ Specifications: ${specLines || "None provided"}`;
   const response = await getGeminiClient().models.generateContent({
     model: process.env.GEMINI_MODEL || "gemini-2.0-flash",
     contents: prompt,
+    config: {
+      httpOptions: { timeout: 60000  },
+    },
   });
 
   // Gemini'nin oluşturduğu text'i al

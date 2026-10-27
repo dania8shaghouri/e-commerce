@@ -75,7 +75,9 @@ const DashboardPage = () => {
         </select>
       </div>
 
-      <div className={`transition-opacity ${isRefreshing ? "opacity-60" : "opacity-100"}`}>
+      <div
+        className={`transition-opacity ${isRefreshing ? "opacity-60" : "opacity-100"}`}
+      >
         <StatsGrid summary={data.summary} />
       </div>
 

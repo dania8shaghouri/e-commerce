@@ -48,4 +48,9 @@ export const generateProductDescription = (data: {
   brand?: string;
   category?: string;
   specs?: Record<string, unknown>;
-}) => api.post<{ description: string }>("/admin/products/generate-description", data);
+}) =>
+  api.post<{ description: string }>(
+    "/admin/products/generate-description",
+    data,
+    { timeout: 65000 },
+  );
